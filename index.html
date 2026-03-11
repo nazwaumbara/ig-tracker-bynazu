@@ -740,23 +740,33 @@ function loadFile(input, key) {
   const st  = document.getElementById('ust-' + key);
   const row = document.getElementById('ur-'  + key);
   const ico = document.getElementById('ui-'  + key);
-  new Response(file).json().then(data => {
-    if      (key === 'followers')  S.followers  = extractUsers(data);
-    else if (key === 'following')  S.following  = extractUsers(data);
-    else if (key === 'unfollowed') S.unfollowed = extractUnfollowed(data);
-    else if (key === 'liked')      S.liked      = extractGenericList(data);
-    else if (key === 'saved')      S.saved      = extractGenericList(data);
-    else if (key === 'comments')   S.comments   = extractComments(data);
-    else if (key === 'searches')   S.searches   = extractSearchTerms(data);
-    else if (key === 'logins')     S.logins     = extractLogins(data);
-    else if (key === 'topics')     S.topics     = extractTopics(data);
-    else if (key === 'ads')        S.ads        = extractAds(data);
-    st.textContent = file.name; st.className = 'ust ok';
-    row.classList.add('ok'); ico.textContent = '✓';
-  }).catch(err => {
-    console.error('File parse error:', err);
-    st.textContent = 'Invalid file'; st.className = 'ust err';
-  });
+
+  // Use FileReader — universally supported, no fetch/Response API needed
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if      (key === 'followers')  S.followers  = extractUsers(data);
+      else if (key === 'following')  S.following  = extractUsers(data);
+      else if (key === 'unfollowed') S.unfollowed = extractUnfollowed(data);
+      else if (key === 'liked')      S.liked      = extractGenericList(data);
+      else if (key === 'saved')      S.saved      = extractGenericList(data);
+      else if (key === 'comments')   S.comments   = extractComments(data);
+      else if (key === 'searches')   S.searches   = extractSearchTerms(data);
+      else if (key === 'logins')     S.logins     = extractLogins(data);
+      else if (key === 'topics')     S.topics     = extractTopics(data);
+      else if (key === 'ads')        S.ads        = extractAds(data);
+      st.textContent = '✓ ' + file.name; st.className = 'ust ok';
+      row.classList.add('ok'); ico.textContent = '✓';
+    } catch(err) {
+      console.error('File parse error for key=' + key + ':', err);
+      st.textContent = 'Invalid JSON'; st.className = 'ust err';
+    }
+  };
+  reader.onerror = function() {
+    st.textContent = 'Read error'; st.className = 'ust err';
+  };
+  reader.readAsText(file);
 }
 
 /* ═══════════════════════ WALK HELPER ═══════════════════════ */
@@ -775,21 +785,21 @@ function walk(d, fn) {
 /*
  * FIX: Unified extractor for both followers AND following.
  *
- * BUG that was here before:
- *   - extractFollowers checked o.string_list_data → OK for most files
- *   - extractFollowing checked (o.title && o.string_list_data) → FAILS when
- *     title is an empty string "" (falsy), which Instagram uses in some exports.
+ * Structure A — followers_1.json:
+ *   { title: "", string_list_data: [{ value: "username", href: "...", timestamp: N }] }
+ *   → username is in string_list_data[i].value ✓
  *
- * FIX: One function for both. Gets username from string_list_data[i].value
- * (primary), falling back to the parent object's title if value is empty.
- * This matches the logic of the working "dummy" script.
+ * Structure B — following.json (confirmed from real files):
+ *   { title: "username", string_list_data: [{ href: "...", timestamp: N }] }
+ *   → value field is MISSING entirely; username is in parent o.title ✓
+ *
+ * Fix: try item.value first, fallback to parent o.title.
  */
 function extractUsers(d) {
   const m = new Map();
   walk(d, o => {
     if (o?.string_list_data) {
       o.string_list_data.forEach(item => {
-        // Prefer item.value; fall back to parent title if non-empty
         const username = (item.value && item.value.trim())
           ? item.value.trim()
           : (o.title && o.title.trim() ? o.title.trim() : null);
