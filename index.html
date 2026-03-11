@@ -49,33 +49,33 @@
 
 /* ── LIGHT MODE – warm paper tone ── */
 [data-theme="light"] {
-  --bg:   #F5F3EE;
-  --bg1:  #FFFFFF;
-  --bg2:  #EDE9E1;
-  --bg3:  #E3DED4;
-  --bg4:  #D6D0C6;
-  --ln:   rgba(60,50,30,.10);
-  --ln2:  rgba(60,50,30,.05);
+  --bg:   #F0EDE6;
+  --bg1:  #FAFAF8;
+  --bg2:  #E8E3DA;
+  --bg3:  #DDD8CE;
+  --bg4:  #CEC8BC;
+  --ln:   rgba(60,50,30,.18);
+  --ln2:  rgba(60,50,30,.09);
   --tx:   #1A1714;
   --tx2:  #4A4540;
-  --mu:   #8A8278;
-  --mu2:  #B5AFA7;
+  --mu:   #7A7268;
+  --mu2:  #A8A298;
   --ac:   #5C38C0;
-  --ac-bg:rgba(92,56,192,.08);
+  --ac-bg:rgba(92,56,192,.10);
   --ac-d: #4A2DA8;
   --gn:   #15803D;
-  --gn-bg:rgba(21,128,61,.08);
+  --gn-bg:rgba(21,128,61,.10);
   --rd:   #C0392B;
-  --rd-bg:rgba(192,57,43,.08);
+  --rd-bg:rgba(192,57,43,.10);
   --am:   #B45309;
-  --am-bg:rgba(180,83,9,.08);
+  --am-bg:rgba(180,83,9,.10);
   --bl:   #1D4ED8;
-  --bl-bg:rgba(29,78,216,.08);
+  --bl-bg:rgba(29,78,216,.10);
   --pi:   #B91C6B;
-  --pi-bg:rgba(185,28,107,.08);
+  --pi-bg:rgba(185,28,107,.10);
   --cy:   #0F766E;
-  --cy-bg:rgba(15,118,110,.08);
-  --sh:   0 1px 4px rgba(60,50,30,.08),0 8px 24px rgba(60,50,30,.06);
+  --cy-bg:rgba(15,118,110,.10);
+  --sh:   0 1px 0 rgba(255,255,255,.8),0 2px 6px rgba(60,50,30,.12),0 8px 24px rgba(60,50,30,.08);
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -156,7 +156,8 @@ nav{
 [data-theme="light"] .hsub{color:var(--tx2)}
 
 /* ══════════════ FLOW STEPS ══════════════ */
-.steps{padding:.5rem 1.5rem 0;display:flex;align-items:center}
+.steps{padding:.75rem 1.5rem .25rem;display:flex;align-items:center;background:var(--bg);border-bottom:1px solid var(--ln)}
+[data-theme="light"] .steps{border-bottom-color:var(--ln)}
 .fst{display:flex;align-items:center;gap:.5rem;font-size:clamp(.65rem,1.2vw,.73rem);font-weight:500;color:var(--mu)}
 .fst.on .fn{background:var(--ac-d);color:#fff;border-color:var(--ac-d)}
 .fst.done .fn{background:var(--gn);color:#fff;border-color:var(--gn)}
@@ -178,13 +179,14 @@ nav{
   padding:1.05rem .9rem;cursor:pointer;
   transition:border-color var(--dur),background var(--dur),box-shadow var(--dur);
   position:relative;user-select:none;
+  box-shadow:0 1px 3px rgba(0,0,0,.25);
 }
-.mc:hover{border-color:rgba(167,139,250,.35);box-shadow:var(--sh)}
-.mc.sel{border-color:var(--ac);background:var(--ac-bg)}
+.mc:hover{border-color:rgba(167,139,250,.5);box-shadow:0 2px 12px rgba(109,79,194,.2)}
+.mc.sel{border-color:var(--ac);background:var(--ac-bg);box-shadow:0 0 0 1px var(--ac),0 4px 16px rgba(109,79,194,.2)}
 .mc.locked{cursor:default;opacity:.95}
-[data-theme="light"] .mc{background:var(--bg1);border-color:var(--ln);box-shadow:0 1px 3px rgba(60,50,30,.06)}
-[data-theme="light"] .mc:hover{border-color:rgba(92,56,192,.3);box-shadow:0 2px 12px rgba(92,56,192,.1)}
-[data-theme="light"] .mc.sel{border-color:var(--ac-d);background:rgba(92,56,192,.07)}
+[data-theme="light"] .mc{background:var(--bg1);border:1.5px solid var(--ln);box-shadow:var(--sh)}
+[data-theme="light"] .mc:hover{border-color:rgba(92,56,192,.5);box-shadow:0 2px 14px rgba(92,56,192,.15)}
+[data-theme="light"] .mc.sel{border-color:var(--ac-d);background:rgba(92,56,192,.08);box-shadow:0 0 0 1px var(--ac-d),0 4px 16px rgba(74,45,168,.15)}
 .mchk{position:absolute;top:.6rem;right:.6rem;width:17px;height:17px;border-radius:50%;background:var(--ac-d);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:800;opacity:0;transform:scale(.5);transition:opacity var(--dur),transform var(--dur)}
 .mc.sel .mchk{opacity:1;transform:scale(1)}
 .mc.locked .mchk{opacity:1;transform:scale(1);background:var(--mu2)}
@@ -212,13 +214,13 @@ nav{
 
 /* ══════════════ UPLOAD LIST ══════════════ */
 .ulist{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem}
-.urow{display:flex;align-items:center;background:var(--bg1);border:1px solid var(--ln);border-radius:var(--r);padding:.8rem .9rem;gap:.85rem;position:relative;cursor:pointer;overflow:hidden;transition:border-color var(--dur),background var(--dur),box-shadow var(--dur)}
-.urow:hover{border-color:rgba(167,139,250,.3);box-shadow:var(--sh)}
-.urow.ok{border-color:rgba(74,222,128,.4);background:var(--gn-bg)}
+.urow{display:flex;align-items:center;background:var(--bg1);border:1px solid var(--ln);border-radius:var(--r);padding:.8rem .9rem;gap:.85rem;position:relative;cursor:pointer;overflow:hidden;transition:border-color var(--dur),background var(--dur),box-shadow var(--dur);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.urow:hover{border-color:rgba(167,139,250,.4);box-shadow:0 2px 12px rgba(109,79,194,.15)}
+.urow.ok{border-color:rgba(74,222,128,.5);background:var(--gn-bg)}
 .urow input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-[data-theme="light"] .urow{background:var(--bg1);border-color:var(--ln);box-shadow:0 1px 3px rgba(60,50,30,.05)}
-[data-theme="light"] .urow:hover{border-color:rgba(92,56,192,.25);box-shadow:0 2px 10px rgba(92,56,192,.08)}
-[data-theme="light"] .urow.ok{border-color:rgba(21,128,61,.4);background:var(--gn-bg)}
+[data-theme="light"] .urow{background:var(--bg1);border-color:var(--ln);box-shadow:var(--sh)}
+[data-theme="light"] .urow:hover{border-color:rgba(92,56,192,.35);box-shadow:0 2px 12px rgba(92,56,192,.12)}
+[data-theme="light"] .urow.ok{border-color:rgba(21,128,61,.45);background:var(--gn-bg)}
 .ui{width:34px;height:34px;flex-shrink:0;border-radius:7px;background:var(--bg3);border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:600;color:var(--mu);font-family:var(--fm);transition:all var(--dur)}
 .urow.ok .ui{background:var(--gn-bg);border-color:rgba(74,222,128,.3);color:var(--gn)}
 [data-theme="light"] .urow.ok .ui{border-color:rgba(21,128,61,.3);color:var(--gn)}
@@ -887,7 +889,7 @@ function extractAds(d) {
   return [...new Set(l)];
 }
 
-/* ═══════════════════════ ANALYZE — fixed: no username lookup ═══════════════════════ */
+/* ═══════════════════════ ANALYZE ═══════════════════════ */
 function analyze() {
   const mods = getMods();
   if (mods.includes('rel') && (!S.followers.size || !S.following.size)) {
@@ -895,10 +897,10 @@ function analyze() {
     return;
   }
 
-  // Show loading synchronously
+  // Show loading overlay
   showLoad(true);
 
-  // Use setTimeout to let the loading UI paint before heavy work
+  // Defer heavy work so browser can repaint loader first
   setTimeout(function() {
     try {
       const frs = new Set(S.followers.keys());
@@ -916,13 +918,16 @@ function analyze() {
 
       buildStats(frs.size, fng.size, mods);
       buildTabs(mods, frs.size, fng.size);
+
+      showLoad(false);
+      setStep(3);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch(e) {
-      console.error(e);
+      console.error('Analysis error:', e);
+      showLoad(false);
+      alert('An error occurred during analysis. Check the browser console for details.');
     }
-    showLoad(false);
-    setStep(3);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 300);
+  }, 350);
 }
 
 /* ═══════════════════════ STATS ═══════════════════════ */
@@ -1274,7 +1279,30 @@ function countUp(id, target) {
 window.addEventListener('scroll', () => {
   document.getElementById('st2').classList.toggle('on', window.scrollY > 400);
 });
-updateHint();
+
+// ── Safe init: make sure DOM is ready and step 1 is definitely visible ──
+function init() {
+  try {
+    // Ensure step 1 is shown, others hidden
+    document.getElementById('s1').style.display = '';
+    document.getElementById('s2').style.display = 'none';
+    document.getElementById('s3').style.display = 'none';
+    document.getElementById('flow').style.display = '';
+    // Set step 1 indicator active
+    const fs1 = document.getElementById('fs1');
+    fs1.classList.add('on');
+    fs1.querySelector('.fn').textContent = '1';
+    updateHint();
+  } catch(e) {
+    console.error('IGTracker init error:', e);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
 </body>
 </html>
