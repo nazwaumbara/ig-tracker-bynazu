@@ -769,16 +769,17 @@ function loadFile(input, key) {
   reader.readAsText(file);
 }
 
-/* ═══════════════════════ WALK HELPER ═══════════════════════ */
-function walk(d, fn) {
-  function i(o) {
-    if (Array.isArray(o)) { o.forEach(i); return; }
-    if (typeof o !== 'object' || !o) return;
-    if (fn(o)) return;
-    Object.values(o).forEach(i);
-  }
-  i(d);
-}
+// /* ═══════════════════════ WALK HELPER ═══════════════════════ */
+// function walk(d, fn) {
+//   function i(o) {
+//     if (Array.isArray(o)) { o.forEach(i); return; }
+//     if (typeof o !== 'object' || !o) return;
+//     if (fn(o)) return;
+//     Object.values(o).forEach(i);
+//   }
+//   i(d);
+// }
+
 
 /* ═══════════════════════ EXTRACTORS (FIXED) ═══════════════════════ */
 
@@ -795,17 +796,148 @@ function walk(d, fn) {
  *
  * Fix: try item.value first, fallback to parent o.title.
  */
+// function extractUsers(d) {
+//   const m = new Map();
+//   walk(d, o => {
+//     if (o?.string_list_data) {
+//       o.string_list_data.forEach(item => {
+//         const username = (item.value && item.value.trim())
+//           ? item.value.trim()
+//           : (o.title && o.title.trim() ? o.title.trim() : null);
+//         if (username) m.set(username, item.timestamp || 0);
+//       });
+//       return true;
+//     }
+//   });
+//   return m;
+// }
+
+// function extractUnfollowed(d) {
+//   const l = [];
+//   walk(d, o => {
+//     if (o?.string_list_data) {
+//       o.string_list_data.forEach(i => {
+//         const username = (i.value && i.value.trim()) ? i.value.trim()
+//           : (o.title && o.title.trim() ? o.title.trim() : null);
+//         if (username) l.push({ username, href: i.href || '', ts: i.timestamp || 0 });
+//       });
+//       return true;
+//     }
+//   });
+//   return l.sort((a, b) => b.ts - a.ts);
+// }
+
+// function extractGenericList(d) {
+//   const l = [];
+//   walk(d, o => {
+//     if (o?.string_list_data) {
+//       o.string_list_data.forEach(i => l.push({ href: i.href || i.value || '', ts: i.timestamp || 0 }));
+//       return true;
+//     }
+//   });
+//   return l.sort((a, b) => b.ts - a.ts);
+// }
+
+// function extractComments(d) {
+//   const l = [];
+//   function dig(o) {
+//     if (Array.isArray(o)) { o.forEach(dig); return; }
+//     if (typeof o !== 'object' || !o) return;
+//     if (o.string_list_data) {
+//       o.string_list_data.forEach(i => { if (i.value) l.push({ text: i.value, ts: i.timestamp || 0 }); });
+//       return;
+//     }
+//     Object.values(o).forEach(dig);
+//   }
+//   dig(d);
+//   return l.sort((a, b) => b.ts - a.ts);
+// }
+
+// function extractSearchTerms(d) {
+//   const l = [];
+//   walk(d, o => {
+//     if (o?.string_list_data) {
+//       o.string_list_data.forEach(i => { if (i.value) l.push({ term: i.value, ts: i.timestamp || 0 }); });
+//       return true;
+//     }
+//   });
+//   return l.sort((a, b) => b.ts - a.ts);
+// }
+
+// function extractLogins(d) {
+//   const l = [];
+//   walk(d, o => {
+//     if (o?.login_information) {
+//       const info = o.login_information;
+//       l.push({ time: info.time || '', ip: info.ip_address || '', device: info.user_agent || info.device || '', location: info.city || '', ts: o.timestamp || 0 });
+//       return true;
+//     }
+//     if (Array.isArray(o.account_history)) {
+//       o.account_history.forEach(e => l.push({ time: e.time || '', ip: e.ip_address || '', device: e.user_agent || '', location: e.city || '', ts: e.timestamp || 0 }));
+//       return true;
+//     }
+//   });
+//   return l.sort((a, b) => b.ts - a.ts);
+// }
+
+// function extractTopics(d) {
+//   const l = [];
+//   walk(d, o => {
+//     if (o?.string_map_data) {
+//       const v = Object.values(o.string_map_data)[0];
+//       if (v?.value) l.push(v.value);
+//       return true;
+//     }
+//     if (o?.value && typeof o.value === 'string' && o.value.length > 1 && o.value.length < 80) l.push(o.value);
+//   });
+//   return [...new Set(l)];
+// }
+
+// function extractAds(d) {
+//   const l = [];
+//   walk(d, o => {
+//     if (o?.string_map_data) {
+//       const v = Object.values(o.string_map_data)[0];
+//       if (v?.value) l.push(v.value);
+//       return true;
+//     }
+//     if (o?.name && typeof o.name === 'string') l.push(o.name);
+//   });
+//   return [...new Set(l)];
+// }
+/* ═══════════════════════ WALK HELPER (REVISI BRUTE-FORCE) ═══════════════════════ */
+function walk(d, fn) {
+  function i(o) {
+    if (Array.isArray(o)) { o.forEach(i); return; }
+    if (typeof o !== 'object' || !o) return;
+    
+    // REVISI 1: Kita hapus "return" di sini agar pencarian tidak berhenti 
+    // di tengah jalan. Sekarang ia akan mencari ke SEMUA cabang (brute-force).
+    fn(o); 
+    
+    Object.values(o).forEach(i);
+  }
+  i(d);
+}
+
+/* ═══════════════════════ EXTRACTORS (REVISI) ═══════════════════════ */
 function extractUsers(d) {
   const m = new Map();
   walk(d, o => {
-    if (o?.string_list_data) {
+    if (o && typeof o === 'object' && "string_list_data" in o) {
       o.string_list_data.forEach(item => {
-        const username = (item.value && item.value.trim())
-          ? item.value.trim()
-          : (o.title && o.title.trim() ? o.title.trim() : null);
+        let username = null;
+        
+        // REVISI 2: Logika pengecekan nama yang jauh lebih tangguh
+        if (item && "value" in item && item.value.trim() !== "") {
+          username = item.value.trim();
+        } else if (o && "title" in o && o.title.trim() !== "") {
+          username = o.title.trim();
+        }
+        
+        // Jika nama ditemukan, simpan beserta riwayat waktunya (timestamp)
         if (username) m.set(username, item.timestamp || 0);
       });
-      return true;
     }
   });
   return m;
@@ -814,97 +946,24 @@ function extractUsers(d) {
 function extractUnfollowed(d) {
   const l = [];
   walk(d, o => {
-    if (o?.string_list_data) {
-      o.string_list_data.forEach(i => {
-        const username = (i.value && i.value.trim()) ? i.value.trim()
-          : (o.title && o.title.trim() ? o.title.trim() : null);
-        if (username) l.push({ username, href: i.href || '', ts: i.timestamp || 0 });
+    if (o && typeof o === 'object' && "string_list_data" in o) {
+      o.string_list_data.forEach(item => {
+        let username = null;
+        
+        if (item && "value" in item && item.value.trim() !== "") {
+          username = item.value.trim();
+        } else if (o && "title" in o && o.title.trim() !== "") {
+          username = o.title.trim();
+        }
+        
+        if (username) {
+          l.push({ username: username, href: item.href || '', ts: item.timestamp || 0 });
+        }
       });
-      return true;
     }
   });
   return l.sort((a, b) => b.ts - a.ts);
 }
-
-function extractGenericList(d) {
-  const l = [];
-  walk(d, o => {
-    if (o?.string_list_data) {
-      o.string_list_data.forEach(i => l.push({ href: i.href || i.value || '', ts: i.timestamp || 0 }));
-      return true;
-    }
-  });
-  return l.sort((a, b) => b.ts - a.ts);
-}
-
-function extractComments(d) {
-  const l = [];
-  function dig(o) {
-    if (Array.isArray(o)) { o.forEach(dig); return; }
-    if (typeof o !== 'object' || !o) return;
-    if (o.string_list_data) {
-      o.string_list_data.forEach(i => { if (i.value) l.push({ text: i.value, ts: i.timestamp || 0 }); });
-      return;
-    }
-    Object.values(o).forEach(dig);
-  }
-  dig(d);
-  return l.sort((a, b) => b.ts - a.ts);
-}
-
-function extractSearchTerms(d) {
-  const l = [];
-  walk(d, o => {
-    if (o?.string_list_data) {
-      o.string_list_data.forEach(i => { if (i.value) l.push({ term: i.value, ts: i.timestamp || 0 }); });
-      return true;
-    }
-  });
-  return l.sort((a, b) => b.ts - a.ts);
-}
-
-function extractLogins(d) {
-  const l = [];
-  walk(d, o => {
-    if (o?.login_information) {
-      const info = o.login_information;
-      l.push({ time: info.time || '', ip: info.ip_address || '', device: info.user_agent || info.device || '', location: info.city || '', ts: o.timestamp || 0 });
-      return true;
-    }
-    if (Array.isArray(o.account_history)) {
-      o.account_history.forEach(e => l.push({ time: e.time || '', ip: e.ip_address || '', device: e.user_agent || '', location: e.city || '', ts: e.timestamp || 0 }));
-      return true;
-    }
-  });
-  return l.sort((a, b) => b.ts - a.ts);
-}
-
-function extractTopics(d) {
-  const l = [];
-  walk(d, o => {
-    if (o?.string_map_data) {
-      const v = Object.values(o.string_map_data)[0];
-      if (v?.value) l.push(v.value);
-      return true;
-    }
-    if (o?.value && typeof o.value === 'string' && o.value.length > 1 && o.value.length < 80) l.push(o.value);
-  });
-  return [...new Set(l)];
-}
-
-function extractAds(d) {
-  const l = [];
-  walk(d, o => {
-    if (o?.string_map_data) {
-      const v = Object.values(o.string_map_data)[0];
-      if (v?.value) l.push(v.value);
-      return true;
-    }
-    if (o?.name && typeof o.name === 'string') l.push(o.name);
-  });
-  return [...new Set(l)];
-}
-
 /* ═══════════════════════ ANALYZE ═══════════════════════ */
 function analyze() {
   const mods = getMods();
@@ -1315,3 +1374,4 @@ if (document.readyState === 'loading') {
 </script>
 </body>
 </html>
+
