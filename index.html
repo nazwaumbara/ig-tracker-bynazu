@@ -710,17 +710,22 @@ function goStep2() {
   setStep(2);
 }
 function goStep1() { setStep(1); }
+/* ═══════════════════════ STEP NAV ═══════════════════════ */
 function setStep(n) {
   document.getElementById('s1').style.display = n === 1 ? '' : 'none';
   document.getElementById('s2').style.display = n === 2 ? '' : 'none';
-  document.getElementById('s3').style.display = n === 3 ? '' : 'none';
+  // REVISI: Ubah '' menjadi 'block' agar Langkah 3 dipaksa muncul
+  document.getElementById('s3').style.display = n === 3 ? 'block' : 'none'; 
+  
   document.getElementById('flow').style.display = n === 3 ? 'none' : '';
   for (let i = 1; i <= 3; i++) {
     const el = document.getElementById('fs' + i);
-    el.classList.remove('on', 'done');
-    if (i < n)  { el.classList.add('done'); el.querySelector('.fn').textContent = '✓'; }
-    if (i === n){ el.classList.add('on');   el.querySelector('.fn').textContent = i; }
-    if (i > n)    el.querySelector('.fn').textContent = i;
+    if (el) {
+      el.classList.remove('on', 'done');
+      if (i < n)  { el.classList.add('done'); el.querySelector('.fn').textContent = '✓'; }
+      if (i === n){ el.classList.add('on');   el.querySelector('.fn').textContent = i; }
+      if (i > n)    el.querySelector('.fn').textContent = i;
+    }
   }
   if (n !== 3) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1291,3 +1296,4 @@ if (document.readyState === 'loading') {
 </script>
 </body>
 </html>
+
