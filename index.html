@@ -88,7 +88,6 @@ a{color:inherit;text-decoration:none}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px}
 
-/* subtle grain for dark mode */
 [data-theme="dark"] body::after{
   content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
@@ -470,7 +469,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
   </div>
 
   <div class="mgrid" id="mgrid">
-
     <div class="mc sel locked" data-mod="rel">
       <div class="mchk">✓</div>
       <div class="mi">⊞</div>
@@ -478,7 +476,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Not following back, mutuals, and fans.</div>
       <div class="mf"><span class="mfc">followers_1.json</span><span class="mfc">following.json</span></div>
     </div>
-
     <div class="mc" data-mod="unfollow">
       <div class="mchk">✓</div>
       <div class="mi">↩</div>
@@ -486,7 +483,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Accounts you recently unfollowed.</div>
       <div class="mf"><span class="mfc">recently_unfollowed_profiles.json</span></div>
     </div>
-
     <div class="mc" data-mod="liked">
       <div class="mchk">✓</div>
       <div class="mi">♡</div>
@@ -494,7 +490,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">All posts you've ever liked.</div>
       <div class="mf"><span class="mfc">liked_posts.json</span></div>
     </div>
-
     <div class="mc" data-mod="saved">
       <div class="mchk">✓</div>
       <div class="mi">◈</div>
@@ -502,7 +497,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Posts you've saved to your collection.</div>
       <div class="mf"><span class="mfc">saved_posts.json</span></div>
     </div>
-
     <div class="mc" data-mod="comments">
       <div class="mchk">✓</div>
       <div class="mi">◻</div>
@@ -510,7 +504,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">All comments you've ever written.</div>
       <div class="mf"><span class="mfc">post_comments.json</span></div>
     </div>
-
     <div class="mc" data-mod="searches">
       <div class="mchk">✓</div>
       <div class="mi">◎</div>
@@ -518,7 +511,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Keywords you've searched.</div>
       <div class="mf"><span class="mfc">word_or_phrase_searches.json</span></div>
     </div>
-
     <div class="mc" data-mod="login">
       <div class="mchk">✓</div>
       <div class="mi">⊙</div>
@@ -526,7 +518,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">When and from which devices you logged in.</div>
       <div class="mf"><span class="mfc">login_and_account_creation.json</span></div>
     </div>
-
     <div class="mc" data-mod="topics">
       <div class="mchk">✓</div>
       <div class="mi">◑</div>
@@ -534,7 +525,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Content categories Instagram curated for you.</div>
       <div class="mf"><span class="mfc">your_topics.json</span></div>
     </div>
-
     <div class="mc" data-mod="ads">
       <div class="mchk">✓</div>
       <div class="mi">▣</div>
@@ -542,7 +532,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Ad topics Instagram has associated with you.</div>
       <div class="mf"><span class="mfc">ads_interests.json</span></div>
     </div>
-
     <div class="mc" data-mod="insight">
       <div class="mchk">✓</div>
       <div class="mi">◈</div>
@@ -550,7 +539,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="md">Visual charts of all selected data.</div>
       <div class="mf"><span class="mfc" style="background:var(--bg3);color:var(--mu);border-color:var(--ln)">from selected files</span></div>
     </div>
-
   </div>
 
   <div class="brow">
@@ -565,13 +553,10 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
     <div class="slbl">Step 2 of 3</div>
     <div class="stitle">Upload the required JSON files</div>
   </div>
-
   <div class="unote">
     <strong>Note: </strong>Choose <strong>JSON</strong> format when exporting from Instagram. You do not need to download any media folders — JSON files are tiny (a few KB each). Just locate the files below inside the ZIP Instagram sends you.
   </div>
-
   <div class="ulist" id="ulist"></div>
-
   <div class="brow">
     <button class="bback" onclick="goStep1()">Back</button>
     <button class="bn" id="banalyze" onclick="analyze()" style="flex:1">Analyze Data</button>
@@ -703,7 +688,6 @@ function toggleMod(card) {
 document.getElementById('mgrid').querySelectorAll('.mc').forEach(c => {
   if (!c.classList.contains('locked')) c.addEventListener('click', () => toggleMod(c));
 });
-
 function getMods() {
   return [...document.querySelectorAll('.mc.sel')].map(c => c.dataset.mod);
 }
@@ -735,7 +719,6 @@ function goStep2() {
   setStep(2);
 }
 function goStep1() { setStep(1); }
-
 function setStep(n) {
   document.getElementById('s1').style.display = n === 1 ? '' : 'none';
   document.getElementById('s2').style.display = n === 2 ? '' : 'none';
@@ -758,24 +741,25 @@ function loadFile(input, key) {
   const row = document.getElementById('ur-'  + key);
   const ico = document.getElementById('ui-'  + key);
   new Response(file).json().then(data => {
-    if      (key === 'followers') S.followers = extractFollowers(data);
-    else if (key === 'following') S.following = extractFollowing(data);
+    if      (key === 'followers')  S.followers  = extractUsers(data);
+    else if (key === 'following')  S.following  = extractUsers(data);
     else if (key === 'unfollowed') S.unfollowed = extractUnfollowed(data);
-    else if (key === 'liked')     S.liked     = extractGenericList(data);
-    else if (key === 'saved')     S.saved     = extractGenericList(data);
-    else if (key === 'comments')  S.comments  = extractComments(data);
-    else if (key === 'searches')  S.searches  = extractSearchTerms(data);
-    else if (key === 'logins')    S.logins    = extractLogins(data);
-    else if (key === 'topics')    S.topics    = extractTopics(data);
-    else if (key === 'ads')       S.ads       = extractAds(data);
+    else if (key === 'liked')      S.liked      = extractGenericList(data);
+    else if (key === 'saved')      S.saved      = extractGenericList(data);
+    else if (key === 'comments')   S.comments   = extractComments(data);
+    else if (key === 'searches')   S.searches   = extractSearchTerms(data);
+    else if (key === 'logins')     S.logins     = extractLogins(data);
+    else if (key === 'topics')     S.topics     = extractTopics(data);
+    else if (key === 'ads')        S.ads        = extractAds(data);
     st.textContent = file.name; st.className = 'ust ok';
     row.classList.add('ok'); ico.textContent = '✓';
-  }).catch(() => {
+  }).catch(err => {
+    console.error('File parse error:', err);
     st.textContent = 'Invalid file'; st.className = 'ust err';
   });
 }
 
-/* ═══════════════════════ EXTRACTORS ═══════════════════════ */
+/* ═══════════════════════ WALK HELPER ═══════════════════════ */
 function walk(d, fn) {
   function i(o) {
     if (Array.isArray(o)) { o.forEach(i); return; }
@@ -785,36 +769,53 @@ function walk(d, fn) {
   }
   i(d);
 }
-function extractFollowers(d) {
+
+/* ═══════════════════════ EXTRACTORS (FIXED) ═══════════════════════ */
+
+/*
+ * FIX: Unified extractor for both followers AND following.
+ *
+ * BUG that was here before:
+ *   - extractFollowers checked o.string_list_data → OK for most files
+ *   - extractFollowing checked (o.title && o.string_list_data) → FAILS when
+ *     title is an empty string "" (falsy), which Instagram uses in some exports.
+ *
+ * FIX: One function for both. Gets username from string_list_data[i].value
+ * (primary), falling back to the parent object's title if value is empty.
+ * This matches the logic of the working "dummy" script.
+ */
+function extractUsers(d) {
   const m = new Map();
   walk(d, o => {
     if (o?.string_list_data) {
-      o.string_list_data.forEach(i => { if (i.value) m.set(i.value, i.timestamp || 0); });
+      o.string_list_data.forEach(item => {
+        // Prefer item.value; fall back to parent title if non-empty
+        const username = (item.value && item.value.trim())
+          ? item.value.trim()
+          : (o.title && o.title.trim() ? o.title.trim() : null);
+        if (username) m.set(username, item.timestamp || 0);
+      });
       return true;
     }
   });
   return m;
 }
-function extractFollowing(d) {
-  const m = new Map();
-  walk(d, o => {
-    if (o?.title && o?.string_list_data) {
-      m.set(o.title, o.string_list_data[0]?.timestamp || 0);
-      return true;
-    }
-  });
-  return m;
-}
+
 function extractUnfollowed(d) {
   const l = [];
   walk(d, o => {
     if (o?.string_list_data) {
-      o.string_list_data.forEach(i => { if (i.value) l.push({ username: i.value, href: i.href || '', ts: i.timestamp || 0 }); });
+      o.string_list_data.forEach(i => {
+        const username = (i.value && i.value.trim()) ? i.value.trim()
+          : (o.title && o.title.trim() ? o.title.trim() : null);
+        if (username) l.push({ username, href: i.href || '', ts: i.timestamp || 0 });
+      });
       return true;
     }
   });
   return l.sort((a, b) => b.ts - a.ts);
 }
+
 function extractGenericList(d) {
   const l = [];
   walk(d, o => {
@@ -825,6 +826,7 @@ function extractGenericList(d) {
   });
   return l.sort((a, b) => b.ts - a.ts);
 }
+
 function extractComments(d) {
   const l = [];
   function dig(o) {
@@ -839,6 +841,7 @@ function extractComments(d) {
   dig(d);
   return l.sort((a, b) => b.ts - a.ts);
 }
+
 function extractSearchTerms(d) {
   const l = [];
   walk(d, o => {
@@ -849,6 +852,7 @@ function extractSearchTerms(d) {
   });
   return l.sort((a, b) => b.ts - a.ts);
 }
+
 function extractLogins(d) {
   const l = [];
   walk(d, o => {
@@ -864,6 +868,7 @@ function extractLogins(d) {
   });
   return l.sort((a, b) => b.ts - a.ts);
 }
+
 function extractTopics(d) {
   const l = [];
   walk(d, o => {
@@ -876,6 +881,7 @@ function extractTopics(d) {
   });
   return [...new Set(l)];
 }
+
 function extractAds(d) {
   const l = [];
   walk(d, o => {
@@ -896,11 +902,7 @@ function analyze() {
     alert('Please upload followers_1.json and following.json first.');
     return;
   }
-
-  // Show loading overlay
   showLoad(true);
-
-  // Defer heavy work so browser can repaint loader first
   setTimeout(function() {
     try {
       const frs = new Set(S.followers.keys());
@@ -934,19 +936,19 @@ function analyze() {
 function buildStats(frs, fng, mods) {
   const cells = [];
   if (mods.includes('rel')) {
-    cells.push({n:frs,           l:'Followers',        c:'var(--bl)'});
-    cells.push({n:fng,           l:'Following',        c:'var(--ac)'});
+    cells.push({n:frs,           l:'Followers',         c:'var(--bl)'});
+    cells.push({n:fng,           l:'Following',         c:'var(--ac)'});
     cells.push({n:T.unfb.length, l:'Not Following Back',c:'var(--rd)'});
-    cells.push({n:T.mut.length,  l:'Mutuals',          c:'var(--gn)'});
-    cells.push({n:T.fan.length,  l:'Fans',             c:'var(--am)'});
+    cells.push({n:T.mut.length,  l:'Mutuals',           c:'var(--gn)'});
+    cells.push({n:T.fan.length,  l:'Fans',              c:'var(--am)'});
   } else {
-    if (mods.includes('liked'))    cells.push({n:S.liked.length,   l:'Liked Posts',   c:'var(--rd)'});
-    if (mods.includes('saved'))    cells.push({n:S.saved.length,   l:'Saved',         c:'var(--am)'});
-    if (mods.includes('comments')) cells.push({n:S.comments.length,l:'Comments',      c:'var(--bl)'});
-    if (mods.includes('searches')) cells.push({n:S.searches.length,l:'Searches',      c:'var(--gn)'});
-    if (mods.includes('login'))    cells.push({n:S.logins.length,  l:'Logins',        c:'var(--ac)'});
-    if (mods.includes('topics'))   cells.push({n:S.topics.length,  l:'Topics',        c:'var(--pi)'});
-    if (mods.includes('ads'))      cells.push({n:S.ads.length,     l:'Ad Interests',  c:'var(--cy)'});
+    if (mods.includes('liked'))    cells.push({n:S.liked.length,   l:'Liked Posts',  c:'var(--rd)'});
+    if (mods.includes('saved'))    cells.push({n:S.saved.length,   l:'Saved',        c:'var(--am)'});
+    if (mods.includes('comments')) cells.push({n:S.comments.length,l:'Comments',     c:'var(--bl)'});
+    if (mods.includes('searches')) cells.push({n:S.searches.length,l:'Searches',     c:'var(--gn)'});
+    if (mods.includes('login'))    cells.push({n:S.logins.length,  l:'Logins',       c:'var(--ac)'});
+    if (mods.includes('topics'))   cells.push({n:S.topics.length,  l:'Topics',       c:'var(--pi)'});
+    if (mods.includes('ads'))      cells.push({n:S.ads.length,     l:'Ad Interests', c:'var(--cy)'});
   }
   const g = document.getElementById('sgrid');
   g.style.gridTemplateColumns = `repeat(${Math.min(cells.length, 5)}, 1fr)`;
@@ -1115,7 +1117,7 @@ function renderTopics() {
 function renderAds() {
   const p = document.getElementById('pads'), data = S.ads;
   p.innerHTML = `<div style="margin-bottom:.75rem"><span class="ctag">${data.length} ad interests</span></div>
-    <div style="font-size:.74rem;color:var(--mu);margin-bottom:1rem;line-height:1.6">These are the ad interest categories Instagram has associated with your profile — based on your activity and behavior.</div>
+    <div style="font-size:.74rem;color:var(--mu);margin-bottom:1rem;line-height:1.6">These are the ad interest categories Instagram has associated with your profile.</div>
     ${data.length
       ? `<div class="tag-cloud">${data.map(t => `<span class="tcloud-tag">${esc(t)}</span>`).join('')}</div>`
       : `<div class="empty"><div class="et">No ad interest data found.</div></div>`}`;
@@ -1280,15 +1282,12 @@ window.addEventListener('scroll', () => {
   document.getElementById('st2').classList.toggle('on', window.scrollY > 400);
 });
 
-// ── Safe init: make sure DOM is ready and step 1 is definitely visible ──
 function init() {
   try {
-    // Ensure step 1 is shown, others hidden
     document.getElementById('s1').style.display = '';
     document.getElementById('s2').style.display = 'none';
     document.getElementById('s3').style.display = 'none';
     document.getElementById('flow').style.display = '';
-    // Set step 1 indicator active
     const fs1 = document.getElementById('fs1');
     fs1.classList.add('on');
     fs1.querySelector('.fn').textContent = '1';
