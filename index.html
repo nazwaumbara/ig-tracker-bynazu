@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark" data-lang="id">
+<html lang="en" data-theme="dark" data-lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>IGTracker — by Nazu</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236D4FC2'/><text y='22' x='5' font-size='18' font-family='serif' fill='white' font-style='italic'>IG</text></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 /* ══════════════ TOKENS ══════════════ */
 :root {
-  --bg:      #0D0D10;
+  --bg:      #0C0C10;
   --bg1:     #111116;
-  --bg2:     #17171E;
-  --bg3:     #1D1D26;
-  --bg4:     #23232E;
-  --ln:      rgba(255,255,255,.07);
+  --bg2:     #16161E;
+  --bg3:     #1C1C26;
+  --bg4:     #22222E;
+  --ln:      rgba(255,255,255,.08);
   --ln2:     rgba(255,255,255,.04);
   --tx:      #ECEAF5;
   --tx2:     #A8A5BE;
-  --mu:      #5A5870;
-  --mu2:     #38364A;
+  --mu:      #5C5A72;
+  --mu2:     #3A3850;
   --ac:      #A78BFA;
   --ac-bg:   rgba(167,139,250,.10);
   --ac-d:    #6D4FC2;
@@ -38,27 +38,46 @@
   --cy-bg:   rgba(52,211,153,.09);
   --nav-h:   54px;
   --r:       10px;
-  --rl:      16px;
-  --rx:      20px;
-  --sh:      0 1px 3px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.25);
-  --dur:     170ms;
+  --rl:      14px;
+  --rx:      18px;
+  --sh:      0 1px 3px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.3);
+  --dur:     160ms;
   --fs:      'Instrument Serif',Georgia,serif;
-  --fb:      'Geist',system-ui,sans-serif;
+  --fb:      'DM Sans',system-ui,sans-serif;
   --fm:      'SF Mono','Fira Code',monospace;
 }
+
+/* ── LIGHT MODE – warm paper tone ── */
 [data-theme="light"] {
-  --bg:  #F6F6F9; --bg1: #FFFFFF; --bg2: #F0EFF6; --bg3: #E7E6F0; --bg4: #DDDCE8;
-  --ln:  rgba(0,0,0,.07); --ln2: rgba(0,0,0,.035);
-  --tx:  #131218; --tx2: #48466A; --mu:  #8886A0; --mu2: #B6B4CC;
-  --ac:  #6D4FC2; --ac-bg: rgba(109,79,194,.09); --ac-d: #5A3EA8;
-  --gn:  #16A34A; --gn-bg: rgba(22,163,74,.08);
-  --rd:  #DC2626; --rd-bg: rgba(220,38,38,.08);
-  --am:  #D97706; --am-bg: rgba(217,119,6,.08);
-  --bl:  #2563EB; --bl-bg: rgba(37,99,235,.08);
-  --pi:  #DB2777; --pi-bg: rgba(219,39,119,.08);
-  --cy:  #059669; --cy-bg: rgba(5,150,105,.08);
-  --sh:  0 1px 3px rgba(0,0,0,.07),0 6px 20px rgba(0,0,0,.05);
+  --bg:   #F5F3EE;
+  --bg1:  #FFFFFF;
+  --bg2:  #EDE9E1;
+  --bg3:  #E3DED4;
+  --bg4:  #D6D0C6;
+  --ln:   rgba(60,50,30,.10);
+  --ln2:  rgba(60,50,30,.05);
+  --tx:   #1A1714;
+  --tx2:  #4A4540;
+  --mu:   #8A8278;
+  --mu2:  #B5AFA7;
+  --ac:   #5C38C0;
+  --ac-bg:rgba(92,56,192,.08);
+  --ac-d: #4A2DA8;
+  --gn:   #15803D;
+  --gn-bg:rgba(21,128,61,.08);
+  --rd:   #C0392B;
+  --rd-bg:rgba(192,57,43,.08);
+  --am:   #B45309;
+  --am-bg:rgba(180,83,9,.08);
+  --bl:   #1D4ED8;
+  --bl-bg:rgba(29,78,216,.08);
+  --pi:   #B91C6B;
+  --pi-bg:rgba(185,28,107,.08);
+  --cy:   #0F766E;
+  --cy-bg:rgba(15,118,110,.08);
+  --sh:   0 1px 4px rgba(60,50,30,.08),0 8px 24px rgba(60,50,30,.06);
 }
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:15px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{font-family:var(--fb);background:var(--bg);color:var(--tx);min-height:100vh;line-height:1.6;overflow-x:hidden;transition:background var(--dur),color var(--dur)}
@@ -68,21 +87,36 @@ a{color:inherit;text-decoration:none}
 ::selection{background:var(--ac-bg)}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px}
-body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E")}
-[data-theme="light"] body::after{display:none}
+
+/* subtle grain for dark mode */
+[data-theme="dark"] body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+}
 
 /* ══════════════ NAV ══════════════ */
-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid var(--ln);backdrop-filter:blur(24px) saturate(1.5);background:rgba(13,13,16,.82);transition:background var(--dur)}
-[data-theme="light"] nav{background:rgba(246,246,249,.88)}
-.nav-brand{display:flex;align-items:center;gap:9px;font-family:var(--fs);font-size:1.1rem;color:var(--tx);user-select:none}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+  border-bottom:1px solid var(--ln);
+  backdrop-filter:blur(24px) saturate(1.6);
+  background:rgba(12,12,16,.85);
+  transition:background var(--dur);
+}
+[data-theme="light"] nav{
+  background:rgba(245,243,238,.90);
+  border-bottom-color:rgba(60,50,30,.12);
+}
+.nav-brand{display:flex;align-items:center;gap:9px;font-family:var(--fs);font-size:1.08rem;color:var(--tx);user-select:none}
 .brand-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--ac-d),var(--ac));display:flex;align-items:center;justify-content:center;font-family:var(--fb);font-size:.72rem;font-weight:700;color:#fff;letter-spacing:.02em;flex-shrink:0}
-.brand-by{font-size:.68rem;color:var(--mu);font-family:var(--fb);font-weight:400;margin-left:2px}
+.brand-by{font-size:.67rem;color:var(--mu);font-family:var(--fb);font-weight:400;margin-left:2px}
 .nav-r{display:flex;align-items:center;gap:.4rem}
-.lang-sw{display:flex;height:30px;border:1px solid var(--ln);border-radius:7px;overflow:hidden;background:var(--bg2)}
-.lb{padding:0 .6rem;font-size:.72rem;font-weight:500;color:var(--mu);transition:all var(--dur);cursor:pointer;height:100%;display:flex;align-items:center}
-.lb.on{background:var(--ac-d);color:#fff}
-.ctrl{height:30px;padding:0 .7rem;border:1px solid var(--ln);border-radius:7px;background:var(--bg2);color:var(--mu);font-size:.72rem;font-weight:500;display:flex;align-items:center;gap:5px;transition:all var(--dur)}
+.ctrl{height:30px;padding:0 .75rem;border:1px solid var(--ln);border-radius:7px;background:var(--bg2);color:var(--mu);font-size:.72rem;font-weight:500;display:flex;align-items:center;gap:5px;transition:all var(--dur)}
 .ctrl:hover{border-color:var(--ac);color:var(--tx)}
+[data-theme="light"] .ctrl{border-color:var(--ln);background:var(--bg2);color:var(--mu)}
+[data-theme="light"] .ctrl:hover{border-color:var(--ac-d);color:var(--tx)}
 .prv{height:30px;padding:0 .65rem;border:1px solid var(--ln);border-radius:7px;background:var(--bg2);display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--mu)}
 .pdot{width:6px;height:6px;border-radius:50%;background:var(--gn);box-shadow:0 0 6px var(--gn);animation:br 3s ease-in-out infinite}
 @keyframes br{0%,100%{opacity:1}50%{opacity:.3}}
@@ -91,70 +125,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);display:
 .page{padding-top:var(--nav-h)}
 
 /* ══════════════ HERO ══════════════ */
-.hero {
-  margin: 0 auto;
-  padding: clamp(2rem, 6vw, 3.5rem) clamp(1rem, 5vw, 1.5rem) 2rem;
-  text-align: center;
-  position: relative;
+.hero{
+  margin:0 auto;
+  padding:clamp(2rem,6vw,3.5rem) clamp(1rem,5vw,1.5rem) 2rem;
+  text-align:center;
+  position:relative;
 }
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    ellipse 80vw 35vw at 50% 0%,
-    var(--ac-bg),
-    transparent
-  );
-  pointer-events: none;
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 80vw 35vw at 50% 0%,var(--ac-bg),transparent);
+  pointer-events:none;
 }
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: clamp(0.6rem, 1.2vw, 0.75rem);
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--mu);
-  border: 1px solid var(--ln);
-  border-radius: 99px;
-  padding: 5px 13px;
-  margin-bottom: 1.5rem;
-  white-space: nowrap;
+[data-theme="light"] .hero::before{
+  background:radial-gradient(ellipse 80vw 40vw at 50% 0%,rgba(92,56,192,.07),transparent);
 }
-
-.ed {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--ac);
-  flex-shrink: 0;
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:clamp(.6rem,1.2vw,.74rem);font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mu);border:1px solid var(--ln);border-radius:99px;padding:5px 13px;
+  margin-bottom:1.5rem;white-space:nowrap;
+  background:var(--bg2);
 }
-
-.hero h1 {
-  font-family: var(--fs);
-  font-size: clamp(2rem, 5vw, 5rem);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  margin-bottom: 0.9rem;
-  word-break: break-word;
-}
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--ac);
-}
-
-.hsub {
-  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
-  color: var(--tx2);
-  line-height: 1.75;
-  margin: 0 auto;
-}
+[data-theme="light"] .eyebrow{background:var(--bg1);border-color:var(--ln);color:var(--mu2)}
+.ed{width:5px;height:5px;border-radius:50%;background:var(--ac);flex-shrink:0}
+.hero h1{font-family:var(--fs);font-size:clamp(2rem,5vw,5rem);line-height:1.1;letter-spacing:-.025em;margin-bottom:.9rem}
+.hero h1 em{font-style:italic;color:var(--ac)}
+[data-theme="light"] .hero h1{color:var(--tx)}
+[data-theme="light"] .hero h1 em{color:var(--ac-d)}
+.hsub{font-size:clamp(.85rem,1.5vw,1.05rem);color:var(--tx2);line-height:1.75;margin:0 auto}
+[data-theme="light"] .hsub{color:var(--tx2)}
 
 /* ══════════════ FLOW STEPS ══════════════ */
 .steps{padding:.5rem 1.5rem 0;display:flex;align-items:center}
@@ -174,37 +173,55 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);display:
 /* ══════════════ MODULE GRID ══════════════ */
 .mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-bottom:1.1rem}
 @media(max-width:540px){.mgrid{grid-template-columns:1fr 1fr}}
-.mc{background:var(--bg1);border:1.5px solid var(--ln);border-radius:var(--rl);padding:1.05rem .9rem;cursor:pointer;transition:border-color var(--dur),background var(--dur);position:relative;user-select:none}
-.mc:hover{border-color:rgba(167,139,250,.35)}
+.mc{
+  background:var(--bg1);border:1.5px solid var(--ln);border-radius:var(--rl);
+  padding:1.05rem .9rem;cursor:pointer;
+  transition:border-color var(--dur),background var(--dur),box-shadow var(--dur);
+  position:relative;user-select:none;
+}
+.mc:hover{border-color:rgba(167,139,250,.35);box-shadow:var(--sh)}
 .mc.sel{border-color:var(--ac);background:var(--ac-bg)}
 .mc.locked{cursor:default;opacity:.95}
+[data-theme="light"] .mc{background:var(--bg1);border-color:var(--ln);box-shadow:0 1px 3px rgba(60,50,30,.06)}
+[data-theme="light"] .mc:hover{border-color:rgba(92,56,192,.3);box-shadow:0 2px 12px rgba(92,56,192,.1)}
+[data-theme="light"] .mc.sel{border-color:var(--ac-d);background:rgba(92,56,192,.07)}
 .mchk{position:absolute;top:.6rem;right:.6rem;width:17px;height:17px;border-radius:50%;background:var(--ac-d);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:800;opacity:0;transform:scale(.5);transition:opacity var(--dur),transform var(--dur)}
 .mc.sel .mchk{opacity:1;transform:scale(1)}
 .mc.locked .mchk{opacity:1;transform:scale(1);background:var(--mu2)}
 .mi{width:30px;height:30px;border-radius:7px;background:var(--bg3);border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;margin-bottom:.65rem;font-size:.8rem;color:var(--mu);transition:all var(--dur)}
 .mc.sel .mi{background:var(--ac-bg);border-color:var(--ac);color:var(--ac)}
+[data-theme="light"] .mc.sel .mi{background:rgba(92,56,192,.1);border-color:rgba(92,56,192,.3);color:var(--ac-d)}
 .mn{font-size:clamp(.75rem,1.5vw,.82rem);font-weight:600;color:var(--tx);margin-bottom:.2rem}
 .md{font-size:clamp(.63rem,1.2vw,.7rem);color:var(--mu);line-height:1.45}
 .mf{margin-top:.5rem;display:flex;flex-direction:column;gap:2px}
 .mfc{font-family:var(--fm);font-size:.62rem;color:var(--bl);background:var(--bl-bg);border:1px solid rgba(96,165,250,.15);border-radius:3px;padding:2px 5px;display:inline-block;width:fit-content}
+[data-theme="light"] .mfc{color:var(--bl);background:var(--bl-bg);border-color:rgba(29,78,216,.15)}
 
 .brow{display:flex;align-items:center;gap:.6rem}
-.bn{flex:1;height:43px;background:var(--ac-d);color:#fff;font-size:clamp(.78rem,1.8vw,.86rem);font-weight:500;border-radius:var(--r);letter-spacing:.01em;box-shadow:0 0 0 1px rgba(167,139,250,.2),inset 0 1px 0 rgba(255,255,255,.08);transition:background var(--dur),box-shadow var(--dur),transform 80ms}
-.bn:hover{background:#5a3ea8;box-shadow:0 0 20px rgba(109,79,194,.35)}
+.bn{flex:1;height:43px;background:var(--ac-d);color:#fff;font-size:clamp(.78rem,1.8vw,.86rem);font-weight:500;border-radius:var(--r);letter-spacing:.01em;box-shadow:0 0 0 1px rgba(167,139,250,.2),inset 0 1px 0 rgba(255,255,255,.1);transition:background var(--dur),box-shadow var(--dur),transform 80ms}
+.bn:hover{background:#5533b0;box-shadow:0 0 24px rgba(109,79,194,.4)}
 .bn:active{transform:scale(.99)}
 .bn:disabled{opacity:.35;cursor:not-allowed}
+[data-theme="light"] .bn{background:var(--ac-d);box-shadow:0 2px 8px rgba(74,45,168,.25),inset 0 1px 0 rgba(255,255,255,.15)}
+[data-theme="light"] .bn:hover{background:#3d2290;box-shadow:0 4px 16px rgba(74,45,168,.35)}
 .bback{height:43px;padding:0 1.1rem;background:var(--bg2);border:1px solid var(--ln);border-radius:var(--r);font-size:clamp(.78rem,1.8vw,.86rem);color:var(--mu);transition:all var(--dur)}
 .bback:hover{border-color:var(--ac);color:var(--tx)}
+[data-theme="light"] .bback{background:var(--bg2);border-color:var(--ln);color:var(--mu)}
+[data-theme="light"] .bback:hover{border-color:var(--ac-d);color:var(--tx)}
 .shint{font-size:clamp(.65rem,1.2vw,.73rem);color:var(--mu)}
 
 /* ══════════════ UPLOAD LIST ══════════════ */
 .ulist{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem}
-.urow{display:flex;align-items:center;background:var(--bg1);border:1px solid var(--ln);border-radius:var(--r);padding:.8rem .9rem;gap:.85rem;position:relative;cursor:pointer;overflow:hidden;transition:border-color var(--dur),background var(--dur)}
-.urow:hover{border-color:rgba(167,139,250,.3)}
-.urow.ok{border-color:rgba(74,222,128,.35);background:var(--gn-bg)}
+.urow{display:flex;align-items:center;background:var(--bg1);border:1px solid var(--ln);border-radius:var(--r);padding:.8rem .9rem;gap:.85rem;position:relative;cursor:pointer;overflow:hidden;transition:border-color var(--dur),background var(--dur),box-shadow var(--dur)}
+.urow:hover{border-color:rgba(167,139,250,.3);box-shadow:var(--sh)}
+.urow.ok{border-color:rgba(74,222,128,.4);background:var(--gn-bg)}
 .urow input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+[data-theme="light"] .urow{background:var(--bg1);border-color:var(--ln);box-shadow:0 1px 3px rgba(60,50,30,.05)}
+[data-theme="light"] .urow:hover{border-color:rgba(92,56,192,.25);box-shadow:0 2px 10px rgba(92,56,192,.08)}
+[data-theme="light"] .urow.ok{border-color:rgba(21,128,61,.4);background:var(--gn-bg)}
 .ui{width:34px;height:34px;flex-shrink:0;border-radius:7px;background:var(--bg3);border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:600;color:var(--mu);font-family:var(--fm);transition:all var(--dur)}
 .urow.ok .ui{background:var(--gn-bg);border-color:rgba(74,222,128,.3);color:var(--gn)}
+[data-theme="light"] .urow.ok .ui{border-color:rgba(21,128,61,.3);color:var(--gn)}
 .ub{flex:1;min-width:0}
 .ufn{font-family:var(--fm);font-size:clamp(.7rem,1.5vw,.77rem);font-weight:500;color:var(--tx)}
 .up{font-size:clamp(.6rem,1.2vw,.67rem);color:var(--mu);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -214,33 +231,31 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);display:
 .ubadge{flex-shrink:0;font-size:.61rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
 .ubr{background:var(--rd-bg);color:var(--rd);border:1px solid rgba(248,113,113,.2)}
 .ubo{background:var(--bg3);color:var(--mu);border:1px solid var(--ln)}
+[data-theme="light"] .ubr{border-color:rgba(192,57,43,.2)}
 
-.unote{font-size:clamp(.66rem,1.3vw,.74rem);color:var(--bl);background:var(--bl-bg);border:1px solid rgba(96,165,250,.15);border-radius:var(--r);padding:.7rem .9rem;margin-bottom:.9rem;line-height:1.65}
-
-/* ══════════════ GREETING ══════════════ */
-#greeting-banner{display:none;padding:0 1.5rem}
-.gb{background:linear-gradient(135deg,rgba(109,79,194,.12),rgba(167,139,250,.06));border:1px solid rgba(167,139,250,.2);border-radius:var(--rl);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:.85rem}
-.gb-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--ac-d),var(--ac));display:flex;align-items:center;justify-content:center;font-family:var(--fs);font-style:italic;font-size:1rem;color:#fff;flex-shrink:0}
-.gb-txt{}
-.gb-hi{font-size:clamp(.7rem,1.4vw,.78rem);color:var(--mu);margin-bottom:1px}
-.gb-name{font-family:var(--fs);font-size:clamp(.9rem,2vw,1.05rem);font-style:italic;color:var(--tx)}
+.unote{font-size:clamp(.66rem,1.3vw,.74rem);color:var(--bl);background:var(--bl-bg);border:1px solid rgba(96,165,250,.15);border-radius:var(--r);padding:.75rem .95rem;margin-bottom:.9rem;line-height:1.7}
+[data-theme="light"] .unote{color:var(--bl);background:var(--bl-bg);border-color:rgba(29,78,216,.15)}
 
 /* ══════════════ STEP 3 ══════════════ */
 #s3{display:none}
 .sstrip{padding:0 1.5rem;margin-top:1.25rem}
-.sgrid{display:grid;gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--rx);overflow:hidden}
+.sgrid{display:grid;gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--rx);overflow:hidden;box-shadow:var(--sh)}
 .sc{background:var(--bg1);padding:1.1rem 1rem;display:flex;flex-direction:column;gap:.28rem;transition:background var(--dur)}
 .sc:hover{background:var(--bg2)}
+[data-theme="light"] .sc{background:var(--bg1)}
+[data-theme="light"] .sc:hover{background:var(--bg2)}
 .sv{font-family:var(--fs);font-size:clamp(1.35rem,3.5vw,1.75rem);line-height:1;color:var(--sc,var(--tx))}
 .sl{font-size:clamp(.58rem,1vw,.63rem);font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--mu)}
 .rw{padding:1.25rem 1.5rem 4rem}
 .breset{display:inline-flex;align-items:center;gap:.4rem;height:32px;padding:0 .85rem;background:var(--bg2);border:1px solid var(--ln);border-radius:7px;font-size:clamp(.65rem,1.3vw,.73rem);color:var(--mu);transition:all var(--dur);margin-bottom:1.25rem}
 .breset:hover{border-color:var(--rd);color:var(--rd)}
+[data-theme="light"] .breset{background:var(--bg2);border-color:var(--ln)}
 .tabbar{display:flex;border-bottom:1px solid var(--ln);margin-bottom:1.5rem;overflow-x:auto;scrollbar-width:none}
 .tabbar::-webkit-scrollbar{display:none}
 .tb{padding:.58rem .9rem;font-size:clamp(.68rem,1.4vw,.76rem);font-weight:500;color:var(--mu);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color var(--dur),border-color var(--dur);flex-shrink:0}
 .tb:hover{color:var(--tx)}
 .tb.on{color:var(--tx);border-bottom-color:var(--ac)}
+[data-theme="light"] .tb.on{color:var(--tx);border-bottom-color:var(--ac-d)}
 .panel{display:none}
 .panel.on{display:block;animation:fu var(--dur) ease both}
 @keyframes fu{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
@@ -249,26 +264,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);display:
 .toolbar{display:flex;align-items:center;gap:.45rem;margin-bottom:.8rem;flex-wrap:wrap}
 .si{flex:1;min-width:130px;height:34px;background:var(--bg2);border:1px solid var(--ln);border-radius:7px;padding:0 .8rem;font-size:clamp(.72rem,1.5vw,.8rem);color:var(--tx);outline:none;transition:border-color var(--dur)}
 .si::placeholder{color:var(--mu)}
-.si:focus{border-color:rgba(167,139,250,.35)}
+.si:focus{border-color:rgba(167,139,250,.4)}
+[data-theme="light"] .si{background:var(--bg1);border-color:var(--ln);color:var(--tx)}
+[data-theme="light"] .si:focus{border-color:rgba(92,56,192,.4)}
 .bg{height:34px;padding:0 .8rem;background:var(--bg2);border:1px solid var(--ln);border-radius:7px;font-size:clamp(.65rem,1.3vw,.73rem);font-weight:500;color:var(--mu);white-space:nowrap;transition:all var(--dur)}
 .bg:hover{border-color:rgba(167,139,250,.3);color:var(--tx)}
+[data-theme="light"] .bg{background:var(--bg2);border-color:var(--ln)}
+[data-theme="light"] .bg:hover{border-color:rgba(92,56,192,.3);color:var(--tx)}
 .ctag{font-size:clamp(.6rem,1.2vw,.68rem);color:var(--mu);background:var(--bg3);border:1px solid var(--ln);border-radius:99px;padding:2px 9px;white-space:nowrap}
+[data-theme="light"] .ctag{background:var(--bg3);border-color:var(--ln)}
 
 /* ══════════════ TABLE ══════════════ */
 .tf{border:1px solid var(--ln);border-radius:var(--rl);overflow:hidden;box-shadow:var(--sh)}
+[data-theme="light"] .tf{border-color:var(--ln);box-shadow:0 1px 6px rgba(60,50,30,.08),0 4px 16px rgba(60,50,30,.05)}
 .ts{max-height:460px;overflow-y:auto}
 table{width:100%;border-collapse:collapse}
 thead th{background:var(--bg2);padding:.62rem .9rem;font-size:clamp(.58rem,.9vw,.65rem);font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);text-align:left;border-bottom:1px solid var(--ln);position:sticky;top:0;z-index:2}
+[data-theme="light"] thead th{background:var(--bg2);border-bottom-color:var(--ln)}
 tbody td{padding:.75rem .9rem;font-size:clamp(.72rem,1.5vw,.8rem);border-bottom:1px solid var(--ln2);vertical-align:middle}
 tbody tr{background:var(--bg1);transition:background var(--dur)}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:var(--bg2)}
+[data-theme="light"] tbody tr{background:var(--bg1)}
+[data-theme="light"] tbody tr:hover td{background:var(--bg2)}
 .tn{color:var(--mu);font-size:clamp(.62rem,1.2vw,.7rem);width:34px;font-variant-numeric:tabular-nums}
 .tu{display:flex;align-items:center;gap:.6rem}
 .av{width:27px;height:27px;border-radius:50%;flex-shrink:0;background:var(--bg3);border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;font-family:var(--fs);font-style:italic;font-size:.7rem;color:var(--mu)}
 .tt{font-size:clamp(.62rem,1.2vw,.72rem);color:var(--mu);font-variant-numeric:tabular-nums}
 .lk{font-size:clamp(.62rem,1.2vw,.69rem);color:var(--mu);border:1px solid var(--ln);border-radius:5px;padding:2px 7px;transition:all var(--dur);white-space:nowrap}
 .lk:hover{color:var(--ac);border-color:var(--ac)}
+[data-theme="light"] .lk:hover{color:var(--ac-d);border-color:var(--ac-d)}
 .bdg{font-size:clamp(.56rem,1vw,.63rem);font-weight:600;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.04em}
 .bg-g{background:var(--gn-bg);color:var(--gn);border:1px solid rgba(74,222,128,.2)}
 .bg-r{background:var(--rd-bg);color:var(--rd);border:1px solid rgba(248,113,113,.2)}
@@ -277,12 +302,16 @@ tbody tr:hover td{background:var(--bg2)}
 .bg-p{background:var(--pi-bg);color:var(--pi);border:1px solid rgba(244,114,182,.2)}
 .bg-c{background:var(--cy-bg);color:var(--cy);border:1px solid rgba(52,211,153,.2)}
 .bg-d{background:var(--bg3);color:var(--mu);border:1px solid var(--ln)}
+[data-theme="light"] .bg-g{border-color:rgba(21,128,61,.2)}
+[data-theme="light"] .bg-r{border-color:rgba(192,57,43,.2)}
+[data-theme="light"] .bg-b{border-color:rgba(29,78,216,.2)}
 .empty{padding:2.5rem 1rem;text-align:center;color:var(--mu)}
 .et{font-size:clamp(.78rem,1.8vw,.86rem);font-weight:500;margin-bottom:.3rem}
 .es{font-size:clamp(.66rem,1.3vw,.74rem)}
 
 /* ══════════════ TIMELINE ══════════════ */
 .tl{border:1px solid var(--ln);border-radius:var(--rl);overflow:hidden;box-shadow:var(--sh)}
+[data-theme="light"] .tl{box-shadow:0 1px 6px rgba(60,50,30,.07),0 4px 16px rgba(60,50,30,.05)}
 .tlr{display:flex;align-items:center;gap:.8rem;padding:.75rem .9rem;border-bottom:1px solid var(--ln2);background:var(--bg1);transition:background var(--dur)}
 .tlr:last-child{border-bottom:none}
 .tlr:hover{background:var(--bg2)}
@@ -290,12 +319,14 @@ tbody tr:hover td{background:var(--bg2)}
 .tlb{flex:1}
 .tlu{font-size:clamp(.72rem,1.5vw,.8rem);font-weight:500}
 .tlu a:hover{color:var(--ac)}
+[data-theme="light"] .tlu a:hover{color:var(--ac-d)}
 .tlt{font-size:clamp(.62rem,1.2vw,.69rem);color:var(--mu);margin-top:2px}
 
 /* ══════════════ INSIGHT ══════════════ */
 .ig{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
 @media(max-width:500px){.ig{grid-template-columns:1fr}}
 .ic{background:var(--bg1);border:1px solid var(--ln);border-radius:var(--rl);padding:1.25rem;box-shadow:var(--sh)}
+[data-theme="light"] .ic{background:var(--bg1);border-color:var(--ln);box-shadow:0 1px 4px rgba(60,50,30,.07),0 4px 16px rgba(60,50,30,.05)}
 .ic-t{font-size:clamp(.57rem,.9vw,.64rem);font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:1rem}
 .dl{display:flex;align-items:center;gap:1.35rem}
 .dsw{position:relative;width:90px;height:90px;flex-shrink:0}
@@ -314,15 +345,19 @@ tbody tr:hover td{background:var(--bg2)}
 .bll{font-size:clamp(.64rem,1.3vw,.72rem);color:var(--mu)}
 .blv{font-size:clamp(.64rem,1.3vw,.72rem);font-weight:500;font-variant-numeric:tabular-nums}
 .bt{height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}
+[data-theme="light"] .bt{background:var(--bg3)}
 .bf{height:100%;border-radius:99px;width:0;transition:width .9s cubic-bezier(.4,0,.2,1)}
 .kw{display:flex;flex-wrap:wrap;gap:.3rem}
 .kwtg{padding:3px 9px;border-radius:99px;font-size:clamp(.62rem,1.3vw,.7rem);background:var(--bg3);border:1px solid var(--ln);color:var(--tx2);transition:all var(--dur);cursor:default}
 .kwtg:hover{border-color:var(--ac);color:var(--ac)}
+[data-theme="light"] .kwtg{background:var(--bg3);border-color:var(--ln)}
+[data-theme="light"] .kwtg:hover{border-color:var(--ac-d);color:var(--ac-d)}
 
 /* ══════════════ LOGIN ACTIVITY ══════════════ */
 .login-cards{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
 @media(max-width:500px){.login-cards{grid-template-columns:1fr}}
 .lcard{background:var(--bg1);border:1px solid var(--ln);border-radius:var(--rl);padding:1rem;box-shadow:var(--sh)}
+[data-theme="light"] .lcard{background:var(--bg1);border-color:var(--ln);box-shadow:0 1px 4px rgba(60,50,30,.07)}
 .lc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem}
 .lc-device{font-size:clamp(.72rem,1.5vw,.8rem);font-weight:600}
 .lc-meta{display:flex;flex-direction:column;gap:3px;margin-top:.35rem}
@@ -334,12 +369,15 @@ tbody tr:hover td{background:var(--bg2)}
 .tag-cloud{display:flex;flex-wrap:wrap;gap:.35rem}
 .tcloud-tag{padding:4px 10px;border-radius:6px;font-size:clamp(.65rem,1.3vw,.73rem);background:var(--bg2);border:1px solid var(--ln);color:var(--tx2);cursor:default;transition:all var(--dur)}
 .tcloud-tag:hover{border-color:var(--ac-d);color:var(--tx)}
+[data-theme="light"] .tcloud-tag{background:var(--bg2);border-color:var(--ln);color:var(--tx2)}
+[data-theme="light"] .tcloud-tag:hover{border-color:var(--ac-d);color:var(--tx)}
 
 /* ══════════════ TUTORIAL ══════════════ */
 .tut{padding:0 1.5rem 5rem}
 .tutt{font-family:var(--fs);font-style:italic;font-size:clamp(1.1rem,2.8vw,1.35rem);color:var(--tx);margin-bottom:.3rem}
 .tuts{font-size:clamp(.72rem,1.5vw,.79rem);color:var(--mu);margin-bottom:1.35rem}
-.tutg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--rx);overflow:hidden}
+.tutg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--rx);overflow:hidden;box-shadow:var(--sh)}
+[data-theme="light"] .tutg{box-shadow:0 1px 6px rgba(60,50,30,.08),0 4px 16px rgba(60,50,30,.05)}
 @media(max-width:500px){.tutg{grid-template-columns:1fr}}
 .tutstep{background:var(--bg1);padding:1.4rem 1.25rem;display:flex;gap:.8rem;transition:background var(--dur)}
 .tutstep:hover{background:var(--bg2)}
@@ -347,22 +385,31 @@ tbody tr:hover td{background:var(--bg2)}
 .tst{font-size:clamp(.76rem,1.7vw,.84rem);font-weight:600;color:var(--tx);margin-bottom:.3rem}
 .tsd{font-size:clamp(.68rem,1.4vw,.76rem);color:var(--mu);line-height:1.65}
 .tsnote{margin-top:.55rem;font-size:clamp(.62rem,1.2vw,.7rem);color:var(--bl);background:var(--bl-bg);border:1px solid rgba(96,165,250,.15);border-radius:5px;padding:.4rem .65rem;line-height:1.5;font-family:var(--fm)}
+[data-theme="light"] .tsnote{color:var(--bl);background:var(--bl-bg);border-color:rgba(29,78,216,.15)}
 .tswarn{margin-top:.55rem;font-size:clamp(.62rem,1.2vw,.7rem);color:var(--am);background:var(--am-bg);border:1px solid rgba(251,191,36,.15);border-radius:5px;padding:.4rem .65rem;line-height:1.5}
+[data-theme="light"] .tswarn{color:var(--am);background:var(--am-bg);border-color:rgba(180,83,9,.15)}
 .flist{display:flex;flex-direction:column;gap:3px;margin-top:.55rem}
 .fi{display:flex;align-items:center;gap:.45rem;padding:.32rem .65rem;background:var(--bg3);border:1px solid var(--ln);border-radius:5px}
 .fn2{font-family:var(--fm);font-size:clamp(.6rem,1.2vw,.67rem);color:var(--bl);flex:1}
+[data-theme="light"] .fn2{color:var(--bl)}
 .fr{font-size:clamp(.53rem,1vw,.6rem);color:var(--rd);font-weight:500}
 .fo{font-size:clamp(.53rem,1vw,.6rem);color:var(--mu);font-weight:500}
 
 /* ══════════════ FOOTER ══════════════ */
 footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:clamp(.64rem,1.3vw,.72rem);color:var(--mu)}
+[data-theme="light"] footer{border-top-color:var(--ln)}
 .fb2{font-family:var(--fs);font-style:italic;color:var(--tx)}
 .fn3{display:flex;align-items:center;gap:.45rem}
 
 /* ══════════════ LOADING ══════════════ */
-#ld{display:none;position:fixed;inset:0;z-index:500;backdrop-filter:blur(20px);background:rgba(13,13,16,.88);flex-direction:column;align-items:center;justify-content:center;gap:1.1rem}
+#ld{
+  display:none;position:fixed;inset:0;z-index:500;
+  backdrop-filter:blur(20px);
+  background:rgba(12,12,16,.88);
+  flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;
+}
 #ld.on{display:flex}
-[data-theme="light"] #ld{background:rgba(246,246,249,.9)}
+[data-theme="light"] #ld{background:rgba(245,243,238,.92)}
 .spin{width:28px;height:28px;border-radius:50%;border:2px solid var(--bg4);border-top-color:var(--ac);animation:sp .65s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .ldt{font-size:clamp(.72rem,1.5vw,.8rem);color:var(--mu)}
@@ -371,8 +418,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 #st2.on{opacity:1;pointer-events:auto}
 #st2:hover{border-color:var(--ac);color:var(--ac)}
 .sep{height:1px;background:var(--ln);margin:1.5rem auto}
-[data-lang="id"] .en{display:none}
-[data-lang="en"] .id{display:none}
 </style>
 </head>
 <body>
@@ -392,42 +437,34 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
     IGTracker <span class="brand-by">by Nazu</span>
   </div>
   <div class="nav-r">
-    <div class="lang-sw">
-      <button class="lb on" id="lb-id" onclick="setLang('id')">ID</button>
-      <button class="lb" id="lb-en" onclick="setLang('en')">EN</button>
-    </div>
     <button class="ctrl" id="thbtn" onclick="toggleTheme()">
-      <span id="thico">☀</span><span id="thtx" class="id">Terang</span><span class="en" style="display:none">Light</span>
+      <span id="thico">☀</span><span id="thtx">Light</span>
     </button>
-    <div class="prv"><div class="pdot"></div><span class="id">Offline</span><span class="en" style="display:none">Offline</span></div>
+    <div class="prv"><div class="pdot"></div>Offline</div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="eyebrow"><span class="ed"></span><span class="id">Analisis Data Instagram</span><span class="en" style="display:none">Instagram Data Analyzer</span></div>
-  <h1 class="id">Instagram-mu,<br/><em>terungkap sepenuhnya</em></h1>
-  <h1 class="en" style="display:none">Your Instagram,<br/><em>fully decoded</em></h1>
-  <p class="hsub id">Pilih fitur yang kamu butuhkan. Upload hanya file yang relevan. Semua diproses langsung di browsermu — privat, cepat, aman.</p>
-  <p class="hsub en" style="display:none">Choose the features you need. Upload only relevant files. Everything processed right in your browser — private, fast, secure.</p>
+  <div class="eyebrow"><span class="ed"></span>Instagram Data Analyzer</div>
+  <h1>Your Instagram,<br/><em>fully decoded</em></h1>
+  <p class="hsub">Choose the features you need. Upload only relevant files.<br>Everything processed right in your browser — private, fast, secure.</p>
 </section>
 
 <!-- FLOW INDICATOR -->
 <div class="steps" id="flow">
-  <div class="fst on" id="fs1"><div class="fn">1</div><span class="id">Pilih Fitur</span><span class="en" style="display:none">Features</span></div>
+  <div class="fst on" id="fs1"><div class="fn">1</div><span>Features</span></div>
   <div class="fl"></div>
-  <div class="fst" id="fs2"><div class="fn">2</div><span class="id">Upload File</span><span class="en" style="display:none">Upload</span></div>
+  <div class="fst" id="fs2"><div class="fn">2</div><span>Upload</span></div>
   <div class="fl"></div>
-  <div class="fst" id="fs3"><div class="fn">3</div><span class="id">Hasil</span><span class="en" style="display:none">Results</span></div>
+  <div class="fst" id="fs3"><div class="fn">3</div><span>Results</span></div>
 </div>
 
 <!-- ══ STEP 1: SELECT MODULES ══ -->
 <div id="s1" class="sw">
   <div class="sh2">
-    <div class="slbl id">Langkah 1 dari 3</div>
-    <div class="slbl en" style="display:none">Step 1 of 3</div>
-    <div class="stitle id">Pilih fitur yang ingin kamu gunakan</div>
-    <div class="stitle en" style="display:none">Choose the features you want</div>
+    <div class="slbl">Step 1 of 3</div>
+    <div class="stitle">Choose the features you want</div>
   </div>
 
   <div class="mgrid" id="mgrid">
@@ -435,90 +472,72 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
     <div class="mc sel locked" data-mod="rel">
       <div class="mchk">✓</div>
       <div class="mi">⊞</div>
-      <div class="mn id">Analisis Relasi</div>
-      <div class="mn en" style="display:none">Relationship Analysis</div>
-      <div class="md id">Tidak follback, mutual, dan fans.</div>
-      <div class="md en" style="display:none">Not following back, mutuals, fans.</div>
+      <div class="mn">Relationship Analysis</div>
+      <div class="md">Not following back, mutuals, and fans.</div>
       <div class="mf"><span class="mfc">followers_1.json</span><span class="mfc">following.json</span></div>
     </div>
 
     <div class="mc" data-mod="unfollow">
       <div class="mchk">✓</div>
       <div class="mi">↩</div>
-      <div class="mn id">Riwayat Unfollow</div>
-      <div class="mn en" style="display:none">Unfollow History</div>
-      <div class="md id">Akun yang baru-baru ini kamu unfollow.</div>
-      <div class="md en" style="display:none">Accounts you recently unfollowed.</div>
+      <div class="mn">Unfollow History</div>
+      <div class="md">Accounts you recently unfollowed.</div>
       <div class="mf"><span class="mfc">recently_unfollowed_profiles.json</span></div>
     </div>
 
     <div class="mc" data-mod="liked">
       <div class="mchk">✓</div>
       <div class="mi">♡</div>
-      <div class="mn id">Post Dilike</div>
-      <div class="mn en" style="display:none">Liked Posts</div>
-      <div class="md id">Semua postingan yang pernah kamu suka.</div>
-      <div class="md en" style="display:none">All posts you've ever liked.</div>
+      <div class="mn">Liked Posts</div>
+      <div class="md">All posts you've ever liked.</div>
       <div class="mf"><span class="mfc">liked_posts.json</span></div>
     </div>
 
     <div class="mc" data-mod="saved">
       <div class="mchk">✓</div>
       <div class="mi">◈</div>
-      <div class="mn id">Post Tersimpan</div>
-      <div class="mn en" style="display:none">Saved Posts</div>
-      <div class="md id">Koleksi postingan yang kamu simpan.</div>
-      <div class="md en" style="display:none">Posts you've saved to your collection.</div>
+      <div class="mn">Saved Posts</div>
+      <div class="md">Posts you've saved to your collection.</div>
       <div class="mf"><span class="mfc">saved_posts.json</span></div>
     </div>
 
     <div class="mc" data-mod="comments">
       <div class="mchk">✓</div>
       <div class="mi">◻</div>
-      <div class="mn id">Riwayat Komentar</div>
-      <div class="mn en" style="display:none">Comment History</div>
-      <div class="md id">Semua komentar yang pernah kamu tulis.</div>
-      <div class="md en" style="display:none">All comments you've ever written.</div>
+      <div class="mn">Comment History</div>
+      <div class="md">All comments you've ever written.</div>
       <div class="mf"><span class="mfc">post_comments.json</span></div>
     </div>
 
     <div class="mc" data-mod="searches">
       <div class="mchk">✓</div>
       <div class="mi">◎</div>
-      <div class="mn id">Riwayat Pencarian</div>
-      <div class="mn en" style="display:none">Search History</div>
-      <div class="md id">Kata kunci yang pernah kamu cari.</div>
-      <div class="md en" style="display:none">Keywords you've searched.</div>
+      <div class="mn">Search History</div>
+      <div class="md">Keywords you've searched.</div>
       <div class="mf"><span class="mfc">word_or_phrase_searches.json</span></div>
     </div>
 
     <div class="mc" data-mod="login">
       <div class="mchk">✓</div>
       <div class="mi">⊙</div>
-      <div class="mn id">Riwayat Login</div>
-      <div class="mn en" style="display:none">Login History</div>
-      <div class="md id">Kapan dan dari perangkat apa kamu login.</div>
-      <div class="md en" style="display:none">When and from which devices you logged in.</div>
+      <div class="mn">Login History</div>
+      <div class="md">When and from which devices you logged in.</div>
       <div class="mf"><span class="mfc">login_and_account_creation.json</span></div>
     </div>
 
     <div class="mc" data-mod="topics">
       <div class="mchk">✓</div>
       <div class="mi">◑</div>
-      <div class="mn id">Topik Minatmu</div>
-      <div class="mn en" style="display:none">Your Topics</div>
-      <div class="md id">Kategori konten yang Instagram pilihkan untukmu.</div>
-      <div class="md en" style="display:none">Content categories Instagram curated for you.</div>
+      <div class="mn">Your Topics</div>
+      <div class="md">Content categories Instagram curated for you.</div>
       <div class="mf"><span class="mfc">your_topics.json</span></div>
     </div>
 
     <div class="mc" data-mod="ads">
       <div class="mchk">✓</div>
       <div class="mi">▣</div>
-      <div class="mn id">Profil Iklan</div>
-      <div class="mn en" style="display:none">Ad Interests</div>
-      <div class="md id">Topik iklan yang Instagram kaitkan denganmu.</div>
-      <div class="md en" style="display:none">Ad topics Instagram has associated with you.</div>
+      <div class="mn">Ad Interests</div>
+      <div class="md">Ad topics Instagram has associated with you.</div>
       <div class="mf"><span class="mfc">ads_interests.json</span></div>
     </div>
 
@@ -526,56 +545,34 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="mchk">✓</div>
       <div class="mi">◈</div>
       <div class="mn">Insight</div>
-      <div class="md id">Visualisasi dari semua data terpilih.</div>
-      <div class="md en" style="display:none">Visual charts of all selected data.</div>
-      <div class="mf"><span class="mfc" style="background:var(--bg3);color:var(--mu);border-color:var(--ln)">dari file terpilih</span></div>
+      <div class="md">Visual charts of all selected data.</div>
+      <div class="mf"><span class="mfc" style="background:var(--bg3);color:var(--mu);border-color:var(--ln)">from selected files</span></div>
     </div>
 
   </div>
 
   <div class="brow">
-    <button class="bn" onclick="goStep2()">
-      <span class="id">Lanjut — Pilih File</span>
-      <span class="en" style="display:none">Continue — Select Files</span>
-    </button>
-    <span class="shint" id="shint"><span class="id">1 fitur dipilih</span><span class="en" style="display:none">1 feature selected</span></span>
+    <button class="bn" onclick="goStep2()">Continue — Select Files</button>
+    <span class="shint" id="shint">1 feature selected</span>
   </div>
 </div>
 
 <!-- ══ STEP 2: UPLOAD ══ -->
 <div id="s2" style="display:none" class="sw">
   <div class="sh2">
-    <div class="slbl id">Langkah 2 dari 3</div>
-    <div class="slbl en" style="display:none">Step 2 of 3</div>
-    <div class="stitle id">Upload file JSON yang diperlukan</div>
-    <div class="stitle en" style="display:none">Upload the required JSON files</div>
+    <div class="slbl">Step 2 of 3</div>
+    <div class="stitle">Upload the required JSON files</div>
   </div>
 
   <div class="unote">
-    <strong class="id">Catatan: </strong><strong class="en" style="display:none">Note: </strong>
-    <span class="id">Pilih format <strong>JSON</strong> saat ekspor dari Instagram. Kamu tidak perlu mendownload folder media — file JSON sangat kecil (beberapa KB saja). Cukup cari file-file di bawah ini dalam folder ZIP dari Instagram.</span>
-    <span class="en" style="display:none">Choose <strong>JSON</strong> format when exporting. You do not need to download any media folders — JSON files are tiny (a few KB each). Just locate the files below inside the ZIP Instagram sends you.</span>
+    <strong>Note: </strong>Choose <strong>JSON</strong> format when exporting from Instagram. You do not need to download any media folders — JSON files are tiny (a few KB each). Just locate the files below inside the ZIP Instagram sends you.
   </div>
 
   <div class="ulist" id="ulist"></div>
 
   <div class="brow">
-    <button class="bback" onclick="goStep1()"><span class="id">Kembali</span><span class="en" style="display:none">Back</span></button>
-    <button class="bn" id="banalyze" onclick="analyze()" style="flex:1">
-      <span class="id">Analisis Data</span><span class="en" style="display:none">Analyze Data</span>
-    </button>
-  </div>
-</div>
-
-<!-- GREETING BANNER -->
-<div id="greeting-banner">
-  <div class="gb">
-    <div class="gb-av" id="gb-av">?</div>
-    <div class="gb-txt">
-      <div class="gb-hi id">Selamat datang kembali</div>
-      <div class="gb-hi en" style="display:none">Welcome back</div>
-      <div class="gb-name" id="gb-name">—</div>
-    </div>
+    <button class="bback" onclick="goStep1()">Back</button>
+    <button class="bn" id="banalyze" onclick="analyze()" style="flex:1">Analyze Data</button>
   </div>
 </div>
 
@@ -583,7 +580,7 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 <div id="s3">
   <div class="sstrip"><div class="sgrid" id="sgrid"></div></div>
   <div class="rw">
-    <button class="breset" onclick="doReset()">← <span class="id">Analisis Ulang</span><span class="en" style="display:none">Start Over</span></button>
+    <button class="breset" onclick="doReset()">← Start Over</button>
     <div class="tabbar" id="tabbar"></div>
     <div id="panelbox"></div>
   </div>
@@ -593,51 +590,40 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 
 <!-- TUTORIAL -->
 <div class="tut">
-  <div class="tutt id">Cara penggunaan</div>
-  <div class="tutt en" style="display:none">How to use IGTracker</div>
-  <div class="tuts id">Panduan ekspor data Instagram dan cara menggunakannya di sini.</div>
-  <div class="tuts en" style="display:none">Guide to exporting your Instagram data and using it here.</div>
+  <div class="tutt">How to use IGTracker</div>
+  <div class="tuts">Guide to exporting your Instagram data and using it here.</div>
   <div class="tutg">
     <div class="tutstep">
       <div class="tsn">1</div>
       <div>
-        <div class="tst id">Minta ekspor data Instagram</div>
-        <div class="tst en" style="display:none">Request Instagram data export</div>
-        <div class="tsd id">Buka Instagram → Pengaturan & Privasi → Pusat Akun → Informasi & Izin → Unduh Informasi Kamu. Pilih akun Instagram, pilih info yang diinginkan, dan pastikan format <strong>JSON</strong>.</div>
-        <div class="tsd en" style="display:none">Open Instagram → Settings & Privacy → Accounts Centre → Your information & permissions → Download your information. Select your account, choose what to include, and set format to <strong>JSON</strong>.</div>
+        <div class="tst">Request Instagram data export</div>
+        <div class="tsd">Open Instagram → Settings &amp; Privacy → Accounts Centre → Your information &amp; permissions → Download your information. Select your account, choose what to include, and set format to <strong>JSON</strong>.</div>
         <div class="tsnote">Settings → Download Your Information → JSON</div>
       </div>
     </div>
     <div class="tutstep">
       <div class="tsn">2</div>
       <div>
-        <div class="tst id">Pilih hanya data yang kamu butuhkan</div>
-        <div class="tst en" style="display:none">Select only what you need</div>
-        <div class="tsd id">Di halaman "Pilih info tertentu untuk diekspor", centang hanya kategori yang relevan: <strong>Pengikut dan mengikuti, Suka, Komentar, Pencarian terbaru, Login dan pembuatan profil, Topik Anda, Informasi iklan</strong>. Hilangkan centang Media untuk menghindari file besar.</div>
-        <div class="tsd en" style="display:none">On the "Select specific information to export" page, check only relevant categories: <strong>Followers and following, Likes, Comments, Recent searches, Login activity, Your topics, Ads information</strong>. Uncheck Media to avoid large files.</div>
-        <div class="tswarn id">Jangan centang Media/Foto/Video — ukurannya bisa sangat besar dan tidak dibutuhkan di sini.</div>
-        <div class="tswarn en" style="display:none">Do not check Media/Photos/Videos — these can be very large and are not needed here.</div>
+        <div class="tst">Select only what you need</div>
+        <div class="tsd">On the "Select specific information to export" page, check only relevant categories: <strong>Followers and following, Likes, Comments, Recent searches, Login activity, Your topics, Ads information</strong>. Uncheck Media to avoid large files.</div>
+        <div class="tswarn">Do not check Media/Photos/Videos — these can be very large and are not needed here.</div>
       </div>
     </div>
     <div class="tutstep">
       <div class="tsn">3</div>
       <div>
-        <div class="tst id">Tunggu email & download ZIP</div>
-        <div class="tst en" style="display:none">Wait for email & download ZIP</div>
-        <div class="tsd id">Instagram mengirim email dengan link download dalam beberapa menit hingga 48 jam. Klik link dan download file .zip-nya.</div>
-        <div class="tsd en" style="display:none">Instagram emails you a download link within minutes to 48 hours. Click it and download the .zip file.</div>
+        <div class="tst">Wait for email &amp; download ZIP</div>
+        <div class="tsd">Instagram emails you a download link within minutes to 48 hours. Click it and download the .zip file.</div>
       </div>
     </div>
     <div class="tutstep">
       <div class="tsn">4</div>
       <div>
-        <div class="tst id">Ekstrak & temukan file JSON</div>
-        <div class="tst en" style="display:none">Extract & locate JSON files</div>
-        <div class="tsd id">Ekstrak ZIP. Navigasi ke subfolder yang sesuai dan temukan file berikut:</div>
-        <div class="tsd en" style="display:none">Extract the ZIP. Navigate to the relevant subfolders:</div>
+        <div class="tst">Extract &amp; locate JSON files</div>
+        <div class="tsd">Extract the ZIP. Navigate to the relevant subfolders:</div>
         <div class="flist">
-          <div class="fi"><span class="fn2">connections/followers_and_following/followers_1.json</span><span class="fr id">Wajib</span><span class="fr en" style="display:none">Required</span></div>
-          <div class="fi"><span class="fn2">connections/followers_and_following/following.json</span><span class="fr id">Wajib</span><span class="fr en" style="display:none">Required</span></div>
+          <div class="fi"><span class="fn2">connections/followers_and_following/followers_1.json</span><span class="fr">Required</span></div>
+          <div class="fi"><span class="fn2">connections/followers_and_following/following.json</span><span class="fr">Required</span></div>
           <div class="fi"><span class="fn2">connections/followers_and_following/recently_unfollowed_profiles.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">your_instagram_activity/likes/liked_posts.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">your_instagram_activity/saved/saved_posts.json</span><span class="fo">Optional</span></div>
@@ -652,19 +638,15 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
     <div class="tutstep">
       <div class="tsn">5</div>
       <div>
-        <div class="tst id">Pilih fitur & upload di sini</div>
-        <div class="tst en" style="display:none">Select features & upload here</div>
-        <div class="tsd id">Di Langkah 1, pilih hanya fitur yang kamu inginkan. Di Langkah 2, upload hanya file yang sesuai. Klik <strong>Analisis Data</strong>.</div>
-        <div class="tsd en" style="display:none">In Step 1, select only the features you want. In Step 2, upload the corresponding files. Click <strong>Analyze Data</strong>.</div>
+        <div class="tst">Select features &amp; upload here</div>
+        <div class="tsd">In Step 1, select only the features you want. In Step 2, upload the corresponding files. Click <strong>Analyze Data</strong>.</div>
       </div>
     </div>
     <div class="tutstep">
       <div class="tsn">6</div>
       <div>
-        <div class="tst id">100% privat — data tidak keluar</div>
-        <div class="tst en" style="display:none">100% private — data stays local</div>
-        <div class="tsd id">Semua pemrosesan dilakukan di browser menggunakan JavaScript. Tidak ada data yang dikirim ke server manapun. Kamu bahkan bisa offline sepenuhnya saat menggunakan alat ini.</div>
-        <div class="tsd en" style="display:none">All processing happens in your browser via JavaScript. No data is sent anywhere. You can even go fully offline before uploading — this tool works entirely locally.</div>
+        <div class="tst">100% private — data stays local</div>
+        <div class="tsd">All processing happens in your browser via JavaScript. No data is sent anywhere. You can even go fully offline before uploading — this tool works entirely locally.</div>
       </div>
     </div>
   </div>
@@ -672,7 +654,7 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 
 <footer>
   <span class="fb2">IGTracker by Nazu</span>
-  <div class="fn3"><div class="pdot"></div><span class="id">Data tidak pernah meninggalkan browsermu</span><span class="en" style="display:none">Your data never leaves your browser</span></div>
+  <div class="fn3"><div class="pdot"></div>Your data never leaves your browser</div>
 </footer>
 </div><!-- /page -->
 
@@ -681,10 +663,9 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 const S = {
   followers: new Map(), following: new Map(), unfollowed: [],
   liked: [], saved: [], comments: [], searches: [],
-  logins: [], topics: [], ads: [], username: ''
+  logins: [], topics: [], ads: []
 };
 const T = {};
-let LANG = 'id', THEME = 'dark';
 
 /* ═══════════════════════ MODULE CONFIG ═══════════════════════ */
 const MOD_FILES = {
@@ -701,25 +682,14 @@ const MOD_FILES = {
   insight:  [],
 };
 
-/* ═══════════════════════ LANG / THEME ═══════════════════════ */
-function setLang(l) {
-  LANG = l;
-  document.documentElement.setAttribute('data-lang', l);
-  document.getElementById('lb-id').classList.toggle('on', l==='id');
-  document.getElementById('lb-en').classList.toggle('on', l==='en');
-  document.querySelectorAll('.hero h1, .hero-sub, .hsub').forEach(el => {
-    if(el.classList.contains('id')||el.classList.contains('en'))
-      el.style.display = el.classList.contains(l) ? '' : 'none';
-  });
-  updateHint();
-}
-
+/* ═══════════════════════ THEME ═══════════════════════ */
+let THEME = 'dark';
 function toggleTheme() {
   THEME = THEME === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', THEME);
   const d = THEME === 'dark';
   document.getElementById('thico').textContent = d ? '☀' : '☾';
-  document.getElementById('thtx').textContent = d ? (LANG==='id'?'Terang':'Light') : (LANG==='id'?'Gelap':'Dark');
+  document.getElementById('thtx').textContent  = d ? 'Light' : 'Dark';
 }
 
 /* ═══════════════════════ MODULES ═══════════════════════ */
@@ -737,16 +707,17 @@ function getMods() {
 }
 function updateHint() {
   const n = getMods().length;
-  document.getElementById('shint').innerHTML =
-    `<span class="id">${n} fitur dipilih</span><span class="en" style="display:${LANG==='en'?'':'none'}">${n} feature${n!==1?'s':''} selected</span>`;
+  document.getElementById('shint').textContent = `${n} feature${n !== 1 ? 's' : ''} selected`;
 }
 
 /* ═══════════════════════ STEP NAV ═══════════════════════ */
 function goStep2() {
   const mods = getMods();
-  if (!mods.length) { alert(L('Pilih minimal satu fitur.','Select at least one feature.')); return; }
+  if (!mods.length) { alert('Select at least one feature.'); return; }
   const seen = new Set(), uploads = [];
-  mods.forEach(m => (MOD_FILES[m]||[]).forEach(f => { if(!seen.has(f.key)){seen.add(f.key);uploads.push(f);} }));
+  mods.forEach(m => (MOD_FILES[m]||[]).forEach(f => {
+    if (!seen.has(f.key)) { seen.add(f.key); uploads.push(f); }
+  }));
   const ul = document.getElementById('ulist');
   ul.innerHTML = uploads.map(f => `
     <div class="urow" id="ur-${f.key}">
@@ -755,8 +726,8 @@ function goStep2() {
         <div class="ufn">${f.file}</div>
         <div class="up">${f.path}${f.file}</div>
       </div>
-      <span class="ust" id="ust-${f.key}"><span class="id">Klik untuk upload</span><span class="en" style="display:${LANG==='en'?'':'none'}">Click to upload</span></span>
-      <span class="ubadge ${f.req?'ubr':'ubo'}">${f.req?(LANG==='id'?'Wajib':'Required'):'Optional'}</span>
+      <span class="ust" id="ust-${f.key}">Click to upload</span>
+      <span class="ubadge ${f.req?'ubr':'ubo'}">${f.req?'Required':'Optional'}</span>
       <input type="file" accept=".json" onchange="loadFile(this,'${f.key}')"/>
     </div>`).join('');
   setStep(2);
@@ -764,197 +735,259 @@ function goStep2() {
 function goStep1() { setStep(1); }
 
 function setStep(n) {
-  document.getElementById('s1').style.display = n===1?'':'none';
-  document.getElementById('s2').style.display = n===2?'':'none';
-  document.getElementById('s3').style.display = n===3?'':'none';
-  document.getElementById('greeting-banner').style.display = n===3?'':'none';
-  document.getElementById('flow').style.display = n===3?'none':'';
-  for(let i=1;i<=3;i++){
-    const el=document.getElementById('fs'+i);
-    el.classList.remove('on','done');
-    if(i<n){el.classList.add('done');el.querySelector('.fn').textContent='✓';}
-    if(i===n){el.classList.add('on');el.querySelector('.fn').textContent=i;}
-    if(i>n)el.querySelector('.fn').textContent=i;
+  document.getElementById('s1').style.display = n === 1 ? '' : 'none';
+  document.getElementById('s2').style.display = n === 2 ? '' : 'none';
+  document.getElementById('s3').style.display = n === 3 ? '' : 'none';
+  document.getElementById('flow').style.display = n === 3 ? 'none' : '';
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById('fs' + i);
+    el.classList.remove('on', 'done');
+    if (i < n)  { el.classList.add('done'); el.querySelector('.fn').textContent = '✓'; }
+    if (i === n){ el.classList.add('on');   el.querySelector('.fn').textContent = i; }
+    if (i > n)    el.querySelector('.fn').textContent = i;
   }
-  if(n!==3) window.scrollTo({top:0,behavior:'smooth'});
+  if (n !== 3) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ═══════════════════════ FILE LOADING ═══════════════════════ */
 function loadFile(input, key) {
-  const file = input.files[0]; if(!file) return;
-  const st = document.getElementById('ust-'+key);
-  const row = document.getElementById('ur-'+key);
-  const ico = document.getElementById('ui-'+key);
+  const file = input.files[0]; if (!file) return;
+  const st  = document.getElementById('ust-' + key);
+  const row = document.getElementById('ur-'  + key);
+  const ico = document.getElementById('ui-'  + key);
   new Response(file).json().then(data => {
-    if      (key==='followers') S.followers  = extractFollowers(data);
-    else if (key==='following') { S.following = extractFollowing(data); S.username = extractUsername(data); }
-    else if (key==='unfollowed') S.unfollowed = extractUnfollowed(data);
-    else if (key==='liked')     S.liked      = extractGenericList(data);
-    else if (key==='saved')     S.saved      = extractGenericList(data);
-    else if (key==='comments')  S.comments   = extractComments(data);
-    else if (key==='searches')  S.searches   = extractSearchTerms(data);
-    else if (key==='logins')    S.logins     = extractLogins(data);
-    else if (key==='topics')    S.topics     = extractTopics(data);
-    else if (key==='ads')       S.ads        = extractAds(data);
-    st.textContent = ''; st.className = 'ust ok';
-    const ok = document.createElement('span'); ok.textContent = file.name; st.appendChild(ok);
+    if      (key === 'followers') S.followers = extractFollowers(data);
+    else if (key === 'following') S.following = extractFollowing(data);
+    else if (key === 'unfollowed') S.unfollowed = extractUnfollowed(data);
+    else if (key === 'liked')     S.liked     = extractGenericList(data);
+    else if (key === 'saved')     S.saved     = extractGenericList(data);
+    else if (key === 'comments')  S.comments  = extractComments(data);
+    else if (key === 'searches')  S.searches  = extractSearchTerms(data);
+    else if (key === 'logins')    S.logins    = extractLogins(data);
+    else if (key === 'topics')    S.topics    = extractTopics(data);
+    else if (key === 'ads')       S.ads       = extractAds(data);
+    st.textContent = file.name; st.className = 'ust ok';
     row.classList.add('ok'); ico.textContent = '✓';
-  }).catch(() => { st.textContent = L('File tidak valid','Invalid file'); st.className = 'ust err'; });
+  }).catch(() => {
+    st.textContent = 'Invalid file'; st.className = 'ust err';
+  });
 }
 
 /* ═══════════════════════ EXTRACTORS ═══════════════════════ */
-function walk(d,fn){
-  function i(o){if(Array.isArray(o)){o.forEach(i);return}if(typeof o!=='object'||!o)return;if(fn(o))return;Object.values(o).forEach(i);}i(d);
+function walk(d, fn) {
+  function i(o) {
+    if (Array.isArray(o)) { o.forEach(i); return; }
+    if (typeof o !== 'object' || !o) return;
+    if (fn(o)) return;
+    Object.values(o).forEach(i);
+  }
+  i(d);
 }
-function extractFollowers(d){const m=new Map();walk(d,o=>{if(o?.string_list_data){o.string_list_data.forEach(i=>{if(i.value)m.set(i.value,i.timestamp||0)});return true}});return m;}
-function extractFollowing(d){const m=new Map();walk(d,o=>{if(o?.title&&o?.string_list_data){m.set(o.title,o.string_list_data[0]?.timestamp||0);return true}});return m;}
-function extractUsername(d){
-  // Try to find the first title from following data as a hint isn't reliable;
-  // Instead detect from personal_information if present, else fallback empty
-  let u='';
-  walk(d, o => { if(o?.title && typeof o.title==='string' && o.title.length>1 && !u){ u=o.title; } });
-  return u;
-}
-function extractUnfollowed(d){const l=[];walk(d,o=>{if(o?.string_list_data){o.string_list_data.forEach(i=>{if(i.value)l.push({username:i.value,href:i.href||'',ts:i.timestamp||0})});return true}});return l.sort((a,b)=>b.ts-a.ts);}
-function extractGenericList(d){const l=[];walk(d,o=>{if(o?.string_list_data){o.string_list_data.forEach(i=>l.push({href:i.href||i.value||'',ts:i.timestamp||0}));return true}});return l.sort((a,b)=>b.ts-a.ts);}
-function extractComments(d){const l=[];function dig(o){if(Array.isArray(o)){o.forEach(dig);return}if(typeof o!=='object'||!o)return;if(o.string_list_data){o.string_list_data.forEach(i=>{if(i.value)l.push({text:i.value,ts:i.timestamp||0})});return}Object.values(o).forEach(dig);}dig(d);return l.sort((a,b)=>b.ts-a.ts);}
-function extractSearchTerms(d){const l=[];walk(d,o=>{if(o?.string_list_data){o.string_list_data.forEach(i=>{if(i.value)l.push({term:i.value,ts:i.timestamp||0})});return true}});return l.sort((a,b)=>b.ts-a.ts);}
-function extractLogins(d){
-  const l=[];
-  walk(d,o=>{
-    if(o?.login_information){
-      const info=o.login_information;
-      l.push({
-        time: info.time||'',
-        ip: info.ip_address||'',
-        device: info.user_agent||info.device||'',
-        location: info.city||'',
-        ts: o.timestamp||0
-      });
-      return true;
-    }
-    // alternative structure
-    if(Array.isArray(o.account_history)){
-      o.account_history.forEach(e=>{l.push({time:e.time||'',ip:e.ip_address||'',device:e.user_agent||'',location:e.city||'',ts:e.timestamp||0})});
+function extractFollowers(d) {
+  const m = new Map();
+  walk(d, o => {
+    if (o?.string_list_data) {
+      o.string_list_data.forEach(i => { if (i.value) m.set(i.value, i.timestamp || 0); });
       return true;
     }
   });
-  return l.sort((a,b)=>b.ts-a.ts);
+  return m;
 }
-function extractTopics(d){
-  const l=[];
-  walk(d,o=>{
-    if(o?.string_map_data){
-      const v=Object.values(o.string_map_data)[0];
-      if(v?.value)l.push(v.value);
+function extractFollowing(d) {
+  const m = new Map();
+  walk(d, o => {
+    if (o?.title && o?.string_list_data) {
+      m.set(o.title, o.string_list_data[0]?.timestamp || 0);
       return true;
     }
-    if(o?.value && typeof o.value==='string' && o.value.length>1 && o.value.length<80)l.push(o.value);
+  });
+  return m;
+}
+function extractUnfollowed(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_list_data) {
+      o.string_list_data.forEach(i => { if (i.value) l.push({ username: i.value, href: i.href || '', ts: i.timestamp || 0 }); });
+      return true;
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+function extractGenericList(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_list_data) {
+      o.string_list_data.forEach(i => l.push({ href: i.href || i.value || '', ts: i.timestamp || 0 }));
+      return true;
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+function extractComments(d) {
+  const l = [];
+  function dig(o) {
+    if (Array.isArray(o)) { o.forEach(dig); return; }
+    if (typeof o !== 'object' || !o) return;
+    if (o.string_list_data) {
+      o.string_list_data.forEach(i => { if (i.value) l.push({ text: i.value, ts: i.timestamp || 0 }); });
+      return;
+    }
+    Object.values(o).forEach(dig);
+  }
+  dig(d);
+  return l.sort((a, b) => b.ts - a.ts);
+}
+function extractSearchTerms(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_list_data) {
+      o.string_list_data.forEach(i => { if (i.value) l.push({ term: i.value, ts: i.timestamp || 0 }); });
+      return true;
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+function extractLogins(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.login_information) {
+      const info = o.login_information;
+      l.push({ time: info.time || '', ip: info.ip_address || '', device: info.user_agent || info.device || '', location: info.city || '', ts: o.timestamp || 0 });
+      return true;
+    }
+    if (Array.isArray(o.account_history)) {
+      o.account_history.forEach(e => l.push({ time: e.time || '', ip: e.ip_address || '', device: e.user_agent || '', location: e.city || '', ts: e.timestamp || 0 }));
+      return true;
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+function extractTopics(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_map_data) {
+      const v = Object.values(o.string_map_data)[0];
+      if (v?.value) l.push(v.value);
+      return true;
+    }
+    if (o?.value && typeof o.value === 'string' && o.value.length > 1 && o.value.length < 80) l.push(o.value);
   });
   return [...new Set(l)];
 }
-function extractAds(d){
-  const l=[];
-  walk(d,o=>{
-    if(o?.string_map_data){
-      const v=Object.values(o.string_map_data)[0];
-      if(v?.value)l.push(v.value);
+function extractAds(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_map_data) {
+      const v = Object.values(o.string_map_data)[0];
+      if (v?.value) l.push(v.value);
       return true;
     }
-    if(o?.name && typeof o.name==='string')l.push(o.name);
+    if (o?.name && typeof o.name === 'string') l.push(o.name);
   });
   return [...new Set(l)];
 }
 
-/* ═══════════════════════ ANALYZE ═══════════════════════ */
-async function analyze() {
+/* ═══════════════════════ ANALYZE — fixed: no username lookup ═══════════════════════ */
+function analyze() {
   const mods = getMods();
   if (mods.includes('rel') && (!S.followers.size || !S.following.size)) {
-    alert(L('Upload followers_1.json dan following.json terlebih dahulu.','Please upload followers_1.json and following.json first.'));
+    alert('Please upload followers_1.json and following.json first.');
     return;
   }
+
+  // Show loading synchronously
   showLoad(true);
-  await sleep(480);
 
-  const frs = new Set(S.followers.keys());
-  const fng = new Set(S.following.keys());
-  T.unfb  = [...fng].filter(u=>!frs.has(u)).map(u=>({username:u,ts:S.following.get(u)})).sort((a,b)=>a.username.localeCompare(b.username));
-  T.mut   = [...fng].filter(u=> frs.has(u)).map(u=>({username:u,ts:S.following.get(u)})).sort((a,b)=>a.username.localeCompare(b.username));
-  T.fan   = [...frs].filter(u=>!fng.has(u)).map(u=>({username:u,ts:S.followers.get(u)})).sort((a,b)=>a.username.localeCompare(b.username));
+  // Use setTimeout to let the loading UI paint before heavy work
+  setTimeout(function() {
+    try {
+      const frs = new Set(S.followers.keys());
+      const fng = new Set(S.following.keys());
 
-  // Greeting
-  const uname = S.username || (T.mut[0]?.username ? '' : '');
-  if (uname) {
-    document.getElementById('gb-av').textContent = uname.slice(0,2).toUpperCase();
-    const greetTime = new Date().getHours();
-    const greetWord = greetTime < 12 ? L('Selamat pagi','Good morning')
-                    : greetTime < 17 ? L('Selamat siang','Good afternoon')
-                    : L('Selamat malam','Good evening');
-    document.getElementById('gb-hi').textContent = greetWord + ',';
-    document.getElementById('gb-name').textContent = '@' + uname;
-    document.querySelectorAll('.gb-hi').forEach(el => el.textContent = greetWord + ',');
-  }
+      T.unfb = [...fng].filter(u => !frs.has(u))
+        .map(u => ({ username: u, ts: S.following.get(u) }))
+        .sort((a, b) => a.username.localeCompare(b.username));
+      T.mut  = [...fng].filter(u =>  frs.has(u))
+        .map(u => ({ username: u, ts: S.following.get(u) }))
+        .sort((a, b) => a.username.localeCompare(b.username));
+      T.fan  = [...frs].filter(u => !fng.has(u))
+        .map(u => ({ username: u, ts: S.followers.get(u) }))
+        .sort((a, b) => a.username.localeCompare(b.username));
 
-  buildStats(frs.size, fng.size, mods);
-  buildTabs(mods, frs.size, fng.size);
-  showLoad(false);
-  setStep(3);
-  if (uname) document.getElementById('greeting-banner').style.display = '';
-  window.scrollTo({top:0,behavior:'smooth'});
+      buildStats(frs.size, fng.size, mods);
+      buildTabs(mods, frs.size, fng.size);
+    } catch(e) {
+      console.error(e);
+    }
+    showLoad(false);
+    setStep(3);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 300);
 }
 
 /* ═══════════════════════ STATS ═══════════════════════ */
 function buildStats(frs, fng, mods) {
   const cells = [];
   if (mods.includes('rel')) {
-    cells.push({n:frs,        l_id:'Followers',       l_en:'Followers',        c:'var(--bl)'});
-    cells.push({n:fng,        l_id:'Following',        l_en:'Following',        c:'var(--ac)'});
-    cells.push({n:T.unfb.length,l_id:'Tidak Follback', l_en:'Not Following Back',c:'var(--rd)'});
-    cells.push({n:T.mut.length, l_id:'Mutual',          l_en:'Mutual',           c:'var(--gn)'});
-    cells.push({n:T.fan.length, l_id:'Fans',             l_en:'Fans',             c:'var(--am)'});
-  }
-  if (!mods.includes('rel')) {
-    if (mods.includes('liked'))    cells.push({n:S.liked.length,   l_id:'Post Dilike',   l_en:'Liked Posts',  c:'var(--rd)'});
-    if (mods.includes('saved'))    cells.push({n:S.saved.length,   l_id:'Tersimpan',     l_en:'Saved',        c:'var(--am)'});
-    if (mods.includes('comments')) cells.push({n:S.comments.length,l_id:'Komentar',      l_en:'Comments',     c:'var(--bl)'});
-    if (mods.includes('searches')) cells.push({n:S.searches.length,l_id:'Pencarian',     l_en:'Searches',     c:'var(--gn)'});
-    if (mods.includes('login'))    cells.push({n:S.logins.length,  l_id:'Login',         l_en:'Logins',       c:'var(--ac)'});
-    if (mods.includes('topics'))   cells.push({n:S.topics.length,  l_id:'Topik',         l_en:'Topics',       c:'var(--pi)'});
-    if (mods.includes('ads'))      cells.push({n:S.ads.length,     l_id:'Minat Iklan',   l_en:'Ad Interests', c:'var(--cy)'});
+    cells.push({n:frs,           l:'Followers',        c:'var(--bl)'});
+    cells.push({n:fng,           l:'Following',        c:'var(--ac)'});
+    cells.push({n:T.unfb.length, l:'Not Following Back',c:'var(--rd)'});
+    cells.push({n:T.mut.length,  l:'Mutuals',          c:'var(--gn)'});
+    cells.push({n:T.fan.length,  l:'Fans',             c:'var(--am)'});
+  } else {
+    if (mods.includes('liked'))    cells.push({n:S.liked.length,   l:'Liked Posts',   c:'var(--rd)'});
+    if (mods.includes('saved'))    cells.push({n:S.saved.length,   l:'Saved',         c:'var(--am)'});
+    if (mods.includes('comments')) cells.push({n:S.comments.length,l:'Comments',      c:'var(--bl)'});
+    if (mods.includes('searches')) cells.push({n:S.searches.length,l:'Searches',      c:'var(--gn)'});
+    if (mods.includes('login'))    cells.push({n:S.logins.length,  l:'Logins',        c:'var(--ac)'});
+    if (mods.includes('topics'))   cells.push({n:S.topics.length,  l:'Topics',        c:'var(--pi)'});
+    if (mods.includes('ads'))      cells.push({n:S.ads.length,     l:'Ad Interests',  c:'var(--cy)'});
   }
   const g = document.getElementById('sgrid');
-  g.style.gridTemplateColumns = `repeat(${Math.min(cells.length,5)},1fr)`;
-  g.innerHTML = cells.map((c,i)=>`<div class="sc"><span class="sv" id="sv${i}" style="--sc:${c.c}">0</span><span class="sl id">${c.l_id}</span><span class="sl en" style="display:${LANG==='en'?'':'none'}">${c.l_en}</span></div>`).join('');
-  cells.forEach((c,i)=>countUp('sv'+i,c.n));
+  g.style.gridTemplateColumns = `repeat(${Math.min(cells.length, 5)}, 1fr)`;
+  g.innerHTML = cells.map((c, i) =>
+    `<div class="sc"><span class="sv" id="sv${i}" style="--sc:${c.c}">0</span><span class="sl">${c.l}</span></div>`
+  ).join('');
+  cells.forEach((c, i) => countUp('sv' + i, c.n));
 }
 
 /* ═══════════════════════ TABS ═══════════════════════ */
 function buildTabs(mods, frs, fng) {
-  const bar = document.getElementById('tabbar'), box = document.getElementById('panelbox');
+  const bar = document.getElementById('tabbar');
+  const box = document.getElementById('panelbox');
   bar.innerHTML = ''; box.innerHTML = '';
+
   const defs = [];
   if (mods.includes('rel')) {
-    defs.push({id:'punfb', il:'Tidak Follback',   el:'Not Following Back', fn:()=>renderRelTable('punfb','tb-unfb',T.unfb,'unfb')});
-    defs.push({id:'pmut',  il:'Mutual',            el:'Mutuals',             fn:()=>renderRelTable('pmut', 'tb-mut', T.mut, 'mut')});
-    defs.push({id:'pfan',  il:'Fans',              el:'Fans',                fn:()=>renderRelTable('pfan', 'tb-fan', T.fan, 'fan')});
+    defs.push({id:'punfb',  label:'Not Following Back', fn:()=>renderRelTable('punfb','tb-unfb',T.unfb,'unfb')});
+    defs.push({id:'pmut',   label:'Mutuals',             fn:()=>renderRelTable('pmut', 'tb-mut', T.mut, 'mut')});
+    defs.push({id:'pfan',   label:'Fans',                fn:()=>renderRelTable('pfan', 'tb-fan', T.fan, 'fan')});
   }
-  if (mods.includes('unfollow')) defs.push({id:'phist',  il:'Riwayat Unfollow',il2:true, el:'Unfollow History',  fn:()=>renderHistory()});
-  if (mods.includes('liked'))    defs.push({id:'pliked', il:'Post Dilike',     el:'Liked Posts',        fn:()=>renderList('pliked','tb-liked',T.liked||S.liked,'liked','liked-posts',L('Post','Post'))});
-  if (mods.includes('saved'))    defs.push({id:'psaved', il:'Tersimpan',        el:'Saved Posts',        fn:()=>renderList('psaved','tb-saved',S.saved,'saved','saved-posts',L('Post','Post'))});
-  if (mods.includes('comments')) defs.push({id:'pcmt',   il:'Komentar',         el:'Comments',           fn:()=>renderComments()});
-  if (mods.includes('searches')) defs.push({id:'psrch',  il:'Pencarian',        el:'Searches',           fn:()=>renderSearches()});
-  if (mods.includes('login'))    defs.push({id:'plogin', il:'Login History',    el:'Login History',      fn:()=>renderLogin()});
-  if (mods.includes('topics'))   defs.push({id:'ptopic', il:'Topik Minat',      el:'Your Topics',        fn:()=>renderTopics()});
-  if (mods.includes('ads'))      defs.push({id:'pads',   il:'Profil Iklan',     el:'Ad Interests',       fn:()=>renderAds()});
-  if (mods.includes('insight'))  defs.push({id:'pins',   il:'Insight',          el:'Insight',            fn:()=>renderInsight(frs,fng,mods)});
+  if (mods.includes('unfollow')) defs.push({id:'phist',  label:'Unfollow History',  fn:()=>renderHistory()});
+  if (mods.includes('liked'))    defs.push({id:'pliked', label:'Liked Posts',       fn:()=>renderList('pliked','tb-liked',S.liked,'liked','liked-posts','Post')});
+  if (mods.includes('saved'))    defs.push({id:'psaved', label:'Saved Posts',       fn:()=>renderList('psaved','tb-saved',S.saved,'saved','saved-posts','Post')});
+  if (mods.includes('comments')) defs.push({id:'pcmt',   label:'Comments',          fn:()=>renderComments()});
+  if (mods.includes('searches')) defs.push({id:'psrch',  label:'Searches',          fn:()=>renderSearches()});
+  if (mods.includes('login'))    defs.push({id:'plogin', label:'Login History',     fn:()=>renderLogin()});
+  if (mods.includes('topics'))   defs.push({id:'ptopic', label:'Your Topics',       fn:()=>renderTopics()});
+  if (mods.includes('ads'))      defs.push({id:'pads',   label:'Ad Interests',      fn:()=>renderAds()});
+  if (mods.includes('insight'))  defs.push({id:'pins',   label:'Insight',           fn:()=>renderInsight(frs,fng,mods)});
 
-  defs.forEach((d,i) => {
+  defs.forEach((d, i) => {
     const btn = document.createElement('button');
-    btn.className = 'tb'+(i===0?' on':'');
-    btn.innerHTML = `<span class="id">${d.il}</span><span class="en" style="display:${LANG==='en'?'':'none'}">${d.el}</span>`;
-    btn.onclick = () => { document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on')); document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on')); btn.classList.add('on'); document.getElementById(d.id).classList.add('on'); };
+    btn.className = 'tb' + (i === 0 ? ' on' : '');
+    btn.textContent = d.label;
+    btn.onclick = () => {
+      document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(d.id).classList.add('on');
+    };
     bar.appendChild(btn);
-    const p = document.createElement('div'); p.className='panel'+(i===0?' on':''); p.id=d.id; box.appendChild(p);
+    const p = document.createElement('div');
+    p.className = 'panel' + (i === 0 ? ' on' : '');
+    p.id = d.id;
+    box.appendChild(p);
     d.fn();
   });
 }
@@ -962,214 +995,227 @@ function buildTabs(mods, frs, fng) {
 /* ═══════════════════════ PANEL RENDERERS ═══════════════════════ */
 function renderRelTable(pId, tbId, data, mode) {
   const p = document.getElementById(pId);
-  p.innerHTML = toolbar(tbId, data.length, L('akun','accounts'), ()=>exportCSV(mode,mode)) + `
+  const colDate = mode === 'fan' ? 'Following Since' : 'Followed Since';
+  p.innerHTML = toolbar(tbId, data.length, 'accounts', () => exportCSV(mode, mode)) + `
     <div class="tf"><div class="ts"><table>
-      <thead><tr><th>#</th><th>${L('Username','Username')}</th>
-      <th>${mode==='fan'?L('Follow Sejak','Following Since'):L('Difollow Sejak','Following Since')}</th>
-      <th>${L('Profil','Profile')}</th></tr></thead>
+      <thead><tr><th>#</th><th>Username</th><th>${colDate}</th><th>Profile</th></tr></thead>
       <tbody id="${tbId}"></tbody>
     </table></div></div>`;
   const tb = document.getElementById(tbId);
   if (!data.length) { tb.innerHTML = emptyRow(4); return; }
-  tb.innerHTML = data.map((d,i) => `<tr class="dr">
-    <td class="tn">${i+1}</td>
+  tb.innerHTML = data.map((d, i) => `<tr class="dr">
+    <td class="tn">${i + 1}</td>
     <td><div class="tu"><div class="av">${d.username.slice(0,2).toUpperCase()}</div><a href="https://instagram.com/${d.username}" target="_blank" style="font-size:.8rem;font-weight:500;color:var(--tx)">@${d.username}</a></div></td>
-    <td class="tt">${mode==='mut'?`<span class="bdg bg-g">Mutual</span>`:(d.ts?fmtDate(d.ts):'—')}</td>
-    <td><a class="lk" href="https://instagram.com/${d.username}" target="_blank">${L('Lihat','View')} ↗</a></td>
+    <td class="tt">${mode === 'mut' ? `<span class="bdg bg-g">Mutual</span>` : (d.ts ? fmtDate(d.ts) : '—')}</td>
+    <td><a class="lk" href="https://instagram.com/${d.username}" target="_blank">View ↗</a></td>
   </tr>`).join('');
-  document.getElementById('si-'+tbId)?.addEventListener('input', e => filterRows(tbId, e.target.value));
+  document.getElementById('si-' + tbId)?.addEventListener('input', e => filterRows(tbId, e.target.value));
 }
 
 function renderHistory() {
-  const p=document.getElementById('phist'),data=S.unfollowed;
-  p.innerHTML = toolbar('tl-hist',data.length,L('akun','accounts'),()=>exportCSV('hist','unfollow-history'));
-  const wrap = document.createElement('div'); wrap.className='tl'; wrap.id='tl-hist';
+  const p = document.getElementById('phist'), data = S.unfollowed;
+  p.innerHTML = toolbar('tl-hist', data.length, 'accounts', () => exportCSV('hist', 'unfollow-history'));
+  const wrap = document.createElement('div'); wrap.className = 'tl'; wrap.id = 'tl-hist';
   p.appendChild(wrap);
-  if (!data.length){wrap.innerHTML=`<div class="empty"><div class="et">${L('Tidak ada data','No data')}</div></div>`;return;}
-  wrap.innerHTML = data.map((d,i)=>`<div class="tlr dr">
-    <div class="tli">${i+1}</div>
-    <div class="tlb"><div class="tlu"><a href="${d.href||'https://instagram.com/'+d.username}" target="_blank">@${d.username}</a></div><div class="tlt">${d.ts?fmtDate(d.ts):'—'}</div></div>
-    <span class="bdg bg-r">${L('Unfollow','Unfollowed')}</span>
+  if (!data.length) { wrap.innerHTML = `<div class="empty"><div class="et">No data</div></div>`; return; }
+  wrap.innerHTML = data.map((d, i) => `<div class="tlr dr">
+    <div class="tli">${i + 1}</div>
+    <div class="tlb"><div class="tlu"><a href="${d.href || 'https://instagram.com/' + d.username}" target="_blank">@${d.username}</a></div><div class="tlt">${d.ts ? fmtDate(d.ts) : '—'}</div></div>
+    <span class="bdg bg-r">Unfollowed</span>
   </div>`).join('');
   document.getElementById('si-tl-hist')?.addEventListener('input', e => {
-    document.querySelectorAll('#tl-hist .dr').forEach(r => { r.style.display=r.textContent.toLowerCase().includes(e.target.value.toLowerCase())?'':'none'; });
+    document.querySelectorAll('#tl-hist .dr').forEach(r => {
+      r.style.display = r.textContent.toLowerCase().includes(e.target.value.toLowerCase()) ? '' : 'none';
+    });
   });
 }
 
-function renderList(pId,tbId,data,mode,csvName,unit) {
-  const p=document.getElementById(pId);
-  p.innerHTML = toolbar(tbId,data.length,unit,()=>exportCSV(mode,csvName)) + `
+function renderList(pId, tbId, data, mode, csvName, unit) {
+  const p = document.getElementById(pId);
+  p.innerHTML = toolbar(tbId, data.length, unit, () => exportCSV(mode, csvName)) + `
     <div class="tf"><div class="ts"><table>
-      <thead><tr><th>#</th><th>${L('Akun','Account')}</th><th>${L('Tanggal','Date')}</th><th>${L('Buka','Open')}</th></tr></thead>
+      <thead><tr><th>#</th><th>Account</th><th>Date</th><th>Open</th></tr></thead>
       <tbody id="${tbId}"></tbody>
     </table></div></div>`;
-  const tb=document.getElementById(tbId);
-  if(!data.length){tb.innerHTML=emptyRow(4);return;}
-  tb.innerHTML = data.map((d,i)=>{
-    const u=d.href?d.href.replace(/https?:\/\/(www\.)?instagram\.com\//,'').split('/')[0]:'—';
-    return `<tr class="dr"><td class="tn">${i+1}</td><td style="font-size:.78rem">@${esc(u)}</td><td class="tt">${d.ts?fmtDate(d.ts):'—'}</td><td>${d.href?`<a class="lk" href="${d.href}" target="_blank">${L('Buka','Open')} ↗</a>`:'—'}</td></tr>`;
+  const tb = document.getElementById(tbId);
+  if (!data.length) { tb.innerHTML = emptyRow(4); return; }
+  tb.innerHTML = data.map((d, i) => {
+    const u = d.href ? d.href.replace(/https?:\/\/(www\.)?instagram\.com\//,'').split('/')[0] : '—';
+    return `<tr class="dr"><td class="tn">${i+1}</td><td style="font-size:.78rem">@${esc(u)}</td><td class="tt">${d.ts?fmtDate(d.ts):'—'}</td><td>${d.href?`<a class="lk" href="${d.href}" target="_blank">Open ↗</a>`:'—'}</td></tr>`;
   }).join('');
-  document.getElementById('si-'+tbId)?.addEventListener('input', e=>filterRows(tbId,e.target.value));
+  document.getElementById('si-' + tbId)?.addEventListener('input', e => filterRows(tbId, e.target.value));
 }
 
 function renderComments() {
-  const p=document.getElementById('pcmt'),data=S.comments;
-  p.innerHTML = toolbar('tb-cmt',data.length,L('komentar','comments'),()=>exportCSV('cmt','comments')) + `
+  const p = document.getElementById('pcmt'), data = S.comments;
+  p.innerHTML = toolbar('tb-cmt', data.length, 'comments', () => exportCSV('cmt', 'comments')) + `
     <div class="tf"><div class="ts"><table>
-      <thead><tr><th>#</th><th>${L('Komentar','Comment')}</th><th>${L('Tanggal','Date')}</th></tr></thead>
+      <thead><tr><th>#</th><th>Comment</th><th>Date</th></tr></thead>
       <tbody id="tb-cmt"></tbody>
     </table></div></div>`;
-  const tb=document.getElementById('tb-cmt');
-  if(!data.length){tb.innerHTML=emptyRow(3);return;}
-  tb.innerHTML=data.map((d,i)=>`<tr class="dr"><td class="tn">${i+1}</td><td style="font-size:.78rem;max-width:320px">${esc(d.text)}</td><td class="tt">${d.ts?fmtDate(d.ts):'—'}</td></tr>`).join('');
-  document.getElementById('si-tb-cmt')?.addEventListener('input',e=>filterRows('tb-cmt',e.target.value));
+  const tb = document.getElementById('tb-cmt');
+  if (!data.length) { tb.innerHTML = emptyRow(3); return; }
+  tb.innerHTML = data.map((d, i) =>
+    `<tr class="dr"><td class="tn">${i+1}</td><td style="font-size:.78rem;max-width:320px">${esc(d.text)}</td><td class="tt">${d.ts?fmtDate(d.ts):'—'}</td></tr>`
+  ).join('');
+  document.getElementById('si-tb-cmt')?.addEventListener('input', e => filterRows('tb-cmt', e.target.value));
 }
 
 function renderSearches() {
-  const p=document.getElementById('psrch'),data=S.searches;
-  p.innerHTML = toolbar('tb-srch',data.length,L('pencarian','searches'),()=>exportCSV('srch','searches')) + `
+  const p = document.getElementById('psrch'), data = S.searches;
+  p.innerHTML = toolbar('tb-srch', data.length, 'searches', () => exportCSV('srch', 'searches')) + `
     <div class="tf"><div class="ts"><table>
-      <thead><tr><th>#</th><th>${L('Kata Kunci','Search Term')}</th><th>${L('Tanggal','Date')}</th></tr></thead>
+      <thead><tr><th>#</th><th>Search Term</th><th>Date</th></tr></thead>
       <tbody id="tb-srch"></tbody>
     </table></div></div>`;
-  const tb=document.getElementById('tb-srch');
-  if(!data.length){tb.innerHTML=emptyRow(3);return;}
-  tb.innerHTML=data.map((d,i)=>`<tr class="dr"><td class="tn">${i+1}</td><td style="font-size:.78rem">${esc(d.term)}</td><td class="tt">${d.ts?fmtDate(d.ts):'—'}</td></tr>`).join('');
-  document.getElementById('si-tb-srch')?.addEventListener('input',e=>filterRows('tb-srch',e.target.value));
+  const tb = document.getElementById('tb-srch');
+  if (!data.length) { tb.innerHTML = emptyRow(3); return; }
+  tb.innerHTML = data.map((d, i) =>
+    `<tr class="dr"><td class="tn">${i+1}</td><td style="font-size:.78rem">${esc(d.term)}</td><td class="tt">${d.ts?fmtDate(d.ts):'—'}</td></tr>`
+  ).join('');
+  document.getElementById('si-tb-srch')?.addEventListener('input', e => filterRows('tb-srch', e.target.value));
 }
 
 function renderLogin() {
-  const p=document.getElementById('plogin'),data=S.logins;
-  const note = `<div style="font-size:.73rem;color:var(--mu);margin-bottom:1rem;padding:.65rem .85rem;background:var(--am-bg);border:1px solid rgba(251,191,36,.15);border-radius:8px;line-height:1.6">${L('Catatan: Struktur file login berbeda-beda tiap akun. Jika data tampil kosong, coba cek nama field di dalam file JSON kamu.','Note: Login file structure varies per account. If data appears empty, check the field names inside your JSON file.')}</div>`;
+  const p = document.getElementById('plogin'), data = S.logins;
+  const note = `<div style="font-size:.73rem;color:var(--mu);margin-bottom:1rem;padding:.65rem .85rem;background:var(--am-bg);border:1px solid rgba(251,191,36,.15);border-radius:8px;line-height:1.6">Note: Login file structure varies per account. If data appears empty, check the field names inside your JSON file.</div>`;
   if (!data.length) {
-    p.innerHTML = note + `<div class="empty"><div class="et">${L('Tidak ada data login yang dapat dibaca.','No login data could be read.')}</div><div class="es">${L('File mungkin memiliki struktur berbeda.','File may have a different structure.')}</div></div>`;
+    p.innerHTML = note + `<div class="empty"><div class="et">No login data could be read.</div><div class="es">File may have a different structure.</div></div>`;
     return;
   }
-  p.innerHTML = note + `<div class="ctag" style="margin-bottom:.9rem;display:inline-block">${data.length} ${L('sesi login','login sessions')}</div>
+  p.innerHTML = note + `<div class="ctag" style="margin-bottom:.9rem;display:inline-block">${data.length} login sessions</div>
     <div class="login-cards">
-      ${data.slice(0,20).map(d=>`
+      ${data.slice(0, 20).map(d => `
       <div class="lcard">
-        <div class="lc-top"><span class="lc-device">${L('Sesi Login','Login Session')}</span><span class="bdg bg-b">Login</span></div>
+        <div class="lc-top"><span class="lc-device">Login Session</span><span class="bdg bg-b">Login</span></div>
         <div class="lc-meta">
-          ${d.time?`<div class="lc-row"><span class="lc-k">${L('Waktu','Time')}</span><span class="lc-v">${d.time}</span></div>`:''}
-          ${d.ip?`<div class="lc-row"><span class="lc-k">IP</span><span class="lc-v" style="font-family:var(--fm);font-size:.7rem">${d.ip}</span></div>`:''}
-          ${d.location?`<div class="lc-row"><span class="lc-k">${L('Lokasi','Location')}</span><span class="lc-v">${d.location}</span></div>`:''}
-          ${d.device?`<div class="lc-row"><span class="lc-k">Device</span><span class="lc-v" style="font-size:.67rem;color:var(--mu)">${d.device.slice(0,60)}</span></div>`:''}
+          ${d.time     ? `<div class="lc-row"><span class="lc-k">Time</span><span class="lc-v">${d.time}</span></div>` : ''}
+          ${d.ip       ? `<div class="lc-row"><span class="lc-k">IP</span><span class="lc-v" style="font-family:var(--fm);font-size:.7rem">${d.ip}</span></div>` : ''}
+          ${d.location ? `<div class="lc-row"><span class="lc-k">Location</span><span class="lc-v">${d.location}</span></div>` : ''}
+          ${d.device   ? `<div class="lc-row"><span class="lc-k">Device</span><span class="lc-v" style="font-size:.67rem;color:var(--mu)">${d.device.slice(0,60)}</span></div>` : ''}
         </div>
       </div>`).join('')}
     </div>`;
 }
 
 function renderTopics() {
-  const p=document.getElementById('ptopic'),data=S.topics;
-  p.innerHTML = `<div style="margin-bottom:.75rem"><span class="ctag">${data.length} ${L('topik','topics')}</span></div>
-    <div style="font-size:.74rem;color:var(--mu);margin-bottom:1rem;line-height:1.6">${L('Topik-topik berikut adalah yang Instagram gunakan untuk mempersonalisasi konten untukmu.','These are the topics Instagram uses to personalize your feed and content.')}</div>
-    ${data.length ? `<div class="tag-cloud">${data.map(t=>`<span class="tcloud-tag">${esc(t)}</span>`).join('')}</div>`
-    : `<div class="empty"><div class="et">${L('Tidak ada data topik.','No topic data found.')}</div></div>`}`;
+  const p = document.getElementById('ptopic'), data = S.topics;
+  p.innerHTML = `<div style="margin-bottom:.75rem"><span class="ctag">${data.length} topics</span></div>
+    <div style="font-size:.74rem;color:var(--mu);margin-bottom:1rem;line-height:1.6">These are the topics Instagram uses to personalize your feed and content.</div>
+    ${data.length
+      ? `<div class="tag-cloud">${data.map(t => `<span class="tcloud-tag">${esc(t)}</span>`).join('')}</div>`
+      : `<div class="empty"><div class="et">No topic data found.</div></div>`}`;
 }
 
 function renderAds() {
-  const p=document.getElementById('pads'),data=S.ads;
-  p.innerHTML = `<div style="margin-bottom:.75rem"><span class="ctag">${data.length} ${L('minat iklan','ad interests')}</span></div>
-    <div style="font-size:.74rem;color:var(--mu);margin-bottom:1rem;line-height:1.6">${L('Inilah kategori iklan yang Instagram kaitkan dengan profilmu — berdasarkan aktivitas dan interaksi kamu.','These are the ad interest categories Instagram has associated with your profile — based on your activity and behavior.')}</div>
-    ${data.length ? `<div class="tag-cloud">${data.map(t=>`<span class="tcloud-tag">${esc(t)}</span>`).join('')}</div>`
-    : `<div class="empty"><div class="et">${L('Tidak ada data minat iklan.','No ad interest data found.')}</div></div>`}`;
+  const p = document.getElementById('pads'), data = S.ads;
+  p.innerHTML = `<div style="margin-bottom:.75rem"><span class="ctag">${data.length} ad interests</span></div>
+    <div style="font-size:.74rem;color:var(--mu);margin-bottom:1rem;line-height:1.6">These are the ad interest categories Instagram has associated with your profile — based on your activity and behavior.</div>
+    ${data.length
+      ? `<div class="tag-cloud">${data.map(t => `<span class="tcloud-tag">${esc(t)}</span>`).join('')}</div>`
+      : `<div class="empty"><div class="et">No ad interest data found.</div></div>`}`;
 }
 
-function renderInsight(frs,fng,mods) {
-  const p=document.getElementById('pins');
-  const mut=T.mut?.length||0,unfb=T.unfb?.length||0,fan=T.fan?.length||0;
-  const fbPct=fng>0?Math.round(mut/fng*100):0;
-  const r=38,circ=2*Math.PI*r,sMut=fng>0?mut/fng:0,sUnfb=fng>0?unfb/fng:0;
+function renderInsight(frs, fng, mods) {
+  const p = document.getElementById('pins');
+  const mut = T.mut?.length || 0, unfb = T.unfb?.length || 0, fan = T.fan?.length || 0;
+  const fbPct  = fng > 0 ? Math.round(mut / fng * 100) : 0;
+  const r = 38, circ = 2 * Math.PI * r;
+  const sMut = fng > 0 ? mut / fng : 0, sUnfb = fng > 0 ? unfb / fng : 0;
 
-  const likedFreq={};
-  S.liked.forEach(d=>{const u=d.href?.replace(/https?:\/\/(www\.)?instagram\.com\//,'').split('/')[0];if(u&&u.length>1&&!u.startsWith('http'))likedFreq[u]=(likedFreq[u]||0)+1;});
-  const topLiked=Object.entries(likedFreq).sort((a,b)=>b[1]-a[1]).slice(0,7);
-
-  const srchFreq={};
-  S.searches.forEach(d=>{if(d.term)srchFreq[d.term]=(srchFreq[d.term]||0)+1;});
-  const topSearch=Object.entries(srchFreq).sort((a,b)=>b[1]-a[1]).slice(0,20);
+  const likedFreq = {};
+  S.liked.forEach(d => {
+    const u = d.href?.replace(/https?:\/\/(www\.)?instagram\.com\//, '').split('/')[0];
+    if (u && u.length > 1 && !u.startsWith('http')) likedFreq[u] = (likedFreq[u] || 0) + 1;
+  });
+  const topLiked  = Object.entries(likedFreq).sort((a, b) => b[1] - a[1]).slice(0, 7);
+  const srchFreq  = {};
+  S.searches.forEach(d => { if (d.term) srchFreq[d.term] = (srchFreq[d.term] || 0) + 1; });
+  const topSearch = Object.entries(srchFreq).sort((a, b) => b[1] - a[1]).slice(0, 20);
 
   const cards = [];
 
-  if (mods.includes('rel') && fng>0) {
-    cards.push(`<div class="ic"><div class="ic-t">${L('Follback Rate','Follback Rate')}</div>
+  if (mods.includes('rel') && fng > 0) {
+    cards.push(`<div class="ic"><div class="ic-t">Follback Rate</div>
       <div class="dl">
         <div class="dsw"><svg width="90" height="90" viewBox="0 0 90 90">
           <circle cx="45" cy="45" r="${r}" fill="none" stroke="var(--bg3)" stroke-width="8"/>
           <circle cx="45" cy="45" r="${r}" fill="none" stroke="var(--gn)" stroke-width="8" stroke-dasharray="${(circ*sMut).toFixed(2)} ${circ.toFixed(2)}" stroke-dashoffset="0"/>
           <circle cx="45" cy="45" r="${r}" fill="none" stroke="var(--rd)" stroke-width="8" stroke-dasharray="${(circ*sUnfb).toFixed(2)} ${circ.toFixed(2)}" stroke-dashoffset="${(-circ*sMut).toFixed(2)}"/>
         </svg>
-        <div class="dc"><span class="dp">${fbPct}%</span><span class="ds">${L('follback','follow back')}</span></div></div>
+        <div class="dc"><span class="dp">${fbPct}%</span><span class="ds">follow back</span></div></div>
         <div class="leg">
           <div class="lr"><div class="ld" style="background:var(--gn)"></div><span class="lt">Mutual</span><span class="lv">${mut.toLocaleString()}</span></div>
-          <div class="lr"><div class="ld" style="background:var(--rd)"></div><span class="lt">${L('Tdk follback','Not FB')}</span><span class="lv">${unfb.toLocaleString()}</span></div>
+          <div class="lr"><div class="ld" style="background:var(--rd)"></div><span class="lt">Not F.B.</span><span class="lv">${unfb.toLocaleString()}</span></div>
           <div class="lr"><div class="ld" style="background:var(--am)"></div><span class="lt">Fans</span><span class="lv">${fan.toLocaleString()}</span></div>
           <div class="lr" style="margin-top:.3rem;padding-top:.4rem;border-top:1px solid var(--ln)">
-            <span class="lt">${L('Rasio','Ratio')}</span><span class="lv">${fng>0?(frs/fng).toFixed(2):'—'}</span>
+            <span class="lt">F/F Ratio</span><span class="lv">${fng > 0 ? (frs / fng).toFixed(2) : '—'}</span>
           </div>
         </div>
       </div>
     </div>`);
 
-    const bars=[
-      {l_id:'Followers',l_en:'Followers',val:frs,c:'var(--bl)'},
-      {l_id:'Following',l_en:'Following',val:fng,c:'var(--ac)'},
-      {l_id:'Mutual',   l_en:'Mutual',   val:mut,c:'var(--gn)'},
-      {l_id:'Tdk Follback',l_en:'Not F.B.',val:unfb,c:'var(--rd)'},
-      {l_id:'Fans',     l_en:'Fans',     val:fan,c:'var(--am)'},
+    const bars = [
+      {l:'Followers', val:frs,  c:'var(--bl)'},
+      {l:'Following', val:fng,  c:'var(--ac)'},
+      {l:'Mutual',    val:mut,  c:'var(--gn)'},
+      {l:'Not F.B.',  val:unfb, c:'var(--rd)'},
+      {l:'Fans',      val:fan,  c:'var(--am)'},
     ];
-    const mx=Math.max(frs,fng,1);
-    cards.push(`<div class="ic"><div class="ic-t">${L('Ringkasan Akun','Account Overview')}</div>
-      <div class="bl">${bars.map(b=>{const pct=Math.round(b.val/mx*100);return`<div class="bi"><div class="bm"><span class="bll"><span class="id">${b.l_id}</span><span class="en" style="display:${LANG==='en'?'':'none'}">${b.l_en}</span></span><span class="blv">${b.val.toLocaleString()}</span></div><div class="bt"><div class="bf" style="background:${b.c}" data-w="${pct}%"></div></div></div>`;}).join('')}
-      </div>
+    const mx = Math.max(frs, fng, 1);
+    cards.push(`<div class="ic"><div class="ic-t">Account Overview</div>
+      <div class="bl">${bars.map(b => {
+        const pct = Math.round(b.val / mx * 100);
+        return `<div class="bi"><div class="bm"><span class="bll">${b.l}</span><span class="blv">${b.val.toLocaleString()}</span></div><div class="bt"><div class="bf" style="background:${b.c}" data-w="${pct}%"></div></div></div>`;
+      }).join('')}</div>
     </div>`);
   }
 
   if (topLiked.length) {
-    const mx=topLiked[0][1];
-    cards.push(`<div class="ic"><div class="ic-t">${L('Akun Paling Sering Dilike','Most Liked Accounts')}</div>
-      <div class="bl">${topLiked.map(([u,n])=>{const pct=Math.round(n/mx*100);return`<div class="bi"><div class="bm"><span class="bll" style="font-family:var(--fm)">@${esc(u)}</span><span class="blv">${n} likes</span></div><div class="bt"><div class="bf" style="background:var(--ac)" data-w="${pct}%"></div></div></div>`;}).join('')}
-      </div>
+    const mx = topLiked[0][1];
+    cards.push(`<div class="ic"><div class="ic-t">Most Liked Accounts</div>
+      <div class="bl">${topLiked.map(([u, n]) => {
+        const pct = Math.round(n / mx * 100);
+        return `<div class="bi"><div class="bm"><span class="bll" style="font-family:var(--fm)">@${esc(u)}</span><span class="blv">${n} likes</span></div><div class="bt"><div class="bf" style="background:var(--ac)" data-w="${pct}%"></div></div></div>`;
+      }).join('')}</div>
     </div>`);
   }
 
   if (topSearch.length) {
-    cards.push(`<div class="ic"><div class="ic-t">${L('Kata Kunci Pencarian','Search Keywords')}</div>
-      <div class="kw">${topSearch.map(([t])=>`<span class="kwtg">${esc(t)}</span>`).join('')}
-      </div>
+    cards.push(`<div class="ic"><div class="ic-t">Search Keywords</div>
+      <div class="kw">${topSearch.map(([t]) => `<span class="kwtg">${esc(t)}</span>`).join('')}</div>
     </div>`);
   }
 
   if (S.topics.length) {
-    cards.push(`<div class="ic"><div class="ic-t">${L('Topik Minatmu','Your Topics')}</div>
-      <div class="kw">${S.topics.slice(0,24).map(t=>`<span class="kwtg" style="background:var(--pi-bg);border-color:rgba(244,114,182,.2);color:var(--pi)">${esc(t)}</span>`).join('')}
-      </div>
+    cards.push(`<div class="ic"><div class="ic-t">Your Topics</div>
+      <div class="kw">${S.topics.slice(0, 24).map(t => `<span class="kwtg" style="background:var(--pi-bg);border-color:rgba(244,114,182,.2);color:var(--pi)">${esc(t)}</span>`).join('')}</div>
     </div>`);
   }
 
   if (S.ads.length) {
-    cards.push(`<div class="ic"><div class="ic-t">${L('Profil Iklan','Ad Profile')}</div>
-      <div style="font-size:.72rem;color:var(--mu);margin-bottom:.75rem">${L('Instagram menganggap kamu tertarik pada:','Instagram thinks you are interested in:')}</div>
-      <div class="kw">${S.ads.slice(0,20).map(t=>`<span class="kwtg" style="background:var(--cy-bg);border-color:rgba(52,211,153,.2);color:var(--cy)">${esc(t)}</span>`).join('')}
-      </div>
+    cards.push(`<div class="ic"><div class="ic-t">Ad Profile</div>
+      <div style="font-size:.72rem;color:var(--mu);margin-bottom:.75rem">Instagram thinks you are interested in:</div>
+      <div class="kw">${S.ads.slice(0, 20).map(t => `<span class="kwtg" style="background:var(--cy-bg);border-color:rgba(52,211,153,.2);color:var(--cy)">${esc(t)}</span>`).join('')}</div>
     </div>`);
   }
 
   if (!cards.length) {
-    p.innerHTML = `<div class="empty"><div class="et">${L('Tidak ada data untuk divisualisasikan.','No data to visualize.')}</div><div class="es">${L('Pilih lebih banyak fitur dan upload file yang sesuai.','Select more features and upload the corresponding files.')}</div></div>`;
+    p.innerHTML = `<div class="empty"><div class="et">No data to visualize.</div><div class="es">Select more features and upload the corresponding files.</div></div>`;
     return;
   }
   p.innerHTML = `<div class="ig">${cards.join('')}</div>`;
-  requestAnimationFrame(()=>{ document.querySelectorAll('.bf[data-w]').forEach(el=>{ el.style.width=el.dataset.w; }); });
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.bf[data-w]').forEach(el => { el.style.width = el.dataset.w; });
+  });
 }
 
 /* ═══════════════════════ HELPERS ═══════════════════════ */
 function toolbar(id, count, unit, exportFn) {
-  const fnId = 'exp_'+id;
+  const fnId = 'exp_' + id;
   window[fnId] = exportFn;
   return `<div class="toolbar">
-    <input class="si" id="si-${id}" placeholder="${L('Cari…','Search…')}" oninput="filterRows('${id}',this.value)"/>
+    <input class="si" id="si-${id}" placeholder="Search…" oninput="filterRows('${id}',this.value)"/>
     <button class="bg" onclick="window['${fnId}']()">Export CSV</button>
     <span class="ctag">${count.toLocaleString()} ${unit}</span>
   </div>`;
@@ -1180,45 +1226,54 @@ function filterRows(id, q) {
   });
 }
 function emptyRow(cols, msg) {
-  return `<tr><td colspan="${cols}"><div class="empty"><div class="et">${msg||L('Tidak ada data.','No data.')}</div></div></td></tr>`;
+  return `<tr><td colspan="${cols}"><div class="empty"><div class="et">${msg || 'No data.'}</div></div></td></tr>`;
 }
 
 function exportCSV(key, fname) {
   const maps = {
-    unfb:{data:T.unfb, cols:'No,Username,Profile URL,Date', row:(d,i)=>`${i+1},${d.username},https://instagram.com/${d.username},${d.ts?fmtDate(d.ts):''}`},
-    mut: {data:T.mut,  cols:'No,Username,Profile URL,Date', row:(d,i)=>`${i+1},${d.username},https://instagram.com/${d.username},${d.ts?fmtDate(d.ts):''}`},
-    fan: {data:T.fan,  cols:'No,Username,Profile URL,Date', row:(d,i)=>`${i+1},${d.username},https://instagram.com/${d.username},${d.ts?fmtDate(d.ts):''}`},
-    hist:{data:S.unfollowed,cols:'No,Username,URL,Date',row:(d,i)=>`${i+1},${d.username},${d.href},${d.ts?fmtDate(d.ts):''}`},
-    liked:{data:S.liked, cols:'No,URL,Date', row:(d,i)=>`${i+1},"${d.href}",${d.ts?fmtDate(d.ts):''}`},
-    saved:{data:S.saved, cols:'No,URL,Date', row:(d,i)=>`${i+1},"${d.href}",${d.ts?fmtDate(d.ts):''}`},
-    cmt:  {data:S.comments,  cols:'No,Comment,Date', row:(d,i)=>`${i+1},"${(d.text||'').replace(/"/g,'""')}",${d.ts?fmtDate(d.ts):''}`},
-    srch: {data:S.searches,  cols:'No,Term,Date',    row:(d,i)=>`${i+1},"${(d.term||'').replace(/"/g,'""')}",${d.ts?fmtDate(d.ts):''}`},
+    unfb: { data:T.unfb,       cols:'No,Username,Profile URL,Date',    row:(d,i)=>`${i+1},${d.username},https://instagram.com/${d.username},${d.ts?fmtDate(d.ts):''}` },
+    mut:  { data:T.mut,        cols:'No,Username,Profile URL,Date',    row:(d,i)=>`${i+1},${d.username},https://instagram.com/${d.username},${d.ts?fmtDate(d.ts):''}` },
+    fan:  { data:T.fan,        cols:'No,Username,Profile URL,Date',    row:(d,i)=>`${i+1},${d.username},https://instagram.com/${d.username},${d.ts?fmtDate(d.ts):''}` },
+    hist: { data:S.unfollowed, cols:'No,Username,URL,Date',            row:(d,i)=>`${i+1},${d.username},${d.href},${d.ts?fmtDate(d.ts):''}` },
+    liked:{ data:S.liked,      cols:'No,URL,Date',                     row:(d,i)=>`${i+1},"${d.href}",${d.ts?fmtDate(d.ts):''}` },
+    saved:{ data:S.saved,      cols:'No,URL,Date',                     row:(d,i)=>`${i+1},"${d.href}",${d.ts?fmtDate(d.ts):''}` },
+    cmt:  { data:S.comments,   cols:'No,Comment,Date',                 row:(d,i)=>`${i+1},"${(d.text||'').replace(/"/g,'""')}",${d.ts?fmtDate(d.ts):''}` },
+    srch: { data:S.searches,   cols:'No,Term,Date',                    row:(d,i)=>`${i+1},"${(d.term||'').replace(/"/g,'""')}",${d.ts?fmtDate(d.ts):''}` },
   };
-  const m=maps[key]; if(!m||!m.data?.length){alert(L('Tidak ada data.','No data.'));return;}
-  const csv=m.cols+'\n'+m.data.map(m.row).join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download=`igtracker-${fname}.csv`;a.click();
+  const m = maps[key];
+  if (!m || !m.data?.length) { alert('No data.'); return; }
+  const csv = m.cols + '\n' + m.data.map(m.row).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = `igtracker-${fname}.csv`;
+  a.click();
 }
 
 function doReset() {
-  Object.assign(S,{followers:new Map(),following:new Map(),unfollowed:[],liked:[],saved:[],comments:[],searches:[],logins:[],topics:[],ads:[],username:''});
-  document.querySelectorAll('.mc:not(.locked)').forEach(c=>c.classList.remove('sel'));
+  Object.assign(S, { followers: new Map(), following: new Map(), unfollowed: [], liked: [], saved: [], comments: [], searches: [], logins: [], topics: [], ads: [] });
+  document.querySelectorAll('.mc:not(.locked)').forEach(c => c.classList.remove('sel'));
   setStep(1); updateHint();
 }
 
-function L(id,en){return LANG==='id'?id:en}
-function fmtDate(ts){return new Date(ts*1000).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-function showLoad(v){
-  document.getElementById('ld').classList.toggle('on',v);
-  if(v){const uname=S.username;document.getElementById('ldt').textContent=uname?L(`Menganalisis data @${uname}…`,`Analyzing @${uname}'s data…`):L('Menganalisis data…','Analyzing data…');}
+function fmtDate(ts) { return new Date(ts * 1000).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }); }
+function showLoad(v) {
+  document.getElementById('ld').classList.toggle('on', v);
+  if (v) document.getElementById('ldt').textContent = 'Analyzing your data…';
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function countUp(id,target){
-  const el=document.getElementById(id);if(!el)return;
-  let n=0;const step=Math.max(1,Math.ceil(target/55));
-  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n.toLocaleString('id');if(n>=target)clearInterval(t);},16);
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function countUp(id, target) {
+  const el = document.getElementById(id); if (!el) return;
+  let n = 0;
+  const step = Math.max(1, Math.ceil(target / 55));
+  const t = setInterval(() => {
+    n = Math.min(n + step, target);
+    el.textContent = n.toLocaleString('en');
+    if (n >= target) clearInterval(t);
+  }, 16);
 }
-window.addEventListener('scroll',()=>{document.getElementById('st2').classList.toggle('on',window.scrollY>400)});
+window.addEventListener('scroll', () => {
+  document.getElementById('st2').classList.toggle('on', window.scrollY > 400);
+});
 updateHint();
 </script>
 </body>
