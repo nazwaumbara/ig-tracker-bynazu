@@ -498,7 +498,7 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
       <div class="mi">◻</div>
       <div class="mn">Comment History</div>
       <div class="md">All comments you've ever written.</div>
-      <div class="mf"><span class="mfc">post_comments.json</span></div>
+      <div class="mf"><span class="mfc">post_comments_1.json</span></div>
     </div>
     <div class="mc" data-mod="searches">
       <div class="mchk">✓</div>
@@ -607,7 +607,7 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
           <div class="fi"><span class="fn2">connections/followers_and_following/recently_unfollowed_profiles.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">your_instagram_activity/likes/liked_posts.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">your_instagram_activity/saved/saved_posts.json</span><span class="fo">Optional</span></div>
-          <div class="fi"><span class="fn2">your_instagram_activity/comments/post_comments.json</span><span class="fo">Optional</span></div>
+          <div class="fi"><span class="fn2">your_instagram_activity/comments/post_comments_1.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">your_instagram_activity/searches/word_or_phrase_searches.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">login_and_account_creation/login_and_account_creation.json</span><span class="fo">Optional</span></div>
           <div class="fi"><span class="fn2">ads_information/instagram_ads_and_businesses/ads_interests.json</span><span class="fo">Optional</span></div>
@@ -652,7 +652,7 @@ const MOD_FILES = {
   unfollow: [{key:'unfollowed',file:'recently_unfollowed_profiles.json',path:'connections/followers_and_following/',req:true}],
   liked:    [{key:'liked',    file:'liked_posts.json',    path:'your_instagram_activity/likes/',req:true}],
   saved:    [{key:'saved',    file:'saved_posts.json',    path:'your_instagram_activity/saved/',req:true}],
-  comments: [{key:'comments', file:'post_comments.json', path:'your_instagram_activity/comments/',req:true}],
+  comments: [{key:'comments', file:'post_comments_1.json', path:'your_instagram_activity/comments/',req:true}],
   searches: [{key:'searches', file:'word_or_phrase_searches.json',path:'your_instagram_activity/searches/',req:true}],
   login:    [{key:'logins',   file:'login_and_account_creation.json',path:'login_and_account_creation/',req:true}],
   topics:   [{key:'topics',   file:'your_topics.json',   path:'your_instagram_activity/your_topics/',req:true}],
@@ -1296,4 +1296,5 @@ if (document.readyState === 'loading') {
 </script>
 </body>
 </html>
+
 
