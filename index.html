@@ -47,7 +47,7 @@
   --fm:      'SF Mono','Fira Code',monospace;
 }
 
-/* ── LIGHT MODE – warm paper tone ── */
+/* ── LIGHT MODE ── */
 [data-theme="light"] {
   --bg:   #F0EDE6;
   --bg1:  #FAFAF8;
@@ -431,7 +431,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 
 <div class="page">
 
-<!-- NAV -->
 <nav>
   <div class="nav-brand">
     <div class="brand-mark">IG</div>
@@ -445,14 +444,12 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="eyebrow"><span class="ed"></span>Instagram Data Analyzer</div>
   <h1>Your Instagram,<br/><em>fully decoded</em></h1>
   <p class="hsub">Choose the features you need. Upload only relevant files.<br>Everything processed right in your browser — private, fast, secure.</p>
 </section>
 
-<!-- FLOW INDICATOR -->
 <div class="steps" id="flow">
   <div class="fst on" id="fs1"><div class="fn">1</div><span>Features</span></div>
   <div class="fl"></div>
@@ -461,7 +458,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
   <div class="fst" id="fs3"><div class="fn">3</div><span>Results</span></div>
 </div>
 
-<!-- ══ STEP 1: SELECT MODULES ══ -->
 <div id="s1" class="sw">
   <div class="sh2">
     <div class="slbl">Step 1 of 3</div>
@@ -547,7 +543,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
   </div>
 </div>
 
-<!-- ══ STEP 2: UPLOAD ══ -->
 <div id="s2" style="display:none" class="sw">
   <div class="sh2">
     <div class="slbl">Step 2 of 3</div>
@@ -563,7 +558,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
   </div>
 </div>
 
-<!-- ══ STEP 3: RESULTS ══ -->
 <div id="s3">
   <div class="sstrip"><div class="sgrid" id="sgrid"></div></div>
   <div class="rw">
@@ -575,7 +569,6 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
 
 <div class="sep"></div>
 
-<!-- TUTORIAL -->
 <div class="tut">
   <div class="tutt">How to use IGTracker</div>
   <div class="tuts">Guide to exporting your Instagram data and using it here.</div>
@@ -643,9 +636,7 @@ footer{border-top:1px solid var(--ln);padding:1.25rem 1.5rem;display:flex;align-
   <span class="fb2">IGTracker by Nazu</span>
   <div class="fn3"><div class="pdot"></div>Your data never leaves your browser</div>
 </footer>
-</div><!-- /page -->
-
-<script>
+</div><script>
 /* ═══════════════════════ STATE ═══════════════════════ */
 const S = {
   followers: new Map(), following: new Map(), unfollowed: [],
@@ -741,7 +732,6 @@ function loadFile(input, key) {
   const row = document.getElementById('ur-'  + key);
   const ico = document.getElementById('ui-'  + key);
 
-  // Use FileReader — universally supported, no fetch/Response API needed
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -769,173 +759,29 @@ function loadFile(input, key) {
   reader.readAsText(file);
 }
 
-// /* ═══════════════════════ WALK HELPER ═══════════════════════ */
-// function walk(d, fn) {
-//   function i(o) {
-//     if (Array.isArray(o)) { o.forEach(i); return; }
-//     if (typeof o !== 'object' || !o) return;
-//     if (fn(o)) return;
-//     Object.values(o).forEach(i);
-//   }
-//   i(d);
-// }
-
-
-/* ═══════════════════════ EXTRACTORS (FIXED) ═══════════════════════ */
-
-/*
- * FIX: Unified extractor for both followers AND following.
- *
- * Structure A — followers_1.json:
- *   { title: "", string_list_data: [{ value: "username", href: "...", timestamp: N }] }
- *   → username is in string_list_data[i].value ✓
- *
- * Structure B — following.json (confirmed from real files):
- *   { title: "username", string_list_data: [{ href: "...", timestamp: N }] }
- *   → value field is MISSING entirely; username is in parent o.title ✓
- *
- * Fix: try item.value first, fallback to parent o.title.
- */
-// function extractUsers(d) {
-//   const m = new Map();
-//   walk(d, o => {
-//     if (o?.string_list_data) {
-//       o.string_list_data.forEach(item => {
-//         const username = (item.value && item.value.trim())
-//           ? item.value.trim()
-//           : (o.title && o.title.trim() ? o.title.trim() : null);
-//         if (username) m.set(username, item.timestamp || 0);
-//       });
-//       return true;
-//     }
-//   });
-//   return m;
-// }
-
-// function extractUnfollowed(d) {
-//   const l = [];
-//   walk(d, o => {
-//     if (o?.string_list_data) {
-//       o.string_list_data.forEach(i => {
-//         const username = (i.value && i.value.trim()) ? i.value.trim()
-//           : (o.title && o.title.trim() ? o.title.trim() : null);
-//         if (username) l.push({ username, href: i.href || '', ts: i.timestamp || 0 });
-//       });
-//       return true;
-//     }
-//   });
-//   return l.sort((a, b) => b.ts - a.ts);
-// }
-
-// function extractGenericList(d) {
-//   const l = [];
-//   walk(d, o => {
-//     if (o?.string_list_data) {
-//       o.string_list_data.forEach(i => l.push({ href: i.href || i.value || '', ts: i.timestamp || 0 }));
-//       return true;
-//     }
-//   });
-//   return l.sort((a, b) => b.ts - a.ts);
-// }
-
-// function extractComments(d) {
-//   const l = [];
-//   function dig(o) {
-//     if (Array.isArray(o)) { o.forEach(dig); return; }
-//     if (typeof o !== 'object' || !o) return;
-//     if (o.string_list_data) {
-//       o.string_list_data.forEach(i => { if (i.value) l.push({ text: i.value, ts: i.timestamp || 0 }); });
-//       return;
-//     }
-//     Object.values(o).forEach(dig);
-//   }
-//   dig(d);
-//   return l.sort((a, b) => b.ts - a.ts);
-// }
-
-// function extractSearchTerms(d) {
-//   const l = [];
-//   walk(d, o => {
-//     if (o?.string_list_data) {
-//       o.string_list_data.forEach(i => { if (i.value) l.push({ term: i.value, ts: i.timestamp || 0 }); });
-//       return true;
-//     }
-//   });
-//   return l.sort((a, b) => b.ts - a.ts);
-// }
-
-// function extractLogins(d) {
-//   const l = [];
-//   walk(d, o => {
-//     if (o?.login_information) {
-//       const info = o.login_information;
-//       l.push({ time: info.time || '', ip: info.ip_address || '', device: info.user_agent || info.device || '', location: info.city || '', ts: o.timestamp || 0 });
-//       return true;
-//     }
-//     if (Array.isArray(o.account_history)) {
-//       o.account_history.forEach(e => l.push({ time: e.time || '', ip: e.ip_address || '', device: e.user_agent || '', location: e.city || '', ts: e.timestamp || 0 }));
-//       return true;
-//     }
-//   });
-//   return l.sort((a, b) => b.ts - a.ts);
-// }
-
-// function extractTopics(d) {
-//   const l = [];
-//   walk(d, o => {
-//     if (o?.string_map_data) {
-//       const v = Object.values(o.string_map_data)[0];
-//       if (v?.value) l.push(v.value);
-//       return true;
-//     }
-//     if (o?.value && typeof o.value === 'string' && o.value.length > 1 && o.value.length < 80) l.push(o.value);
-//   });
-//   return [...new Set(l)];
-// }
-
-// function extractAds(d) {
-//   const l = [];
-//   walk(d, o => {
-//     if (o?.string_map_data) {
-//       const v = Object.values(o.string_map_data)[0];
-//       if (v?.value) l.push(v.value);
-//       return true;
-//     }
-//     if (o?.name && typeof o.name === 'string') l.push(o.name);
-//   });
-//   return [...new Set(l)];
-// }
-/* ═══════════════════════ WALK HELPER (REVISI BRUTE-FORCE) ═══════════════════════ */
+/* ═══════════════════════ WALK HELPER (BRUTE FORCE) ═══════════════════════ */
 function walk(d, fn) {
   function i(o) {
     if (Array.isArray(o)) { o.forEach(i); return; }
     if (typeof o !== 'object' || !o) return;
-    
-    // REVISI 1: Kita hapus "return" di sini agar pencarian tidak berhenti 
-    // di tengah jalan. Sekarang ia akan mencari ke SEMUA cabang (brute-force).
-    fn(o); 
-    
+    fn(o);
     Object.values(o).forEach(i);
   }
   i(d);
 }
 
-/* ═══════════════════════ EXTRACTORS (REVISI) ═══════════════════════ */
+/* ═══════════════════════ EXTRACTORS ═══════════════════════ */
 function extractUsers(d) {
   const m = new Map();
   walk(d, o => {
     if (o && typeof o === 'object' && "string_list_data" in o) {
       o.string_list_data.forEach(item => {
         let username = null;
-        
-        // REVISI 2: Logika pengecekan nama yang jauh lebih tangguh
         if (item && "value" in item && item.value.trim() !== "") {
           username = item.value.trim();
         } else if (o && "title" in o && o.title.trim() !== "") {
           username = o.title.trim();
         }
-        
-        // Jika nama ditemukan, simpan beserta riwayat waktunya (timestamp)
         if (username) m.set(username, item.timestamp || 0);
       });
     }
@@ -949,21 +795,90 @@ function extractUnfollowed(d) {
     if (o && typeof o === 'object' && "string_list_data" in o) {
       o.string_list_data.forEach(item => {
         let username = null;
-        
         if (item && "value" in item && item.value.trim() !== "") {
           username = item.value.trim();
         } else if (o && "title" in o && o.title.trim() !== "") {
           username = o.title.trim();
         }
-        
-        if (username) {
-          l.push({ username: username, href: item.href || '', ts: item.timestamp || 0 });
-        }
+        if (username) l.push({ username: username, href: item.href || '', ts: item.timestamp || 0 });
       });
     }
   });
   return l.sort((a, b) => b.ts - a.ts);
 }
+
+function extractGenericList(d) {
+  const l = [];
+  walk(d, o => {
+    if (o && typeof o === 'object' && "string_list_data" in o) {
+      o.string_list_data.forEach(i => {
+        if (i.href || i.value) l.push({ href: i.href || i.value || '', ts: i.timestamp || 0 });
+      });
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+
+function extractComments(d) {
+  const l = [];
+  walk(d, o => {
+    if (o && typeof o === 'object' && "string_list_data" in o) {
+      o.string_list_data.forEach(i => { if (i.value) l.push({ text: i.value, ts: i.timestamp || 0 }); });
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+
+function extractSearchTerms(d) {
+  const l = [];
+  walk(d, o => {
+    if (o && typeof o === 'object' && "string_list_data" in o) {
+      o.string_list_data.forEach(i => { if (i.value) l.push({ term: i.value, ts: i.timestamp || 0 }); });
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+
+function extractLogins(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.login_information) {
+      const info = o.login_information;
+      l.push({ time: info.time || '', ip: info.ip_address || '', device: info.user_agent || info.device || '', location: info.city || '', ts: o.timestamp || 0 });
+    }
+    if (Array.isArray(o?.account_history)) {
+      o.account_history.forEach(e => l.push({ time: e.time || '', ip: e.ip_address || '', device: e.user_agent || '', location: e.city || '', ts: e.timestamp || 0 }));
+    }
+  });
+  return l.sort((a, b) => b.ts - a.ts);
+}
+
+function extractTopics(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_map_data) {
+      const v = Object.values(o.string_map_data)[0];
+      if (v?.value) l.push(v.value);
+    } else if (o?.value && typeof o.value === 'string' && o.value.length > 1 && o.value.length < 80) {
+      l.push(o.value);
+    }
+  });
+  return [...new Set(l)];
+}
+
+function extractAds(d) {
+  const l = [];
+  walk(d, o => {
+    if (o?.string_map_data) {
+      const v = Object.values(o.string_map_data)[0];
+      if (v?.value) l.push(v.value);
+    } else if (o?.name && typeof o.name === 'string') {
+      l.push(o.name);
+    }
+  });
+  return [...new Set(l)];
+}
+
 /* ═══════════════════════ ANALYZE ═══════════════════════ */
 function analyze() {
   const mods = getMods();
@@ -1358,8 +1273,10 @@ function init() {
     document.getElementById('s3').style.display = 'none';
     document.getElementById('flow').style.display = '';
     const fs1 = document.getElementById('fs1');
-    fs1.classList.add('on');
-    fs1.querySelector('.fn').textContent = '1';
+    if (fs1) {
+        fs1.classList.add('on');
+        fs1.querySelector('.fn').textContent = '1';
+    }
     updateHint();
   } catch(e) {
     console.error('IGTracker init error:', e);
@@ -1374,4 +1291,3 @@ if (document.readyState === 'loading') {
 </script>
 </body>
 </html>
-
