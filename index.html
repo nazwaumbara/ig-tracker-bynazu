@@ -1,310 +1,971 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detektif Instagram</title>
-    <style>
-        /* =========================================
-           BAGIAN 1: CSS (TAMPILAN MODERN MINIMALIS)
-           ========================================= */
-        :root {
-            --primary: #4F46E5; /* Warna ungu kebiruan modern */
-            --primary-hover: #4338CA;
-            --bg: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --text-main: #111827;
-            --text-muted: #6B7280;
-            --border: #E5E7EB;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IG Tracker — by Nazu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================== ROOT & RESET ===================== */
+    :root {
+      --bg:       #0A0A0F;
+      --bg2:      #111118;
+      --surface:  #16161F;
+      --surface2: #1E1E2A;
+      --border:   rgba(255,255,255,0.07);
+      --accent:   #E040FB;
+      --accent2:  #7C4DFF;
+      --accent3:  #00E5FF;
+      --green:    #00E676;
+      --red:      #FF5252;
+      --yellow:   #FFD740;
+      --text:     #F0EFF5;
+      --muted:    #6B6A80;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ===================== NOISE OVERLAY ===================== */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; opacity: .5;
+    }
 
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            padding: 2rem 1rem;
-            line-height: 1.5;
-        }
+    /* ===================== GLOW BLOBS ===================== */
+    .blob { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+    .blob-1 { width: 500px; height: 500px; background: rgba(224,64,251,0.12); top: -100px; right: -100px; }
+    .blob-2 { width: 400px; height: 400px; background: rgba(124,77,255,0.10); bottom: 100px; left: -100px; }
+    .blob-3 { width: 300px; height: 300px; background: rgba(0,229,255,0.07); top: 50%; left: 40%; }
 
-        .container {
-            background-color: var(--card-bg);
-            max-width: 800px;
-            width: 100%;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+    /* ===================== LAYOUT ===================== */
+    .page { position: relative; z-index: 1; }
 
-        h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; }
-        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 2rem; }
+    /* ===================== HEADER ===================== */
+    header {
+      padding: 2rem 2.5rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,15,0.7);
+    }
+    .logo {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .logo span { 
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .logo-badge {
+      font-family: var(--font-body);
+      font-size: 0.65rem; font-weight: 500;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 2px 10px;
+      color: var(--muted);
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .header-status {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; color: var(--muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-        /* Kotak Upload File */
-        .upload-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+    /* ===================== HERO ===================== */
+    .hero {
+      padding: 5rem 2.5rem 3rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 99px; padding: 6px 16px;
+      font-size: 0.78rem; color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag .icon { font-size: 1rem; }
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.05rem; color: var(--muted); line-height: 1.7;
+      max-width: 520px; margin: 0 auto 2.5rem;
+    }
 
-        .upload-box {
-            border: 2px dashed var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            position: relative;
-        }
+    /* ===================== UPLOAD ZONE ===================== */
+    .upload-section { padding: 0 2.5rem 3rem; max-width: 900px; margin: 0 auto; }
+    .upload-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media(max-width:700px){ .upload-grid { grid-template-columns: 1fr; } }
 
-        .upload-box:hover {
-            border-color: var(--primary);
-            background-color: #EEF2FF;
-        }
+    .upload-card {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: border-color .2s, background .2s, transform .15s;
+      overflow: hidden;
+    }
+    .upload-card:hover { border-color: var(--accent); background: rgba(224,64,251,0.05); transform: translateY(-2px); }
+    .upload-card input[type=file] { position: absolute; inset:0; opacity:0; cursor:pointer; }
+    .upload-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
+    .upload-label { font-family: var(--font-head); font-weight: 700; font-size: .9rem; display: block; margin-bottom: .3rem; }
+    .upload-sub { font-size: .75rem; color: var(--muted); }
+    .upload-status { font-size: .75rem; margin-top: .5rem; color: var(--muted); transition: color .2s; }
+    .upload-status.ok { color: var(--green); }
+    .upload-card.loaded { border-color: var(--green); border-style: solid; }
+    .upload-card.loaded .upload-icon { filter: grayscale(0); }
 
-        .upload-box input[type="file"] {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; cursor: pointer;
-        }
+    /* Optional file note */
+    .upload-opt-note {
+      font-size: 0.72rem; color: var(--muted); margin-top: .25rem;
+    }
 
-        .upload-label { font-weight: 600; display: block; margin-bottom: 0.5rem; }
-        .file-status { font-size: 0.875rem; color: var(--text-muted); }
-        .file-status.ready { color: #10B981; font-weight: bold; } /* Warna hijau jika sukses */
+    /* ===================== ANALYZE BUTTON ===================== */
+    .btn-analyze {
+      width: 100%; padding: 1.1rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; border-radius: 1rem;
+      font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+      color: #fff; cursor: pointer; letter-spacing: .01em;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 0 30px rgba(224,64,251,0.25);
+      margin-top: .5rem;
+    }
+    .btn-analyze:hover { opacity: .9; transform: translateY(-1px); box-shadow: 0 0 50px rgba(224,64,251,0.4); }
+    .btn-analyze:active { transform: translateY(0); }
 
-        /* Tombol Utama */
-        button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 1rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-bottom: 2rem;
-        }
-        button:hover { background-color: var(--primary-hover); }
+    /* ===================== RESULTS WRAPPER ===================== */
+    #results-area { display: none; padding: 0 2.5rem 4rem; max-width: 900px; margin: 0 auto; }
 
-        /* Panel Metrik */
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-            display: none; /* Disembunyikan sampai tombol ditekan */
-        }
-        
-        .metric-card {
-            background-color: var(--bg);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-        .metric-title { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .metric-value { font-size: 2rem; font-weight: bold; color: var(--primary); }
+    /* ===================== STATS STRIP ===================== */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(5,1fr); gap: .75rem;
+      margin-bottom: 2.5rem;
+    }
+    @media(max-width:700px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: .875rem; padding: 1.25rem 1rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent-color, var(--accent));
+    }
+    .stat-val { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--accent-color, var(--accent)); display: block; }
+    .stat-lbl { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .25rem; }
 
-        /* Tabel Hasil */
-        .result-section { display: none; }
-        h2 { font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
-        
-        .table-container {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-        }
+    /* ===================== TAB NAV ===================== */
+    .tabs {
+      display: flex; gap: .5rem; margin-bottom: 1.5rem;
+      overflow-x: auto; padding-bottom: .25rem;
+    }
+    .tab {
+      padding: .55rem 1.2rem; border-radius: 99px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-family: var(--font-head); font-size: .82rem; font-weight: 600;
+      color: var(--muted); cursor: pointer; white-space: nowrap;
+      transition: all .2s;
+    }
+    .tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent; color: #fff;
+    }
+    .tab:hover:not(.active) { border-color: var(--accent); color: var(--text); }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background-color: var(--bg); padding: 1rem; position: sticky; top: 0; font-weight: 600; border-bottom: 1px solid var(--border); }
-        td { padding: 1rem; border-bottom: 1px solid var(--border); }
-        tr:last-child td { border-bottom: none; }
-        tr:hover { background-color: #F9FAFB; }
-        
-        /* Animasi sederhana */
-        @media (max-width: 600px) {
-            .upload-grid { grid-template-columns: 1fr; }
-            .metrics { grid-template-columns: 1fr; }
-        }
-    </style>
+    /* ===================== PANEL ===================== */
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeUp .3s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ===================== SECTION HEADER ===================== */
+    .section-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .section-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; }
+    .badge-count {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 99px; padding: 3px 12px;
+      font-size: .75rem; color: var(--muted);
+    }
+
+    /* ===================== SEARCH BAR ===================== */
+    .search-bar {
+      display: flex; gap: .5rem; margin-bottom: 1rem;
+    }
+    .search-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: .6rem; padding: .65rem 1rem;
+      font-family: var(--font-body); font-size: .875rem; color: var(--text);
+      outline: none; transition: border-color .2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    .btn-export {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: .6rem; padding: .65rem 1.1rem;
+      font-size: .8rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; white-space: nowrap; transition: all .2s;
+    }
+    .btn-export:hover { border-color: var(--accent3); color: var(--accent3); }
+
+    /* ===================== TABLE ===================== */
+    .tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; overflow: hidden; }
+    .scroll-wrap { max-height: 460px; overflow-y: auto; }
+    .scroll-wrap::-webkit-scrollbar { width: 5px; }
+    .scroll-wrap::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 99px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--surface2); padding: .875rem 1.25rem;
+      font-family: var(--font-head); font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+      position: sticky; top: 0;
+    }
+    tbody td { padding: .875rem 1.25rem; border-top: 1px solid var(--border); font-size: .875rem; vertical-align: middle; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .avatar-cell { display: flex; align-items: center; gap: .75rem; }
+    .av {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 700; flex-shrink: 0;
+      font-family: var(--font-head);
+    }
+    .uname { font-weight: 500; }
+    .uname a { color: var(--text); text-decoration: none; }
+    .uname a:hover { color: var(--accent); }
+
+    .ts-cell { font-size: .78rem; color: var(--muted); }
+    .pill {
+      display: inline-block; font-size: .7rem; font-weight: 600;
+      padding: 3px 10px; border-radius: 99px;
+    }
+    .pill-red   { background: rgba(255,82,82,.15); color: var(--red); border: 1px solid rgba(255,82,82,.2); }
+    .pill-green { background: rgba(0,230,118,.15); color: var(--green); border: 1px solid rgba(0,230,118,.2); }
+    .pill-purple{ background: rgba(124,77,255,.15); color: #B388FF; border: 1px solid rgba(124,77,255,.2); }
+    .pill-yellow{ background: rgba(255,215,64,.15); color: var(--yellow); border: 1px solid rgba(255,215,64,.2); }
+
+    /* ===================== EMPTY STATE ===================== */
+    .empty {
+      padding: 3rem; text-align: center; color: var(--muted);
+    }
+    .empty .e-icon { font-size: 3rem; margin-bottom: .75rem; }
+    .empty p { font-size: .9rem; }
+
+    /* ===================== TIMELINE ===================== */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: flex; gap: 1rem; padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface); transition: background .15s;
+    }
+    .tl-item:first-child { border-radius: 1rem 1rem 0 0; }
+    .tl-item:last-child { border-radius: 0 0 1rem 1rem; border-bottom: none; }
+    .tl-item:only-child { border-radius: 1rem; }
+    .tl-item:hover { background: var(--surface2); }
+    .tl-dot {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .tl-dot.unf  { background: rgba(255,82,82,.15); border: 1px solid rgba(255,82,82,.2); }
+    .tl-dot.fol  { background: rgba(0,230,118,.15); border: 1px solid rgba(0,230,118,.2); }
+    .tl-content { flex: 1; }
+    .tl-name { font-weight: 500; font-size: .88rem; margin-bottom: 2px; }
+    .tl-name a { color: var(--text); text-decoration: none; }
+    .tl-name a:hover { color: var(--accent); }
+    .tl-time { font-size: .75rem; color: var(--muted); }
+
+    /* ===================== CHART PLACEHOLDER ===================== */
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    @media(max-width:600px){ .chart-grid { grid-template-columns: 1fr; } }
+    .chart-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 1rem; padding: 1.5rem;
+    }
+    .chart-title { font-family: var(--font-head); font-size: .85rem; font-weight: 700; margin-bottom: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+    /* Ratio donut */
+    .donut-wrap { display: flex; align-items: center; justify-content: center; gap: 2rem; }
+    .donut { position: relative; width: 110px; height: 110px; }
+    .donut svg { transform: rotate(-90deg); }
+    .donut-label { position: absolute; inset:0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .donut-pct { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; }
+    .donut-sub { font-size: .65rem; color: var(--muted); }
+    .legend { display: flex; flex-direction: column; gap: .5rem; }
+    .leg-item { display: flex; align-items: center; gap: .5rem; font-size: .8rem; }
+    .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink:0; }
+
+    /* Bar chart */
+    .bar-chart { display: flex; flex-direction: column; gap: .5rem; }
+    .bar-row { display: flex; align-items: center; gap: .75rem; }
+    .bar-lbl { font-size: .75rem; color: var(--muted); width: 90px; flex-shrink: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+    .bar-num { font-size: .72rem; color: var(--muted); width: 28px; flex-shrink:0; }
+
+    /* ===================== TUTORIAL ===================== */
+    .tutorial-section { padding: 3rem 2.5rem 4rem; max-width: 900px; margin: 0 auto; }
+    .tut-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 1rem; overflow: hidden;
+    }
+    .tut-header {
+      padding: 1.5rem 2rem;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .tut-header-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; }
+    .tut-steps { padding: 2rem; }
+    .step {
+      display: flex; gap: 1.25rem; padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: .9rem; font-weight: 800;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-family: var(--font-head); font-weight: 700; margin-bottom: .4rem; }
+    .step-desc { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+    .step-code {
+      margin-top: .75rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: .5rem; padding: .75rem 1rem;
+      font-family: monospace; font-size: .8rem; color: var(--accent3);
+    }
+    .files-list { margin-top: .75rem; display: flex; flex-direction: column; gap: .4rem; }
+    .file-item {
+      display: flex; align-items: center; gap: .6rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: .5rem; padding: .5rem .875rem;
+      font-size: .82rem;
+    }
+    .fi-icon { font-size: 1rem; }
+    .fi-name { font-family: monospace; color: var(--accent3); }
+    .fi-note { color: var(--muted); margin-left: auto; font-size: .75rem; }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: .8rem; color: var(--muted);
+    }
+    footer span { font-family: var(--font-head); font-weight: 700; background: linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .footer-note { font-size: .75rem; }
+    .lock-icon { margin-right: 4px; }
+
+    /* ===================== SCROLL TOP ===================== */
+    #scrolltop {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--surface2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.1rem; opacity: 0; pointer-events: none;
+      transition: opacity .3s, transform .2s;
+    }
+    #scrolltop.show { opacity: 1; pointer-events: auto; }
+    #scrolltop:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+    /* ===================== LOADING ===================== */
+    #loading-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(10,10,15,.85); backdrop-filter: blur(10px);
+      align-items: center; justify-content: center; flex-direction: column; gap: 1rem;
+    }
+    #loading-overlay.show { display: flex; }
+    .spinner {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 3px solid var(--surface2);
+      border-top-color: var(--accent);
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: var(--font-head); font-size: .9rem; color: var(--muted); }
+
+    /* ===================== MISC ===================== */
+    a { color: var(--accent); }
+    ::selection { background: rgba(224,64,251,.3); }
+    @media(max-width:500px) { header { padding: 1rem 1.25rem; } .upload-section,.results-area,.tutorial-section { padding-left: 1.25rem; padding-right: 1.25rem; } }
+  </style>
 </head>
 <body>
+  <!-- Ambient glow blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
 
-    <div class="container">
-        <h1>🕵️ Detektif Instagram</h1>
-        <p class="subtitle">Cari tahu siapa yang tidak <i>follback</i> kamu secara instan dan 100% aman (Offline).</p>
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Menganalisis data Instagram kamu…</div>
+  </div>
 
-        <div class="upload-grid">
-            <div class="upload-box">
-                <span class="upload-label">📂 Upload Followers</span>
-                <span class="file-status" id="status-followers">Pilih file followers_1.json</span>
-                <input type="file" id="file-followers" accept=".json">
-            </div>
-            <div class="upload-box">
-                <span class="upload-label">📂 Upload Following</span>
-                <span class="file-status" id="status-following">Pilih file following.json</span>
-                <input type="file" id="file-following" accept=".json">
-            </div>
+  <!-- Scroll to top -->
+  <div id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <div class="page">
+    <!-- HEADER -->
+    <header>
+      <div>
+        <span class="logo">IG<span>Tracker</span></span>
+        <span class="logo-badge">by Nazu</span>
+      </div>
+      <div class="header-status">
+        <div class="dot"></div>
+        <span>100% Offline · Data Aman</span>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-tag">
+        <span class="icon">🔍</span>
+        Instagram Relationship Analyzer
+      </div>
+      <h1>Kenali <span class="grad">Relasi</span><br />Instagram-mu</h1>
+      <p>Upload file JSON ekspor Instagram-mu dan dapatkan analisis lengkap — siapa yang tidak follback, riwayat unfollow, dan insight mendalam tentang akun-mu.</p>
+    </section>
+
+    <!-- UPLOAD SECTION -->
+    <section class="upload-section">
+      <div class="upload-grid">
+        <div class="upload-card" id="card-followers">
+          <span class="upload-icon">👥</span>
+          <span class="upload-label">Followers</span>
+          <span class="upload-sub">followers_1.json</span>
+          <div class="upload-status" id="st-followers">Klik untuk pilih file</div>
+          <input type="file" id="f-followers" accept=".json" onchange="handleFile(this,'followers')">
         </div>
-
-        <button onclick="prosesData()">Mulai Analisis Data 🚀</button>
-
-        <div class="metrics" id="metrics-panel">
-            <div class="metric-card">
-                <div class="metric-title">Pengikut (Followers)</div>
-                <div class="metric-value" id="val-followers">0</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-title">Mengikuti (Following)</div>
-                <div class="metric-value" id="val-following">0</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-title">Tidak Follback</div>
-                <div class="metric-value" id="val-unfollowers">0</div>
-            </div>
+        <div class="upload-card" id="card-following">
+          <span class="upload-icon">➡️</span>
+          <span class="upload-label">Following</span>
+          <span class="upload-sub">following.json</span>
+          <div class="upload-status" id="st-following">Klik untuk pilih file</div>
+          <input type="file" id="f-following" accept=".json" onchange="handleFile(this,'following')">
         </div>
-
-        <div class="result-section" id="result-section">
-            <h2>📝 Daftar Akun Tidak Follback</h2>
-            <div class="table-container">
-                <table id="result-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 60px;">No</th>
-                            <th>Username Instagram</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        </tbody>
-                </table>
-            </div>
+        <div class="upload-card" id="card-unfollowed">
+          <span class="upload-icon">📋</span>
+          <span class="upload-label">Recently Unfollowed</span>
+          <span class="upload-sub">recently_unfollowed_profiles.json</span>
+          <div class="upload-status" id="st-unfollowed">Klik untuk pilih file</div>
+          <div class="upload-opt-note">✦ Opsional</div>
+          <input type="file" id="f-unfollowed" accept=".json" onchange="handleFile(this,'unfollowed')">
         </div>
+      </div>
+      <button class="btn-analyze" onclick="analyze()">🚀 Mulai Analisis</button>
+    </section>
+
+    <!-- RESULTS AREA -->
+    <section id="results-area">
+      <!-- Stats -->
+      <div class="stats-grid" id="stats-grid"></div>
+
+      <!-- Tabs -->
+      <div class="tabs" id="tab-nav">
+        <button class="tab active" onclick="switchTab(this,'tab-unfollowback')">🚫 Tidak Follback</button>
+        <button class="tab" onclick="switchTab(this,'tab-mutuals')">🤝 Saling Follow</button>
+        <button class="tab" onclick="switchTab(this,'tab-fans')">⭐ Followers Only</button>
+        <button class="tab" onclick="switchTab(this,'tab-history')">🕘 Riwayat Unfollow</button>
+        <button class="tab" onclick="switchTab(this,'tab-insight')">📊 Insight</button>
+      </div>
+
+      <!-- Panel: Tidak Follback -->
+      <div class="panel active" id="tab-unfollowback">
+        <div class="section-hd">
+          <span class="section-title">🚫 Akun Yang Tidak Follback Kamu</span>
+          <span class="badge-count" id="badge-unfb">0 akun</span>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" placeholder="Cari username…" oninput="filterTable('tbl-unfb',this.value)">
+          <button class="btn-export" onclick="exportCSV('unfollowback')">⬇ Export CSV</button>
+        </div>
+        <div class="tbl-wrap"><div class="scroll-wrap">
+          <table><thead><tr><th>#</th><th>Username</th><th>Profil</th><th>Difollow Sejak</th></tr></thead>
+          <tbody id="tbl-unfb"></tbody></table>
+        </div></div>
+      </div>
+
+      <!-- Panel: Saling Follow -->
+      <div class="panel" id="tab-mutuals">
+        <div class="section-hd">
+          <span class="section-title">🤝 Mutual Followers</span>
+          <span class="badge-count" id="badge-mut">0 akun</span>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" placeholder="Cari username…" oninput="filterTable('tbl-mut',this.value)">
+          <button class="btn-export" onclick="exportCSV('mutuals')">⬇ Export CSV</button>
+        </div>
+        <div class="tbl-wrap"><div class="scroll-wrap">
+          <table><thead><tr><th>#</th><th>Username</th><th>Profil</th><th>Status</th></tr></thead>
+          <tbody id="tbl-mut"></tbody></table>
+        </div></div>
+      </div>
+
+      <!-- Panel: Fans -->
+      <div class="panel" id="tab-fans">
+        <div class="section-hd">
+          <span class="section-title">⭐ Followers yang Belum Kamu Follow Balik</span>
+          <span class="badge-count" id="badge-fan">0 akun</span>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" placeholder="Cari username…" oninput="filterTable('tbl-fan',this.value)">
+          <button class="btn-export" onclick="exportCSV('fans')">⬇ Export CSV</button>
+        </div>
+        <div class="tbl-wrap"><div class="scroll-wrap">
+          <table><thead><tr><th>#</th><th>Username</th><th>Profil</th><th>Follow Sejak</th></tr></thead>
+          <tbody id="tbl-fan"></tbody></table>
+        </div></div>
+      </div>
+
+      <!-- Panel: Riwayat Unfollow -->
+      <div class="panel" id="tab-history">
+        <div class="section-hd">
+          <span class="section-title">🕘 Riwayat Akun yang Pernah Kamu Unfollow</span>
+          <span class="badge-count" id="badge-hist">0 akun</span>
+        </div>
+        <div id="timeline-wrap"></div>
+      </div>
+
+      <!-- Panel: Insight -->
+      <div class="panel" id="tab-insight">
+        <div class="section-hd">
+          <span class="section-title">📊 Insight Akun</span>
+        </div>
+        <div class="chart-grid" id="insight-charts"></div>
+      </div>
+    </section>
+
+    <!-- TUTORIAL SECTION -->
+    <section class="tutorial-section" id="tutorial">
+      <div class="tut-card">
+        <div class="tut-header">
+          <span style="font-size:1.5rem">📖</span>
+          <div>
+            <div class="tut-header-title">Cara Menggunakan IG Tracker</div>
+            <div style="font-size:.8rem;color:var(--muted);margin-top:2px">Panduan lengkap step-by-step</div>
+          </div>
+        </div>
+        <div class="tut-steps">
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Minta Data dari Instagram</div>
+              <div class="step-desc">Buka Instagram → <strong>Profil</strong> → ikon ☰ (tiga garis) → <strong>Pengaturan dan privasi</strong> → <strong>Pusat Akun</strong> → <strong>Informasi dan izin</strong> → <strong>Unduh informasi kamu</strong>. Pilih format <strong>JSON</strong> dan rentang tanggal <em>Sepanjang waktu</em>. Klik <strong>Buat file</strong>.</div>
+              <div class="step-code">Instagram → Settings → Download Your Information → JSON format</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Tunggu Email dari Instagram</div>
+              <div class="step-desc">Instagram akan mengirim email dengan link unduhan dalam beberapa menit hingga 48 jam. Klik link tersebut dan unduh file <strong>.zip</strong> ke perangkatmu.</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Ekstrak File ZIP</div>
+              <div class="step-desc">Ekstrak (unzip) file yang sudah diunduh. Di dalam folder yang dihasilkan, navigasi ke subfolder <strong>connections/followers_and_following/</strong>. Di sana kamu akan menemukan file-file JSON berikut:</div>
+              <div class="files-list">
+                <div class="file-item"><span class="fi-icon">📄</span><span class="fi-name">followers_1.json</span><span class="fi-note">Wajib</span></div>
+                <div class="file-item"><span class="fi-icon">📄</span><span class="fi-name">following.json</span><span class="fi-note">Wajib</span></div>
+                <div class="file-item"><span class="fi-icon">📄</span><span class="fi-name">recently_unfollowed_profiles.json</span><span class="fi-note">Opsional</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Upload File ke IG Tracker</div>
+              <div class="step-desc">Di halaman ini, klik masing-masing kotak upload dan pilih file JSON yang sesuai. Setelah kedua file wajib terupload, klik tombol <strong>"Mulai Analisis"</strong>.</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title">Nikmati Hasilnya!</div>
+              <div class="step-desc">Kamu akan mendapatkan laporan lengkap: siapa yang tidak follback, siapa yang kamu tidak follback, mutual followers, riwayat unfollow, dan insight statistik akun Instagram-mu. Semua data diproses <strong>100% di browser-mu</strong> — tidak ada yang dikirim ke server manapun. 🔒</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>Made with 💜 by <span>Nazu</span></div>
+      <div class="footer-note"><span class="lock-icon">🔒</span>Data kamu tidak pernah dikirim ke server. 100% offline & aman.</div>
+    </footer>
+  </div>
+
+  <script>
+  /* ===== STATE ===== */
+  const STATE = {
+    followers: new Map(),   // username -> timestamp
+    following: new Map(),   // username -> timestamp
+    unfollowed: [],         // [{username, href, timestamp}]
+  };
+  const TABLES = {};
+
+  /* ===== FILE HANDLER ===== */
+  function handleFile(input, key) {
+    const file = input.files[0];
+    if (!file) return;
+    const card = document.getElementById(`card-${key}`);
+    const st   = document.getElementById(`st-${key}`);
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (key === 'followers') STATE.followers = extractFollowers(data);
+        else if (key === 'following') STATE.following = extractFollowing(data);
+        else if (key === 'unfollowed') STATE.unfollowed = extractUnfollowed(data);
+        st.textContent = '✅ ' + file.name;
+        st.classList.add('ok');
+        card.classList.add('loaded');
+      } catch(err) {
+        st.textContent = '❌ File tidak valid';
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  /* ===== EXTRACTORS ===== */
+  function extractFollowers(data) {
+    const map = new Map();
+    function walk(obj) {
+      if (Array.isArray(obj)) { obj.forEach(walk); return; }
+      if (typeof obj !== 'object' || !obj) return;
+      if (obj.string_list_data) {
+        obj.string_list_data.forEach(item => {
+          if (item.value) map.set(item.value, item.timestamp || 0);
+        });
+        return;
+      }
+      Object.values(obj).forEach(walk);
+    }
+    walk(data);
+    return map;
+  }
+
+  function extractFollowing(data) {
+    const map = new Map();
+    function walk(obj) {
+      if (Array.isArray(obj)) { obj.forEach(walk); return; }
+      if (typeof obj !== 'object' || !obj) return;
+      if (obj.title && obj.string_list_data) {
+        map.set(obj.title, obj.string_list_data[0]?.timestamp || 0);
+        return;
+      }
+      Object.values(obj).forEach(walk);
+    }
+    walk(data);
+    return map;
+  }
+
+  function extractUnfollowed(data) {
+    const list = [];
+    function walk(obj) {
+      if (Array.isArray(obj)) { obj.forEach(walk); return; }
+      if (typeof obj !== 'object' || !obj) return;
+      if (obj.string_list_data) {
+        obj.string_list_data.forEach(item => {
+          if (item.value) list.push({ username: item.value, href: item.href || '', timestamp: item.timestamp || 0 });
+        });
+        return;
+      }
+      Object.values(obj).forEach(walk);
+    }
+    walk(data);
+    list.sort((a,b) => b.timestamp - a.timestamp);
+    return list;
+  }
+
+  /* ===== MAIN ANALYZE ===== */
+  async function analyze() {
+    if (STATE.followers.size === 0 || STATE.following.size === 0) {
+      alert('⚠️ Harap upload minimal followers_1.json dan following.json terlebih dahulu!');
+      return;
+    }
+    showLoading(true);
+    await sleep(600);
+
+    const followersSet = new Set(STATE.followers.keys());
+    const followingSet = new Set(STATE.following.keys());
+
+    // Compute sets
+    const unfollowback = [...followingSet].filter(u => !followersSet.has(u))
+      .map(u => ({username: u, ts: STATE.following.get(u)}))
+      .sort((a,b) => a.username.localeCompare(b.username));
+
+    const mutuals = [...followingSet].filter(u => followersSet.has(u))
+      .map(u => ({username: u, ts: STATE.following.get(u)}))
+      .sort((a,b) => a.username.localeCompare(b.username));
+
+    const fans = [...followersSet].filter(u => !followingSet.has(u))
+      .map(u => ({username: u, ts: STATE.followers.get(u)}))
+      .sort((a,b) => a.username.localeCompare(b.username));
+
+    TABLES.unfollowback = unfollowback;
+    TABLES.mutuals = mutuals;
+    TABLES.fans = fans;
+
+    // Stats
+    renderStats(followersSet.size, followingSet.size, unfollowback.length, mutuals.length, fans.length);
+
+    // Tables
+    renderTable('tbl-unfb', unfollowback, 'badge-unfb', 'unf');
+    renderTable('tbl-mut', mutuals, 'badge-mut', 'mut');
+    renderTable('tbl-fan', fans, 'badge-fan', 'fan');
+
+    // History
+    renderHistory();
+
+    // Insight
+    renderInsight(followersSet.size, followingSet.size, unfollowback.length, mutuals.length, fans.length);
+
+    showLoading(false);
+    document.getElementById('results-area').style.display = 'block';
+    document.getElementById('results-area').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  /* ===== RENDER STATS ===== */
+  function renderStats(fol, fing, unfb, mut, fan) {
+    const items = [
+      {val: fol,  lbl: 'Followers',       color: 'var(--accent3)'},
+      {val: fing, lbl: 'Following',        color: 'var(--accent2)'},
+      {val: unfb, lbl: 'Tidak Follback',   color: 'var(--red)'},
+      {val: mut,  lbl: 'Mutual',           color: 'var(--green)'},
+      {val: fan,  lbl: 'Fans Only',        color: 'var(--yellow)'},
+    ];
+    const g = document.getElementById('stats-grid');
+    g.innerHTML = items.map(i => `
+      <div class="stat-card" style="--accent-color:${i.color}">
+        <span class="stat-val" id="sv-${i.lbl.replace(/\s/,'')}">0</span>
+        <span class="stat-lbl">${i.lbl}</span>
+      </div>
+    `).join('');
+    // Animate count
+    items.forEach(item => {
+      const el = document.getElementById('sv-' + item.lbl.replace(/\s/,''));
+      if (el) countUp(el, item.val);
+    });
+  }
+
+  function countUp(el, target) {
+    let cur = 0; const step = Math.max(1, Math.ceil(target / 50));
+    const t = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.textContent = cur.toLocaleString('id');
+      if (cur >= target) clearInterval(t);
+    }, 20);
+  }
+
+  /* ===== RENDER TABLE ===== */
+  function renderTable(tbodyId, data, badgeId, type) {
+    const tbody = document.getElementById(tbodyId);
+    document.getElementById(badgeId).textContent = data.length + ' akun';
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4"><div class="empty"><div class="e-icon">🎉</div><p>Tidak ada akun di kategori ini.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = data.map((item, i) => {
+      const initials = item.username.slice(0,2).toUpperCase();
+      const ts = item.ts ? fmtDate(item.ts) : '—';
+      const pill = type === 'unf' ? `<span class="pill pill-red">Tidak follback</span>`
+                 : type === 'mut' ? `<span class="pill pill-green">Mutual</span>`
+                 : `<span class="pill pill-yellow">Fans</span>`;
+      return `<tr class="data-row">
+        <td class="ts-cell">${i+1}</td>
+        <td><div class="avatar-cell">
+          <div class="av">${initials}</div>
+          <div class="uname"><a href="https://instagram.com/${item.username}" target="_blank">@${item.username}</a></div>
+        </div></td>
+        <td><a href="https://instagram.com/${item.username}" target="_blank" style="font-size:.8rem;color:var(--accent3)">Lihat Profil ↗</a></td>
+        <td class="ts-cell">${type === 'mut' ? pill : ts}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  /* ===== RENDER HISTORY ===== */
+  function renderHistory() {
+    const wrap = document.getElementById('timeline-wrap');
+    const hist = STATE.unfollowed;
+    document.getElementById('badge-hist').textContent = hist.length + ' akun';
+    if (hist.length === 0) {
+      wrap.innerHTML = `<div class="empty"><div class="e-icon">📭</div><p>File riwayat unfollow tidak diupload atau kosong.</p></div>`;
+      return;
+    }
+    wrap.innerHTML = `<div class="timeline" id="tl-inner">`
+      + hist.map(item => `
+        <div class="tl-item">
+          <div class="tl-dot unf">🚫</div>
+          <div class="tl-content">
+            <div class="tl-name"><a href="${item.href||'https://instagram.com/'+item.username}" target="_blank">@${item.username}</a></div>
+            <div class="tl-time">${item.timestamp ? fmtDate(item.timestamp) : '—'}</div>
+          </div>
+          <span class="pill pill-red" style="align-self:center;font-size:.7rem">Unfollow</span>
+        </div>`).join('')
+      + `</div>`;
+  }
+
+  /* ===== RENDER INSIGHT ===== */
+  function renderInsight(fol, fing, unfb, mut, fan) {
+    const c = document.getElementById('insight-charts');
+    const ratio = fol > 0 ? Math.round((fing/fol)*100)/100 : 0;
+    const follbackPct = fing > 0 ? Math.round((mut/fing)*100) : 0;
+
+    // Donut: follback ratio
+    const r = 45, circ = 2*Math.PI*r;
+    const fill = circ * (follbackPct/100);
+    const fillFan = circ * ((fing > 0 ? unfb/fing : 0));
+
+    c.innerHTML = `
+    <div class="chart-card">
+      <div class="chart-title">Follback Rate</div>
+      <div class="donut-wrap">
+        <div class="donut">
+          <svg width="110" height="110" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="${r}" fill="none" stroke="var(--surface2)" stroke-width="12"/>
+            <circle cx="55" cy="55" r="${r}" fill="none" stroke="var(--green)" stroke-width="12"
+              stroke-dasharray="${fill} ${circ}" stroke-linecap="round"/>
+          </svg>
+          <div class="donut-label">
+            <span class="donut-pct" style="color:var(--green)">${follbackPct}%</span>
+            <span class="donut-sub">follback</span>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>${mut} Mutual</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>${unfb} Tidak Follback</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--yellow)"></div>${fan} Fans Only</div>
+        </div>
+      </div>
     </div>
+    <div class="chart-card">
+      <div class="chart-title">Ringkasan Angka</div>
+      <div class="bar-chart">
+        ${barRow('Followers', fol, Math.max(fol,fing,1), 'var(--accent3)')}
+        ${barRow('Following', fing, Math.max(fol,fing,1), 'var(--accent2)')}
+        ${barRow('Mutual', mut, Math.max(fol,fing,1), 'var(--green)')}
+        ${barRow('Tidak Follback', unfb, Math.max(fol,fing,1), 'var(--red)')}
+        ${barRow('Fans Only', fan, Math.max(fol,fing,1), 'var(--yellow)')}
+      </div>
+    </div>`;
 
-    <script>
-        let dataFollowers = new Set();
-        let dataFollowing = new Set();
+    // Animate bars
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.bar-fill').forEach(b => {
+        b.style.width = b.dataset.w;
+      });
+    });
+  }
 
-        // Mengubah teks saat file berhasil dipilih
-        document.getElementById('file-followers').addEventListener('change', function(e) {
-            if(e.target.files.length > 0) {
-                document.getElementById('status-followers').innerText = "✅ " + e.target.files[0].name;
-                document.getElementById('status-followers').classList.add('ready');
-            }
-        });
+  function barRow(label, val, max, color) {
+    const pct = max > 0 ? Math.round(val/max*100) : 0;
+    return `<div class="bar-row">
+      <span class="bar-lbl" title="${label}">${label}</span>
+      <div class="bar-track"><div class="bar-fill" style="background:${color};width:0%" data-w="${pct}%"></div></div>
+      <span class="bar-num">${val.toLocaleString('id')}</span>
+    </div>`;
+  }
 
-        document.getElementById('file-following').addEventListener('change', function(e) {
-            if(e.target.files.length > 0) {
-                document.getElementById('status-following').innerText = "✅ " + e.target.files[0].name;
-                document.getElementById('status-following').classList.add('ready');
-            }
-        });
+  /* ===== TAB SWITCH ===== */
+  function switchTab(btn, panelId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
 
-        // Fungsi Detektif untuk mencari nama di dalam JSON (Sama seperti Python kemarin)
-        function ekstrakUsername(data) {
-            let names = new Set();
-            
-            function cariNama(obj) {
-                if (typeof obj === 'object' && obj !== null) {
-                    if ("string_list_data" in obj) {
-                        obj.string_list_data.forEach(item => {
-                            if ("value" in item) {
-                                names.add(item.value);
-                            } else if ("title" in obj && obj.title !== "") {
-                                names.add(obj.title);
-                            }
-                        });
-                    }
-                    // Cari terus ke dalam cabang lainnya
-                    for (let key in obj) {
-                        cariNama(obj[key]);
-                    }
-                } else if (Array.isArray(obj)) {
-                    obj.forEach(cariNama);
-                }
-            }
-            
-            cariNama(data);
-            return names;
-        }
+  /* ===== SEARCH FILTER ===== */
+  function filterTable(tbodyId, q) {
+    const tbody = document.getElementById(tbodyId);
+    const rows = tbody.querySelectorAll('tr.data-row');
+    const qLow = q.toLowerCase();
+    rows.forEach(r => {
+      r.style.display = r.textContent.toLowerCase().includes(qLow) ? '' : 'none';
+    });
+  }
 
-        // Fungsi membaca file dari komputer ke browser
-        function bacaFile(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = e => resolve(JSON.parse(e.target.result));
-                reader.onerror = e => reject(e);
-                reader.readAsText(file);
-            });
-        }
+  /* ===== EXPORT CSV ===== */
+  function exportCSV(type) {
+    const data = TABLES[type === 'unfollowback' ? 'unfollowback' : type === 'mutuals' ? 'mutuals' : 'fans'];
+    if (!data || data.length === 0) { alert('Tidak ada data untuk diekspor.'); return; }
+    const header = 'No,Username,Profil URL,Timestamp\n';
+    const rows = data.map((item, i) =>
+      `${i+1},${item.username},https://instagram.com/${item.username},${item.ts ? fmtDate(item.ts) : ''}`
+    ).join('\n');
+    download(`ig-tracker-${type}.csv`, 'data:text/csv;charset=utf-8,' + encodeURIComponent(header + rows));
+  }
 
-        // AKSI UTAMA SAAT TOMBOL DITEKAN
-        async function prosesData() {
-            const fileFollowers = document.getElementById('file-followers').files[0];
-            const fileFollowing = document.getElementById('file-following').files[0];
+  function download(name, url) {
+    const a = document.createElement('a');
+    a.href = url; a.download = name; a.click();
+  }
 
-            if (!fileFollowers || !fileFollowing) {
-                alert("Ups! Jangan lupa masukkan kedua file JSON-nya ya.");
-                return;
-            }
+  /* ===== UTILS ===== */
+  function fmtDate(ts) {
+    if (!ts) return '—';
+    return new Date(ts * 1000).toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'});
+  }
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function showLoading(v) {
+    const el = document.getElementById('loading-overlay');
+    el.classList.toggle('show', v);
+  }
 
-            try {
-                // Suruh detektif membaca kedua buku
-                const jsonFollowers = await bacaFile(fileFollowers);
-                const jsonFollowing = await bacaFile(fileFollowing);
-
-                // Ekstrak nama
-                dataFollowers = ekstrakUsername(jsonFollowers);
-                dataFollowing = ekstrakUsername(jsonFollowing);
-
-                // Matematika: Kurangi Following dengan Followers
-                // JavaScript tidak punya simbol "-" untuk Set, jadi kita buat manual
-                let tidakFollback = [];
-                dataFollowing.forEach(nama => {
-                    if (!dataFollowers.has(nama)) {
-                        tidakFollback.push(nama);
-                    }
-                });
-
-                // Urutkan nama sesuai abjad
-                tidakFollback.sort();
-
-                // Tampilkan ke UI (Layar)
-                document.getElementById('metrics-panel').style.display = 'grid';
-                document.getElementById('val-followers').innerText = dataFollowers.size;
-                document.getElementById('val-following').innerText = dataFollowing.size;
-                document.getElementById('val-unfollowers').innerText = tidakFollback.length;
-
-                // Tampilkan Tabel
-                const tbody = document.querySelector('#result-table tbody');
-                tbody.innerHTML = ''; // Bersihkan tabel sebelumnya
-
-                if (tidakFollback.length > 0) {
-                    document.getElementById('result-section').style.display = 'block';
-                    tidakFollback.forEach((nama, index) => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${index + 1}</td>
-                            <td><strong>${nama}</strong></td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                } else {
-                    document.getElementById('result-section').style.display = 'none';
-                    alert("Wah hebat! Semua orang follback kamu.");
-                }
-
-            } catch (error) {
-                console.error(error);
-                alert("Terjadi kesalahan saat membaca file. Pastikan itu benar-benar file JSON dari Instagram.");
-            }
-        }
-    </script>
+  /* ===== SCROLL TOP BUTTON ===== */
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrolltop').classList.toggle('show', window.scrollY > 400);
+  });
+  </script>
 </body>
 </html>
