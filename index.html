@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detektif Instagram</title>
+    <style>
+        /* =========================================
+           BAGIAN 1: CSS (TAMPILAN MODERN MINIMALIS)
+           ========================================= */
+        :root {
+            --primary: #4F46E5; /* Warna ungu kebiruan modern */
+            --primary-hover: #4338CA;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            max-width: 800px;
+            width: 100%;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; }
+        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 2rem; }
+
+        /* Kotak Upload File */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-box:hover {
+            border-color: var(--primary);
+            background-color: #EEF2FF;
+        }
+
+        .upload-box input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer;
+        }
+
+        .upload-label { font-weight: 600; display: block; margin-bottom: 0.5rem; }
+        .file-status { font-size: 0.875rem; color: var(--text-muted); }
+        .file-status.ready { color: #10B981; font-weight: bold; } /* Warna hijau jika sukses */
+
+        /* Tombol Utama */
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 2rem;
+        }
+        button:hover { background-color: var(--primary-hover); }
+
+        /* Panel Metrik */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            display: none; /* Disembunyikan sampai tombol ditekan */
+        }
+        
+        .metric-card {
+            background-color: var(--bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .metric-title { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .metric-value { font-size: 2rem; font-weight: bold; color: var(--primary); }
+
+        /* Tabel Hasil */
+        .result-section { display: none; }
+        h2 { font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+        
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background-color: var(--bg); padding: 1rem; position: sticky; top: 0; font-weight: 600; border-bottom: 1px solid var(--border); }
+        td { padding: 1rem; border-bottom: 1px solid var(--border); }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #F9FAFB; }
+        
+        /* Animasi sederhana */
+        @media (max-width: 600px) {
+            .upload-grid { grid-template-columns: 1fr; }
+            .metrics { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🕵️ Detektif Instagram</h1>
+        <p class="subtitle">Cari tahu siapa yang tidak <i>follback</i> kamu secara instan dan 100% aman (Offline).</p>
+
+        <div class="upload-grid">
+            <div class="upload-box">
+                <span class="upload-label">📂 Upload Followers</span>
+                <span class="file-status" id="status-followers">Pilih file followers_1.json</span>
+                <input type="file" id="file-followers" accept=".json">
+            </div>
+            <div class="upload-box">
+                <span class="upload-label">📂 Upload Following</span>
+                <span class="file-status" id="status-following">Pilih file following.json</span>
+                <input type="file" id="file-following" accept=".json">
+            </div>
+        </div>
+
+        <button onclick="prosesData()">Mulai Analisis Data 🚀</button>
+
+        <div class="metrics" id="metrics-panel">
+            <div class="metric-card">
+                <div class="metric-title">Pengikut (Followers)</div>
+                <div class="metric-value" id="val-followers">0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Mengikuti (Following)</div>
+                <div class="metric-value" id="val-following">0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Tidak Follback</div>
+                <div class="metric-value" id="val-unfollowers">0</div>
+            </div>
+        </div>
+
+        <div class="result-section" id="result-section">
+            <h2>📝 Daftar Akun Tidak Follback</h2>
+            <div class="table-container">
+                <table id="result-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">No</th>
+                            <th>Username Instagram</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let dataFollowers = new Set();
+        let dataFollowing = new Set();
+
+        // Mengubah teks saat file berhasil dipilih
+        document.getElementById('file-followers').addEventListener('change', function(e) {
+            if(e.target.files.length > 0) {
+                document.getElementById('status-followers').innerText = "✅ " + e.target.files[0].name;
+                document.getElementById('status-followers').classList.add('ready');
+            }
+        });
+
+        document.getElementById('file-following').addEventListener('change', function(e) {
+            if(e.target.files.length > 0) {
+                document.getElementById('status-following').innerText = "✅ " + e.target.files[0].name;
+                document.getElementById('status-following').classList.add('ready');
+            }
+        });
+
+        // Fungsi Detektif untuk mencari nama di dalam JSON (Sama seperti Python kemarin)
+        function ekstrakUsername(data) {
+            let names = new Set();
+            
+            function cariNama(obj) {
+                if (typeof obj === 'object' && obj !== null) {
+                    if ("string_list_data" in obj) {
+                        obj.string_list_data.forEach(item => {
+                            if ("value" in item) {
+                                names.add(item.value);
+                            } else if ("title" in obj && obj.title !== "") {
+                                names.add(obj.title);
+                            }
+                        });
+                    }
+                    // Cari terus ke dalam cabang lainnya
+                    for (let key in obj) {
+                        cariNama(obj[key]);
+                    }
+                } else if (Array.isArray(obj)) {
+                    obj.forEach(cariNama);
+                }
+            }
+            
+            cariNama(data);
+            return names;
+        }
+
+        // Fungsi membaca file dari komputer ke browser
+        function bacaFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => resolve(JSON.parse(e.target.result));
+                reader.onerror = e => reject(e);
+                reader.readAsText(file);
+            });
+        }
+
+        // AKSI UTAMA SAAT TOMBOL DITEKAN
+        async function prosesData() {
+            const fileFollowers = document.getElementById('file-followers').files[0];
+            const fileFollowing = document.getElementById('file-following').files[0];
+
+            if (!fileFollowers || !fileFollowing) {
+                alert("Ups! Jangan lupa masukkan kedua file JSON-nya ya.");
+                return;
+            }
+
+            try {
+                // Suruh detektif membaca kedua buku
+                const jsonFollowers = await bacaFile(fileFollowers);
+                const jsonFollowing = await bacaFile(fileFollowing);
+
+                // Ekstrak nama
+                dataFollowers = ekstrakUsername(jsonFollowers);
+                dataFollowing = ekstrakUsername(jsonFollowing);
+
+                // Matematika: Kurangi Following dengan Followers
+                // JavaScript tidak punya simbol "-" untuk Set, jadi kita buat manual
+                let tidakFollback = [];
+                dataFollowing.forEach(nama => {
+                    if (!dataFollowers.has(nama)) {
+                        tidakFollback.push(nama);
+                    }
+                });
+
+                // Urutkan nama sesuai abjad
+                tidakFollback.sort();
+
+                // Tampilkan ke UI (Layar)
+                document.getElementById('metrics-panel').style.display = 'grid';
+                document.getElementById('val-followers').innerText = dataFollowers.size;
+                document.getElementById('val-following').innerText = dataFollowing.size;
+                document.getElementById('val-unfollowers').innerText = tidakFollback.length;
+
+                // Tampilkan Tabel
+                const tbody = document.querySelector('#result-table tbody');
+                tbody.innerHTML = ''; // Bersihkan tabel sebelumnya
+
+                if (tidakFollback.length > 0) {
+                    document.getElementById('result-section').style.display = 'block';
+                    tidakFollback.forEach((nama, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td><strong>${nama}</strong></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    document.getElementById('result-section').style.display = 'none';
+                    alert("Wah hebat! Semua orang follback kamu.");
+                }
+
+            } catch (error) {
+                console.error(error);
+                alert("Terjadi kesalahan saat membaca file. Pastikan itu benar-benar file JSON dari Instagram.");
+            }
+        }
+    </script>
+</body>
+</html>
